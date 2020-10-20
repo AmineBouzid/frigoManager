@@ -4,7 +4,7 @@
 > Gestionairen d'ingrédients et Génération automatique de recettes
 
 ## Created Branch and merged it:
-🤵🏿Amine BOUZID  
+🤵Amine BOUZID  
 🤵Guillaume Bayon  
 🤵Thomas GAGNAIRE  
 
