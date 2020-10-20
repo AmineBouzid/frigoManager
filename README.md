@@ -8,6 +8,6 @@ Amine BOUZID
 
 ## Author
 
-👤 **Amine BOUZID - Thomas Gagnaire -  Mohammed Lekmad -Thomas Blomme **
+👤 **Amine BOUZID - Thomas Gagnaire -  Mohammed Lekmad -Thomas Blomme - Guillaume BAYON**
 
 
