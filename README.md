@@ -5,9 +5,7 @@
 
 ## Created Branch and merged it:
 Amine BOUZID
-
+Thomas GAGNAIRE
 ## Author
 
 👤 **Amine BOUZID - Thomas Gagnaire -  Mohammed Lekmad -Thomas Blomme - Guillaume BAYON**
-
-
