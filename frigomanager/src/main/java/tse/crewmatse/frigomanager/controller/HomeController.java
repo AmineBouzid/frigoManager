@@ -4,7 +4,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import tse.crewmatse.frigomanager.App;
 
-public class MenuControllers {
+public class HomeController {
 
     @FXML
     private void switchToProfile() throws IOException {
