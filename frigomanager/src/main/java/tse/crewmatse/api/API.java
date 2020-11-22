@@ -17,14 +17,14 @@ public class API {
 
 	
 	private static HttpURLConnection connection;
-	public static void main(String[] args) {
+	public static void apiConnectionAndTest(String keyword) {
 		// TODO Auto-generated method stub
 		BufferedReader reader;
 		String line;
 		StringBuffer responseContent = new StringBuffer();
 		 
 		try {
-			URL url = new URL("https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr=spaghetti&app_id=6b68bbde&app_key=5fe7b8c81ef2bbb009195b055c52b753");
+			URL url = new URL("https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr="+keyword+"&app_id=6b68bbde&app_key=5fe7b8c81ef2bbb009195b055c52b753");
 			connection = (HttpURLConnection) url.openConnection();
 			
 			connection.setRequestMethod("GET");
@@ -61,20 +61,28 @@ public class API {
 		} finally {
 			connection.disconnect();
 		}
-		
-		}
+	}
+	
 	public static String parse(String responseBody) {
 		JSONObject  data = new JSONObject(responseBody);
 
 		JSONArray  ingredients = data.getJSONArray("hints");
 		for (int i = 0; i < ingredients.length(); i++) {
 			JSONObject ingredient =  ingredients.getJSONObject(i);
-			System.out.println(ingredient.toString());
+			JSONObject food = ingredient.getJSONObject("food");
+			System.out.println(food.toString());
 //			int id = ingredient.getInt("id");
 //			//we put here data we want to get
 //			System.out.println("id"+id);
 		}
 		return null;
 	}
+	
+	
+	public static void main(String[] args) {
+		apiConnectionAndTest("pizza");
+		
+		}
+	
 
 }
