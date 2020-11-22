@@ -28,8 +28,8 @@ public class API {
 			connection = (HttpURLConnection) url.openConnection();
 			
 			connection.setRequestMethod("GET");
-			//connection.setConnectTimeout(105000);
-			//connection.setReadTimeout(105000);
+			connection.setConnectTimeout(5000);
+			connection.setReadTimeout(5000);
 			
 			
 			int status = connection.getResponseCode();
