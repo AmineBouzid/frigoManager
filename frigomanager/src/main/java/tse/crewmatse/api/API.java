@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.stream.Stream;
 
 import org.json.JSONArray;
@@ -65,21 +66,21 @@ public class API {
 		}
 	}
 	
-	public static String parse(String responseBody) {
+	public static HashMap<String, String>  parse(String responseBody) {
+		HashMap<String, String> apiResponses = new HashMap<String, String>();
 		JSONObject  data = new JSONObject(responseBody);
-
 		JSONArray  ingredients = data.getJSONArray("hints");
 		for (int i = 0; i < 10; i++) {
 			JSONObject ingredient =  ingredients.getJSONObject(i);
 			JSONObject food = ingredient.getJSONObject("food");
 			String foodId = food.getString("foodId");
 			String foodName = food.getString("label");
-			System.out.println("ID: "+ foodId + " name: " + foodName);
-//			int id = ingredient.getInt("id");
-//			//we put here data we want to get
-//			System.out.println("id"+id);
+			apiResponses.put(foodId, foodName);
+//			System.out.println("ID: "+ foodId + " name: " + foodName);
+
 		}
-		return null;
+//		System.out.println(apiResponses.toString());
+		return apiResponses;
 	}
 	
 	
