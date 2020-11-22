@@ -34,7 +34,7 @@ public class DatabaseController {
 		
 	}
 	
-	public static void deleteSelectedRow(int apiID) {
+	public static void deleteSelectedRow(String apiID) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
@@ -42,7 +42,7 @@ public class DatabaseController {
 			statementa.setQueryTimeout(30);
 			
 			PreparedStatement pS = connection.prepareStatement("delete from Pantry where apiID = ?");
-			pS.setInt(1, apiID);
+			pS.setString(1, apiID);
 			
 			pS.executeUpdate();
 			
@@ -62,13 +62,13 @@ public class DatabaseController {
 		}
 	}
 	
-	public static void addItemInTable(int apiID, String foodName, String expirationdate, String quantity) {
+	public static void addItemInTable(String string, String foodName, String expirationdate, String quantity) {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 			PreparedStatement pS = connection.prepareStatement("insert into Pantry values (?,?,?,?)");
 			pS.setQueryTimeout(30);
-			pS.setInt(1, 12); // HERE  replace 12 with the id returned by a http request to api
+			pS.setString(1, string); // HERE  replace 12 with the id returned by a http request to api
 			pS.setString(2, foodName); 
 			pS.setString(3,expirationdate);
 			pS.setString(4, quantity);

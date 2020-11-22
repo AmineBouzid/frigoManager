@@ -5,7 +5,7 @@
 package tse.crewmatse.frigomanager.util;
 
 public class Ingredients {
-	public Ingredients(int idApi, String nameFood, String quantity, String date) {
+	public Ingredients(String idApi, String nameFood, String quantity, String date) {
 		super();
 		this.idApi = idApi;
 		this.nameFood = nameFood;
@@ -13,10 +13,10 @@ public class Ingredients {
 		this.date = date;
 	}
 	
-	public int getIdApi() {
+	public String getIdApi() {
 		return idApi;
 	}
-	public void setIdApi(int idApi) {
+	public void setIdApi(String idApi) {
 		this.idApi = idApi;
 	}
 	public String getNameFood() {
@@ -40,6 +40,6 @@ public class Ingredients {
 	private String nameFood;
 	private String quantity;
 	private String date;	
-	private int idApi;
+	private String idApi;
 
 }

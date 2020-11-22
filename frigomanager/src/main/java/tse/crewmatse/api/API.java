@@ -18,7 +18,9 @@ public class API {
 
 	
 	private static HttpURLConnection connection;
-	public static void apiConnectionAndTest(String keyword) {
+	private static HashMap<String, String> result;
+	
+	public static HashMap<String, String> apiConnectionAndTest(String keyword) {
 	
 		BufferedReader reader;
 		String line;
@@ -53,7 +55,8 @@ public class API {
 				}
 				reader.close();
 			}
-			parse(responseContent.toString());
+			
+			result = parse(responseContent.toString());
 			//System.out.println(responseContent.toString());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
@@ -64,6 +67,8 @@ public class API {
 		} finally {
 			connection.disconnect();
 		}
+		return result;
+		
 	}
 	
 	public static HashMap<String, String>  parse(String responseBody) {
