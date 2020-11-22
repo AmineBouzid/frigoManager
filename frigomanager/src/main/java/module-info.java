@@ -1,7 +1,7 @@
 module tse.crewmatse.frigomanager {
     requires javafx.controls;
     requires javafx.fxml;
-
+    requires json;
     opens tse.crewmatse.frigomanager to javafx.fxml;
     exports tse.crewmatse.frigomanager;
     exports tse.crewmatse.frigomanager.controller;
