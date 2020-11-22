@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="619.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.MenuControllers">
+<BorderPane prefHeight="619.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.PantryController">
    <top>
       <HBox alignment="CENTER" prefHeight="37.0" prefWidth="944.0" style="-fx-background-color: #D2D6D9;">
          <children>

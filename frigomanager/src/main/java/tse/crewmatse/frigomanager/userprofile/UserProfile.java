@@ -12,7 +12,7 @@ public class UserProfile {
 	private double idealWeightMax;
 	private boolean healthyMode;
 /*
- * tableau de recettes epinglées
+ * tableau de recettes epinglï¿½es
  * tableau recettes favorites
  * 
  */
@@ -75,7 +75,7 @@ public class UserProfile {
 	//----------------------------------------Constructor
 	public UserProfile(double userWeight, double userHeight, String userFirstName, String userLastName,
 			boolean healthyMode) {
-		super();
+		//super();
 		this.userWeight = userWeight;
 		this.userHeight = userHeight;
 		this.userFirstName = userFirstName;
@@ -89,15 +89,15 @@ public class UserProfile {
 	
 	//----------------------------------------BMI Functions
 	public void calculateBMI() {
-		//bmi = (kg/m²)
-		this.setUserBMI(this.getUserWeight()/(this.getUserHeight()*this.getUserHeight()));
+		//bmi = (kg/mï¿½)
+		this.setUserBMI(this.getUserWeight()/(((this.getUserHeight())/100)*((this.getUserHeight()))/100));
 	}
 	
 	public void calculateIdealWeight() {
 		//Ideal BMI between 18.5 & 25
-		//p=bmi*h²
-		this.setIdealWeightMin(18.5*(this.getUserHeight()*this.getUserHeight()));
-		this.setIdealWeightMax(25*(this.getUserHeight()*this.getUserHeight()));
+		//p=bmi*hï¿½
+		this.setIdealWeightMin(18.5*(((this.getUserHeight())/100)*((this.getUserHeight())/100)));
+		this.setIdealWeightMax(25*(((this.getUserHeight())/100)*((this.getUserHeight())/100)));
 	}
 	
 	//BMI Functions----------------------------------------
