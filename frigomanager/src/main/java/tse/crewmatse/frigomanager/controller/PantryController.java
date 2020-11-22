@@ -161,9 +161,12 @@ public class PantryController implements Initializable {
 
 		Ingredients selectedApiResult=apiTableView.getSelectionModel().getSelectedItem();
 		DatabaseController.addItemInTable(selectedApiResult.getIdApi(),selectedApiResult.getNameFood(), datePicker.getValue().toString(), quantityField.getText());			
-		Ingredients toAdd = new Ingredients(selectedApiResult.getIdApi(), foodField.getText(),datePicker.getValue().toString(), quantityField.getText());
+		Ingredients toAdd = new Ingredients(selectedApiResult.getIdApi(), selectedApiResult.getNameFood(),datePicker.getValue().toString(), quantityField.getText());
 		getPantryView().getItems().add(toAdd);
-			
+		apiTableView.getItems().clear();	
+		foodField.clear();
+		quantityField.clear();
+		datePicker.getEditor().clear();
 		
 	}
 	
