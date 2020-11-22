@@ -18,15 +18,17 @@ public class API {
 	
 	private static HttpURLConnection connection;
 	public static void apiConnectionAndTest(String keyword) {
-		// TODO Auto-generated method stub
+	
 		BufferedReader reader;
 		String line;
 		StringBuffer responseContent = new StringBuffer();
 		 
 		try {
+			// the API url 
 			URL url = new URL("https://api.edamam.com/api/food-database/v2/parser?nutrition-type=logging&ingr="+keyword+"&app_id=6b68bbde&app_key=5fe7b8c81ef2bbb009195b055c52b753");
 			connection = (HttpURLConnection) url.openConnection();
 			
+			// set request
 			connection.setRequestMethod("GET");
 			connection.setConnectTimeout(5000);
 			connection.setReadTimeout(5000);
@@ -45,7 +47,7 @@ public class API {
 			}else {
 				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				while((line = reader.readLine()) != null) {
-					System.out.println(line.toString());
+//					System.out.println(line.toString());
 					responseContent.append(line);
 				}
 				reader.close();
@@ -67,10 +69,12 @@ public class API {
 		JSONObject  data = new JSONObject(responseBody);
 
 		JSONArray  ingredients = data.getJSONArray("hints");
-		for (int i = 0; i < ingredients.length(); i++) {
+		for (int i = 0; i < 10; i++) {
 			JSONObject ingredient =  ingredients.getJSONObject(i);
 			JSONObject food = ingredient.getJSONObject("food");
-			System.out.println(food.toString());
+			String foodId = food.getString("foodId");
+			String foodName = food.getString("label");
+			System.out.println("ID: "+ foodId + " name: " + foodName);
 //			int id = ingredient.getInt("id");
 //			//we put here data we want to get
 //			System.out.println("id"+id);

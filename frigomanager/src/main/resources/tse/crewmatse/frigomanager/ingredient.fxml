@@ -22,11 +22,6 @@
                </font>
             </Label>
             <TextField layoutX="14.0" layoutY="71.0" prefHeight="27.0" prefWidth="183.0" promptText="search " style="-fx-background-color: ; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-            <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="174.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/icons8_Search_52px.png" />
-               </image>
-            </ImageView>
             <VBox fx:id="pnItems" layoutX="14.0" layoutY="117.0" prefHeight="269.0" prefWidth="298.0" spacing="5.0" style="-fx-background-color: #ffff;">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -37,6 +32,15 @@
             <RadioButton layoutX="418.0" layoutY="191.0" mnemonicParsing="false" text="gram" />
             <TextField layoutX="351.0" layoutY="219.0" promptText="quantity" />
             <Button layoutX="403.0" layoutY="252.0" mnemonicParsing="false" text="save" />
+            <Button layoutX="208.0" layoutY="72.0" mnemonicParsing="false">
+               <graphic>
+                  <ImageView fitHeight="17.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/icons8_Search_52px.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
       </children>
     </AnchorPane>
   </children>
