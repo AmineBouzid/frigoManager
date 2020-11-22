@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 
 
-public class API {
+public class ApiIngredients {
 
 	
 	private static HttpURLConnection connection;

@@ -30,7 +30,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import tse.crewmatse.api.API;
+import tse.crewmatse.api.ApiIngredients;
 
 import tse.crewmatse.frigomanager.util.DatabaseController;
 
@@ -177,7 +177,7 @@ public class PantryController implements Initializable {
 	private void searchButtonAction() {
 		 HashMap<String, String> result;
 		 
-		 result = API.apiConnectionAndTest(foodField.getText());
+		 result = ApiIngredients.apiConnectionAndTest(foodField.getText());
 		 
 		 for(Map.Entry<String, String> entry : result.entrySet()) {
 			 //int id = Integer.parseInt(entry.getKey());
