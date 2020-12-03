@@ -13,6 +13,10 @@ public class Ingredients {
 		this.date = date;
 	}
 	
+	public Ingredients() {
+		super();
+	}
+
 	public String getIdApi() {
 		return idApi;
 	}

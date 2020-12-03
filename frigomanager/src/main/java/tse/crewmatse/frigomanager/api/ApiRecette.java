@@ -1,3 +1,7 @@
+/**
+ * @author Thomas
+ *
+ */
 package tse.crewmatse.frigomanager.api;
 
 
@@ -13,6 +17,7 @@ import java.nio.charset.Charset;
 import org.json.JSONObject;
 
 import tse.crewmatse.frigomanager.util.Ingredients;
+import tse.crewmatse.frigomanager.util.Recette;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +46,7 @@ public class ApiRecette {
 			}
 			url+=ingredientToUrl(ingredients.get(i));
 		}
+		url+="&ranking=1";
 		return url;
 	}
 	private static String readAll(Reader rd) throws IOException {
@@ -55,7 +61,7 @@ public class ApiRecette {
 
     
     
-    public static JSONArray UrltoJsonRecette(String url) throws IOException, JSONException {
+    public static JSONArray urltoJsonRecette(String url) throws IOException, JSONException {
         try (InputStream myurl = new URL(url).openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(myurl, Charset.forName("UTF-8")));
             String jsonText = readAll(rd);
@@ -64,28 +70,49 @@ public class ApiRecette {
         }
     }
     
-    public static void displayRecettes(JSONArray recettes) throws JSONException {
-    	ArrayList<String> recettesString = new ArrayList<String>();
-    	for (int i=0;i<recettes.length();i++) {
-    		recettesString.add(recettes.getJSONObject(i).getString("title"));
-    	}
-    	System.out.println(recettes.length()+" recettes ont été trouvées :");
-    	for (int i=0;i<recettes.length();i++) {
-    		System.out.println(recettesString.get(i));
-    	}
-    }
     
-    /*public static void main(String[] args) throws IOException, JSONException {
-        // launch();
-        String ingredient = "apples";
-        JSONObject json = UrltoJsonIngredient(urlIngredient(ingredientToUrl(ingredient)));
-        System.out.println(json.getString("text"));
-        ArrayList<String> ingredients = new ArrayList<String>();
-        ingredients.add(ingredient);
-        ingredients.add("flour");
-        ingredients.add("sugar");
-        JSONArray json2 = UrltoJsonRecette(urlRecette(ingredients));
-        displayRecettes(json2);
-    }*/
+    public static ArrayList<Recette> parse(JSONArray recettes) {
+    	ArrayList<Recette> result = new ArrayList<Recette>();
+    	for (int i = 0;i<recettes.length();i++) {
+    		
+    		int id = recettes.getJSONObject(i).getInt("id");
+    		String name = recettes.getJSONObject(i).getString("title");
+    		
+    		JSONArray usedIngredient = recettes.getJSONObject(i).getJSONArray("usedIngredients");
+    		JSONArray missedIngredient = recettes.getJSONObject(i).getJSONArray("missedIngredients");
+    		
+    		ArrayList<String> listIngredient = new ArrayList<>();
+    		
+    		for (int j = 0;j<usedIngredient.length();j++) {
+    			listIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
+    		};
+    		for (int j = 0;j<missedIngredient.length();j++) {
+    			listIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
+    		};
+    		
+    		Recette r = new Recette(name,id,listIngredient);
+    		result.add(r);
+    	};
+    	return result;
+    };
+    
+    /*public static void main(String[] args) throws JSONException, IOException {
+		Ingredients ing1 = new Ingredients();
+		ing1.setNameFood("apples");
+		Ingredients ing3 = new Ingredients();
+		ing3.setNameFood("butter");
+		Ingredients ing2 = new Ingredients();
+		ing2.setNameFood("flour");
+		ArrayList<Ingredients> list = new ArrayList<Ingredients>();
+		list.add(ing1);
+		list.add(ing3);
+		list.add(ing2);
+		
+		JSONArray r = urltoJsonRecette(urlRecette(list));
+		ArrayList<Recette> listR = parse(r);
+		for(int i = 0;i<listR.size();i++) {
+			listR.get(i).display();
+		};
+	}*/
 
 }
