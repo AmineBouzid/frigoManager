@@ -11,17 +11,20 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import org.json.JSONObject;
+
+import tse.crewmatse.frigomanager.util.Ingredients;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 
 
 
 public class ApiRecette {
-	public static String ingredientToUrl(String ingredient) {
+	public static String ingredientToUrl(Ingredients ingredient) {
 		String ingredientUrl = "";
-		for (int i = 0;i<ingredient.length();i++) {
-			if (ingredient.charAt(i) != ' ') {
-				ingredientUrl+=ingredient.charAt(i);
+		for (int i = 0;i<ingredient.getNameFood().length();i++) {
+			if (ingredient.getNameFood().charAt(i) != ' ') {
+				ingredientUrl+=ingredient.getNameFood().charAt(i);
 			}
 			else {
 				ingredientUrl+="%20";
@@ -30,12 +33,7 @@ public class ApiRecette {
 		return ingredientUrl;
 	}
 	
-	public static String urlIngredient(String ingredientUrl) {
-		String url = "https://api.edamam.com/api/food-database/v2/parser?ingr="+ingredientUrl+"&app_id=3b2759b3&app_key=eaec543203e28db84d3dbc227ce467c2";
-		return url;
-	}
-	
-	public static String urlRecette(ArrayList<String> ingredients) {
+	public static String urlRecette(ArrayList<Ingredients> ingredients) {
 		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=81864c9e51a048cda9377275626cd6b8&ingredients=";
 		for (int i =0;i<ingredients.size();i++) {
 			if (i!=0) {
@@ -55,15 +53,7 @@ public class ApiRecette {
     }
 
 
-    public static JSONObject UrltoJsonIngredient(String url) throws IOException, JSONException {
-        try (InputStream myurl = new URL(url).openStream()) {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(myurl, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            JSONObject json = new JSONObject(jsonText);
-            return json;
-        }
-        
-    }
+    
     
     public static JSONArray UrltoJsonRecette(String url) throws IOException, JSONException {
         try (InputStream myurl = new URL(url).openStream()) {
