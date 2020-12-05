@@ -82,15 +82,19 @@ public class ApiRecette {
     		JSONArray missedIngredient = recettes.getJSONObject(i).getJSONArray("missedIngredients");
     		
     		ArrayList<String> listIngredient = new ArrayList<>();
+    		ArrayList<String> listMissedIngredient = new ArrayList<>();
+    		ArrayList<String> listUsedIngredient = new ArrayList<>();
     		
     		for (int j = 0;j<usedIngredient.length();j++) {
     			listIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
+    			listUsedIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
     		};
     		for (int j = 0;j<missedIngredient.length();j++) {
     			listIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
+    			listMissedIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
     		};
     		
-    		Recette r = new Recette(name,id,listIngredient);
+    		Recette r = new Recette(name,id,listIngredient,listMissedIngredient,listUsedIngredient);
     		result.add(r);
     	};
     	return result;

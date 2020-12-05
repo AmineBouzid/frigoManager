@@ -10,6 +10,9 @@ public class Recette {
 		private String name;
 		private int idApi;
 		private ArrayList<String> listIngredient;
+		private ArrayList<String> listMissedIngredient;
+		private ArrayList<String> listUsedIngredient;
+		
 		
 		public String getName() {
 			return name;
@@ -35,11 +38,29 @@ public class Recette {
 			this.listIngredient = listIngredient;
 		}
 		
-		public Recette(String name, int idApi, ArrayList<String> listIngredient) {
+		public ArrayList<String> getListMissedIngredient() {
+			return listMissedIngredient;
+		}
+		
+		public void setListMissedIngredient(ArrayList<String> listMissedIngredient) {
+			this.listMissedIngredient = listMissedIngredient;
+		}
+		
+		public ArrayList<String> getListUsedIngredient() {
+			return listUsedIngredient;
+		}
+		
+		public void setListUsedIngredient(ArrayList<String> listUsedIngredient) {
+			this.listUsedIngredient = listUsedIngredient;
+		}
+		
+		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<String> listMissedIngredient, ArrayList<String> listUsedIngredient) {
 			super();
 			this.name = name;
 			this.idApi = idApi;
 			this.listIngredient = listIngredient;
+			this.listMissedIngredient = listMissedIngredient;
+			this.listUsedIngredient = listUsedIngredient;
 		}
 		
 		public void display() {
