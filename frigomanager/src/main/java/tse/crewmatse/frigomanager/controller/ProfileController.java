@@ -2,9 +2,11 @@ package tse.crewmatse.frigomanager.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -18,15 +20,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
+import tse.crewmatse.frigomanager.util.DatabaseController;
+import tse.crewmatse.frigomanager.util.Ingredients;
 
 public class ProfileController  implements Initializable{
-		
+	
+	@FXML private  TextField usernameTxtField;
 	@FXML private  TextField firstNameTxtField;
 	@FXML private  TextField lastNameTxtField;
 	@FXML private  ChoiceBox choiceBoxGender;
+	@FXML private  ChoiceBox choiceBoxProfile;
 	@FXML private  DatePicker birthDatePicker;	
 	@FXML private  TextField heightTxtField;
 	@FXML private  TextField weightTxtField;
@@ -34,8 +41,13 @@ public class ProfileController  implements Initializable{
 	@FXML private  TextField weightTxtMinWeight;
 	@FXML private  TextField weightTxtMaxWeight;
 	@FXML private  Button saveButtonProfile;
+	@FXML private  Button deleteButtonProfile;
+	@FXML private  Button loadButtonProfile;
+	@FXML private  Button modifButtonProfile;
+	@FXML private RadioButton radioButtonHealthy;
 	
-
+	public UserProfile user = null;
+	
     @FXML
     private void switchToProfile() throws IOException {
         App.setRoot("profile");
@@ -61,10 +73,56 @@ public class ProfileController  implements Initializable{
         App.setRoot("alerts");
     }
 
+    
+   
+    public RadioButton getradioButtonHealthy() {
+		return radioButtonHealthy;
+	}
+
+	public void setradioButtonHealthy(RadioButton radioButtonHealthy) {
+		this.radioButtonHealthy= radioButtonHealthy;
+	}
 	
+    public Button getmodifButtonProfile() {
+		return modifButtonProfile;
+	}
 
+	public void setmodifButtonProfile(Button modifButtonProfile) {
+		this.modifButtonProfile= modifButtonProfile;
+	}
+    
+    public Button getloadButtonProfile() {
+		return loadButtonProfile;
+	}
 
+	public void setloadButtonProfile(Button loadButtonProfile) {
+		this.loadButtonProfile = loadButtonProfile;
+	}
 
+    public Button getdeleteButtonProfile() {
+		return deleteButtonProfile;
+	}
+
+	public void setdeleteButtonProfile(Button deleteButtonProfile) {
+		this.deleteButtonProfile = deleteButtonProfile;
+	}
+	
+    public ChoiceBox getchoiceBoxProfile() {
+		return choiceBoxProfile;
+	}
+
+	public void setchoiceBoxProfile(ChoiceBox choiceBoxProfile) {
+		this.choiceBoxProfile = choiceBoxProfile;
+	}
+
+    
+    public TextField getusernameTxtField() {
+		return usernameTxtField;
+	}
+
+	public void setusernameTxtField(TextField usernameTxtField) {
+		this.usernameTxtField = usernameTxtField;
+	}
 	public TextField getFirstNameTxtField() {
 		return firstNameTxtField;
 	}
@@ -144,40 +202,134 @@ public class ProfileController  implements Initializable{
 	public void setSaveButtonProfile(Button saveButtonProfile) {
 		this.saveButtonProfile = saveButtonProfile;
 	}
-
+	
+	public void populateUserChoiceBox() {
+		getchoiceBoxProfile().getItems().clear();
+		ArrayList<String> profileArrayList = new ArrayList<String>();
+		try {
+			
+			ResultSet rs = DatabaseController.getUserProfile();
+			while (rs.next()) { 					
+				profileArrayList.add(rs.getString(1));
+			}
+			rs.close();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String profileList[] = new String[profileArrayList.size()]; 
+		  
+        // ArrayList to Array Conversion 
+        for (int j = 0; j < profileArrayList.size(); j++) { 
+  
+            // Assign each value to String array 
+            profileList[j] = profileArrayList.get(j); 
+        } 
+        getchoiceBoxProfile().getItems().addAll(profileList);
+		getchoiceBoxProfile().getSelectionModel().selectFirst();
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		String[] genderList = {"male","female"};
+		String[] genderList = {"Male","Female"};
 		getChoiceBoxGender().getItems().addAll(genderList);
-		//Modify these next lines 
-		getChoiceBoxGender().getSelectionModel().selectFirst();
-		getFirstNameTxtField().setText("Amine");
-		getLastNameTxtField().setText("Bouzid");
-		getWeightTxtField().setText("65");
-		getHeightTxtField().setText("170");
-		
-		//Date date_naissance = new Date("03-01-2000");
-		getBirthDatePicker().setValue(LocalDate.of(2000, 1, 3));
 		getWeightTxtImc().setEditable(false);
 		getWeightTxtMaxWeight().setEditable(false);
 		getWeightTxtMinWeight().setEditable(false);
+		
+		populateUserChoiceBox();
 
+		
 	}
 	
 	@FXML
 	private void saveButtonAction() {
-			System.out.println(getWeightTxtField().getText());
-			System.out.println(Double.valueOf(getHeightTxtField().getText()));
+		String username = getusernameTxtField().getText();
+		String FirstName = getFirstNameTxtField().getText();
+		String LastName = getLastNameTxtField().getText();
+		String userGender = getChoiceBoxGender().getSelectionModel().getSelectedItem().toString();
+		Double Height = Double.valueOf(getHeightTxtField().getText());
+		Double Weight = Double.valueOf(getWeightTxtField().getText());
+		Boolean HealthyMode = getradioButtonHealthy().isSelected();
+		Date birthDate = Date.valueOf(getBirthDatePicker().getValue());
+		if (username != null && !username.trim().isEmpty() 
+				&& FirstName != null && !LastName.trim().isEmpty()
+				&& LastName != null && !LastName.trim().isEmpty()
+				&& userGender != null && !userGender.trim().isEmpty()
+				&& Weight > 0.1
+	        	&& Height > 10.0
+	        	&& birthDate != null
+				) {
+		DatabaseController.saveUserInfo(username, FirstName, LastName, userGender, Height, Weight, HealthyMode, birthDate);
+		}
+		populateUserChoiceBox();
+	}
+	
+	@FXML
+	private void modifButtonAction() {
+		String username = getusernameTxtField().getText();
+		String FirstName = getFirstNameTxtField().getText();
+		String LastName = getLastNameTxtField().getText();
+		String userGender = getChoiceBoxGender().getSelectionModel().getSelectedItem().toString();
+		Double Height = Double.valueOf(getHeightTxtField().getText());
+		Double Weight = Double.valueOf(getWeightTxtField().getText());
+		Boolean HealthyMode = getradioButtonHealthy().isSelected();
+		Date birthDate = Date.valueOf(getBirthDatePicker().getValue());
+		Integer userId = Integer.valueOf(user.getuserId()); 
+		if (username != null && !username.trim().isEmpty() 
+			&& FirstName != null && !LastName.trim().isEmpty()
+			&& LastName != null && !LastName.trim().isEmpty()
+			&& userGender != null && !userGender.trim().isEmpty()
+			&& Weight > 0.1
+        	&& Height > 10.0
+        	&& birthDate != null
+        	&& userId != 0
+			) {
+			DatabaseController.modifUserInfo(username, FirstName, LastName, userGender, Height, Weight, HealthyMode, birthDate, userId);
+		}
+		populateUserChoiceBox();
+	}
+	
+	@FXML
+	private void loadButtonAction() {
+			String username = getchoiceBoxProfile().getSelectionModel().getSelectedItem().toString();
+			ResultSet rs = DatabaseController.getUserInfo(username);
+			try {
+				user = new UserProfile(rs.getDouble(7), rs.getDouble(6), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(8),rs.getDate(9),rs.getInt(1));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			//System.out.println(firstNameTxtField.getText());
-			UserProfile user =  new UserProfile(Double.valueOf(getWeightTxtField().getText()), Double.valueOf(getHeightTxtField().getText()), getFirstNameTxtField().getText(), getLastNameTxtField().getText(),true);
-			//System.out.println(user.getIdealWeightMax());
-			//System.out.println(String.valueOf(user.getIdealWeightMax()));
-			//System.out.println(String.valueOf(user.getIdealWeightMin()));
-			getWeightTxtImc().setText(String.valueOf(user.getUserBMI()));
-			getWeightTxtMaxWeight().setText(String.valueOf(user.getIdealWeightMax()));
-			getWeightTxtMinWeight().setText(String.valueOf(user.getIdealWeightMin()));
+			getusernameTxtField().setText(user.getusername());
+			getFirstNameTxtField().setText(user.getUserFirstName());
+			getLastNameTxtField().setText(user.getUserLastName());
+			
+			if(user.getuserGender().equalsIgnoreCase("Male")) {
+				getChoiceBoxGender().getSelectionModel().selectFirst();
+			} else if(user.getuserGender().equalsIgnoreCase("Female")) {
+				 
+				getChoiceBoxGender().getSelectionModel().selectLast();
+			}
+			
+			LocalDate birthdate = user.getbirthDate().toLocalDate();
+			getBirthDatePicker().setValue(birthdate);			
+			getHeightTxtField().setText(String.valueOf(user.getUserHeight()));	
+			getWeightTxtField().setText(String.valueOf(user.getUserWeight()));					 
+			getWeightTxtImc().setText(String.format("%.2f",user.getUserBMI()));			
+			getWeightTxtMaxWeight().setText(String.format("%.2f", user.getIdealWeightMax()));
+			getWeightTxtMinWeight().setText(String.format("%.2f", user.getIdealWeightMin()));
+			
+			if (user.getHealthyMode() == true) {
+				getradioButtonHealthy().setSelected(true);
+			}else {
+				getradioButtonHealthy().setSelected(false);
+			}
 	}
 	
 	
