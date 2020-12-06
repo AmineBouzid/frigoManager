@@ -160,7 +160,7 @@ public class PantryController implements Initializable {
 	private void addButtonAction() {
 
 		Ingredients selectedApiResult=apiTableView.getSelectionModel().getSelectedItem();
-		DatabaseController.addItemInTable(selectedApiResult.getIdApi(),selectedApiResult.getNameFood(), quantityField.getText(), datePicker.getValue().toString());			
+		DatabaseController.addItemInTable(selectedApiResult.getIdApi(),selectedApiResult.getNameFood(), datePicker.getValue().toString(), quantityField.getText() );			
 		Ingredients toAdd = new Ingredients(selectedApiResult.getIdApi(), selectedApiResult.getNameFood(), quantityField.getText(),datePicker.getValue().toString());
 		getPantryView().getItems().add(toAdd);
 		apiTableView.getItems().clear();	
