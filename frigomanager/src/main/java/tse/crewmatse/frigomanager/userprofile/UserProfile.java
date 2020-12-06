@@ -12,7 +12,7 @@ public class UserProfile {
 	private double idealWeightMax;
 	private boolean healthyMode;
 /*
- * tableau de recettes epingl�es
+ * tableau de recettes epinglees
  * tableau recettes favorites
  * 
  */
@@ -90,16 +90,28 @@ public class UserProfile {
 	//----------------------------------------BMI Functions
 	public void calculateBMI() {
 		//bmi = (kg/m�)
-		this.setUserBMI(this.getUserWeight()/(((this.getUserHeight())/100)*((this.getUserHeight()))/100));
+		double tempBMI=this.getUserWeight()/(((this.getUserHeight())/100)*((this.getUserHeight()))/100);
+		this.setUserBMI(setDecimals(1,tempBMI));
 	}
 	
 	public void calculateIdealWeight() {
 		//Ideal BMI between 18.5 & 25
 		//p=bmi*h�
-		this.setIdealWeightMin(18.5*(((this.getUserHeight())/100)*((this.getUserHeight())/100)));
-		this.setIdealWeightMax(25*(((this.getUserHeight())/100)*((this.getUserHeight())/100)));
+		double MinWeight,MaxWeight;
+		MinWeight=18.5*(((this.getUserHeight())/100)*((this.getUserHeight())/100));
+		MaxWeight=25*(((this.getUserHeight())/100)*((this.getUserHeight())/100));
+		this.setIdealWeightMin(setDecimals(2,MinWeight));
+		this.setIdealWeightMax(setDecimals(2,MaxWeight));
 	}
-	
 	//BMI Functions----------------------------------------
+	
+	 static double setDecimals(int DecimalNumber,double Number) {
+		double temp=Number;
+		double powtemp=Math.pow(10,DecimalNumber);
+		temp=(powtemp*Number);
+		temp=(int)temp;
+		temp=temp/powtemp;
+		return temp;	
+	}
 
 }

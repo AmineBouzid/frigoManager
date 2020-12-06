@@ -74,72 +74,66 @@
    <center>
       <AnchorPane prefHeight="552.0" prefWidth="947.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" layoutX="26.0" layoutY="33.0" prefHeight="491.0" prefWidth="151.0">
+            <VBox alignment="CENTER" layoutX="26.0" layoutY="33.0" prefHeight="491.0" prefWidth="147.0">
                <children>
                
                         <EmojiOneView fill="#86ecbc" glyphName="BUST_IN_SILHOUETTE" size="70" />
                   <Label text="First Name" />
-                  <TextField fx:id="firstNameTxtField" />
+                  <TextField fx:id="firstNameTxtField" promptText="First Name">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></TextField>
                   <Label text="Last Name" />
-                  <TextField fx:id="lastNameTxtField" />
+                  <TextField fx:id="lastNameTxtField" promptText="Last Name" />
                   <Label text="Gender" />
                   <ChoiceBox fx:id="choiceBoxGender" prefWidth="150.0" />
                   <Label text="Birth Date" />
-                  <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="151.0" />
-                  <Label text="Height" />
-                  <TextField fx:id="heightTxtField" centerShape="false" prefHeight="25.0" prefWidth="82.0" scaleShape="false" />
-                  <Label text="Weight " />
-                  <TextField fx:id="weightTxtField" prefHeight="25.0" prefWidth="75.0" />
+                  <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="151.0" promptText="Birth Date" />
+                  <Label text="Height (cm)" />
+                  <TextField fx:id="heightTxtField" alignment="TOP_LEFT" centerShape="false" prefHeight="25.0" prefWidth="82.0" promptText="in centimeters" scaleShape="false" />
+                  <Label text="Weight (kg)" />
+                  <TextField fx:id="weightTxtField" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="75.0" promptText="in kilogramms" />
                   <Separator prefHeight="34.0" prefWidth="151.0" />
-                  <HBox prefHeight="43.0" prefWidth="151.0">
+                  <HBox>
                      <children>
                         <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="Your IMC:">
                            <HBox.margin>
                               <Insets left="3.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="weightTxtImc" prefHeight="25.0" prefWidth="73.0" />
+                        <TextField fx:id="weightTxtImc" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="73.0" promptText="[18.5,25]" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="4.0" top="4.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox>
-                     <children>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="69.0" text="Min Weight">
-                           <HBox.margin>
-                              <Insets left="3.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="70.0" text="Max Weight">
-                           <HBox.margin>
-                              <Insets left="3.0" right="3.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
+                  <Label fx:id="labelIMCmean" alignment="CENTER" text="IMCmeanning">
                      <VBox.margin>
-                        <Insets bottom="4.0" top="4.0" />
+                        <Insets bottom="15.0" />
                      </VBox.margin>
-                  </HBox>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="17.0" text="Ideal Weight between :" />
                   <HBox alignment="CENTER" scaleShape="false">
                      <children>
-                        <TextField fx:id="weightTxtMinWeight" prefHeight="25.0" prefWidth="143.0">
+                        <TextField fx:id="weightTxtMinWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
                            <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="weightTxtMaxWeight" prefHeight="25.0" prefWidth="155.0">
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="-" />
+                        <TextField fx:id="weightTxtMaxWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
                            <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="kg" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="4.0" top="4.0" />
                      </VBox.margin>
                   </HBox>
                   <Separator prefHeight="36.0" prefWidth="151.0" />
-                  <Button onAction="#saveButtonAction" fx:id="saveButtonProfile" centerShape="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="save" VBox.vgrow="NEVER" />
+                  <Button fx:id="saveButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="135.0" text="save" VBox.vgrow="NEVER" />
                </children>
             </VBox>
          </children>

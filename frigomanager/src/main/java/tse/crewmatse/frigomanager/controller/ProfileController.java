@@ -18,7 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
 
@@ -34,6 +36,7 @@ public class ProfileController  implements Initializable{
 	@FXML private  TextField weightTxtMinWeight;
 	@FXML private  TextField weightTxtMaxWeight;
 	@FXML private  Button saveButtonProfile;
+	@FXML private  Label labelIMCmean;
 	
 
     @FXML
@@ -167,8 +170,8 @@ public class ProfileController  implements Initializable{
 	
 	@FXML
 	private void saveButtonAction() {
-			System.out.println(getWeightTxtField().getText());
-			System.out.println(Double.valueOf(getHeightTxtField().getText()));
+			//System.out.println(getWeightTxtField().getText());
+			//System.out.println(Double.valueOf(getHeightTxtField().getText()));
 			
 			//System.out.println(firstNameTxtField.getText());
 			UserProfile user =  new UserProfile(Double.valueOf(getWeightTxtField().getText()), Double.valueOf(getHeightTxtField().getText()), getFirstNameTxtField().getText(), getLastNameTxtField().getText(),true);
@@ -178,6 +181,26 @@ public class ProfileController  implements Initializable{
 			getWeightTxtImc().setText(String.valueOf(user.getUserBMI()));
 			getWeightTxtMaxWeight().setText(String.valueOf(user.getIdealWeightMax()));
 			getWeightTxtMinWeight().setText(String.valueOf(user.getIdealWeightMin()));
+			//18.5 to 25
+			double a=user.getUserBMI();
+			if(a>=30) {
+				weightTxtImc.setStyle("-fx-text-inner-color: purple;");
+				labelIMCmean.setText("You are obese");
+				labelIMCmean.setTextFill(Color.PURPLE);
+			} else {
+				if(a<18.5 || a>=25) {
+				weightTxtImc.setStyle("-fx-text-inner-color: red;");
+					if(a<18.5)labelIMCmean.setText("You are underweight.");
+					else labelIMCmean.setText("You are overweight.");
+				labelIMCmean.setTextFill(Color.RED);
+				} else {
+				weightTxtImc.setStyle("-fx-text-inner-color: green;");
+				labelIMCmean.setText("Your weight is Healthy");
+				labelIMCmean.setTextFill(Color.GREEN);
+				}
+			}
+			
+
 	}
 	
 	
