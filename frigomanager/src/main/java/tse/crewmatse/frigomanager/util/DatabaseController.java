@@ -17,6 +17,12 @@ public class DatabaseController {
 	public static ResultSet selectAllRows() {
 		ResultSet rs = null;
 		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 		    statement = connection.createStatement();
@@ -38,6 +44,12 @@ public class DatabaseController {
 	
 	public static void deleteSelectedRow(String apiID) {
 		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 			Statement statementa = connection.createStatement();
@@ -54,18 +66,17 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		}
+	}
+	
+	public static void addItemInTable(String string, String foodName, String expirationdate, String quantity) {
+		try {
 			try {
 				if(connection != null)
 					connection.close();
 			} catch (SQLException e) {
 				System.err.println(e);
 			}
-		}
-	}
-	
-	public static void addItemInTable(String string, String foodName, String expirationdate, String quantity) {
-		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 			PreparedStatement pS = connection.prepareStatement("insert into Pantry values (?,?,?,?)");
@@ -83,13 +94,6 @@ public class DatabaseController {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			try {
-				if(connection != null)
-					connection.close();
-			} catch (SQLException e) {
-				System.err.println(e);
-			}
 		}
 	}
 	
@@ -103,7 +107,7 @@ public class DatabaseController {
 			}
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
-			PreparedStatement pS = connection.prepareStatement("insert into User values (?,?,?,?,?,?,?,?,?)");
+			PreparedStatement pS = connection.prepareStatement("insert into User values (?,?,?,?,?,?,?,?,?,?)");
 			pS.setQueryTimeout(30);
 			pS.setNull(1,Types.INTEGER);
 			pS.setString(2, username);
@@ -114,6 +118,7 @@ public class DatabaseController {
 			pS.setDouble(7,Weight);
 			pS.setBoolean(8, HealthyMode);
 			pS.setDate(9, birthDate);
+			pS.setBoolean(10, true);
 			pS.executeUpdate();
 			
 		} catch (ClassNotFoundException e) {
@@ -127,14 +132,14 @@ public class DatabaseController {
 	}
 	
 	public static ResultSet getUserProfile() {
-		try {
-			if(connection != null)
-				connection.close();
-		} catch (SQLException e) {
-			System.err.println(e);
-		}
 		ResultSet rs = null;
 		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 		    statement = connection.createStatement();
@@ -154,14 +159,14 @@ public class DatabaseController {
 	}
 	
 	public static ResultSet getUserInfo(String username) {
-		try {
-			if(connection != null)
-				connection.close();
-		} catch (SQLException e) {
-			System.err.println(e);
-		}
 		ResultSet rs = null;
 		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 			Statement statementa = connection.createStatement();
@@ -208,6 +213,40 @@ public class DatabaseController {
 			pS.setDate(8, birthDate);
 			pS.setInt(9, userId);
 			pS.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void updateLoadedState(Integer userId   ) {
+		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+			Statement statementa = connection.createStatement();
+			statementa.setQueryTimeout(30);
+			PreparedStatement pS = connection.prepareStatement("update User set ProfileLoaded=1 where UserID=?");
+			pS.setQueryTimeout(30);
+			pS.setInt(1, userId);
+			pS.executeUpdate();
+			Statement statementa2 = connection.createStatement();
+			statementa2.setQueryTimeout(30);
+			PreparedStatement pS2 = connection.prepareStatement("update User set ProfileLoaded=0 where NOT UserID=?");
+			pS2.setQueryTimeout(30);
+			pS2.setInt(1, userId);
+			pS2.executeUpdate();
+			
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

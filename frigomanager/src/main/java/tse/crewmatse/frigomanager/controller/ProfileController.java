@@ -240,7 +240,7 @@ public class ProfileController  implements Initializable{
 		getWeightTxtMinWeight().setEditable(false);
 		
 		populateUserChoiceBox();
-
+		
 		
 	}
 	
@@ -290,6 +290,19 @@ public class ProfileController  implements Initializable{
 			DatabaseController.modifUserInfo(username, FirstName, LastName, userGender, Height, Weight, HealthyMode, birthDate, userId);
 		}
 		populateUserChoiceBox();
+		user.setusername(username);
+		user.setUserFirstName(FirstName);
+		user.setUserLastName(LastName);
+		user.setuserGender(userGender);
+		user.setUserHeight(Height);
+		user.setUserWeight(Weight);
+		user.setHealthyMode(HealthyMode);
+		user.setbirthDate(birthDate);
+		user.calculateBMI();
+		user.calculateIdealWeight();
+		getWeightTxtImc().setText(String.format("%.2f",user.getUserBMI()));			
+		getWeightTxtMaxWeight().setText(String.format("%.2f", user.getIdealWeightMax()));
+		getWeightTxtMinWeight().setText(String.format("%.2f", user.getIdealWeightMin()));
 	}
 	
 	@FXML
@@ -330,6 +343,8 @@ public class ProfileController  implements Initializable{
 			}else {
 				getradioButtonHealthy().setSelected(false);
 			}
+			
+			DatabaseController.updateLoadedState(user.getuserId());
 	}
 	
 	
