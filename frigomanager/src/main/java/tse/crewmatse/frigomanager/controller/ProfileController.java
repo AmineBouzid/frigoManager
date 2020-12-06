@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -21,7 +22,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
 import tse.crewmatse.frigomanager.util.DatabaseController;
@@ -33,7 +36,6 @@ public class ProfileController  implements Initializable{
 	@FXML private  TextField firstNameTxtField;
 	@FXML private  TextField lastNameTxtField;
 	@FXML private  ChoiceBox choiceBoxGender;
-	@FXML private  ChoiceBox choiceBoxProfile;
 	@FXML private  DatePicker birthDatePicker;	
 	@FXML private  TextField heightTxtField;
 	@FXML private  TextField weightTxtField;
@@ -41,6 +43,7 @@ public class ProfileController  implements Initializable{
 	@FXML private  TextField weightTxtMinWeight;
 	@FXML private  TextField weightTxtMaxWeight;
 	@FXML private  Button saveButtonProfile;
+	@FXML private  Label labelIMCmean;
 	@FXML private  Button deleteButtonProfile;
 	@FXML private  Button loadButtonProfile;
 	@FXML private  Button modifButtonProfile;
@@ -235,13 +238,11 @@ public class ProfileController  implements Initializable{
 		// TODO Auto-generated method stub
 		String[] genderList = {"Male","Female"};
 		getChoiceBoxGender().getItems().addAll(genderList);
+
 		getWeightTxtImc().setEditable(false);
 		getWeightTxtMaxWeight().setEditable(false);
 		getWeightTxtMinWeight().setEditable(false);
-		
-		populateUserChoiceBox();
-		
-		
+
 	}
 	
 	@FXML
@@ -303,6 +304,24 @@ public class ProfileController  implements Initializable{
 		getWeightTxtImc().setText(String.format("%.2f",user.getUserBMI()));			
 		getWeightTxtMaxWeight().setText(String.format("%.2f", user.getIdealWeightMax()));
 		getWeightTxtMinWeight().setText(String.format("%.2f", user.getIdealWeightMin()));
+				//18.5 to 25
+			double a=user.getUserBMI();
+			if(a>=30) {
+				weightTxtImc.setStyle("-fx-text-inner-color: purple;");
+				labelIMCmean.setText("You are obese");
+				labelIMCmean.setTextFill(Color.PURPLE);
+			} else {
+				if(a<18.5 || a>=25) {
+				weightTxtImc.setStyle("-fx-text-inner-color: red;");
+					if(a<18.5)labelIMCmean.setText("You are underweight.");
+					else labelIMCmean.setText("You are overweight.");
+				labelIMCmean.setTextFill(Color.RED);
+				} else {
+				weightTxtImc.setStyle("-fx-text-inner-color: green;");
+				labelIMCmean.setText("Your weight is Healthy");
+				labelIMCmean.setTextFill(Color.GREEN);
+				}
+			}	
 	}
 	
 	@FXML
@@ -343,7 +362,24 @@ public class ProfileController  implements Initializable{
 			}else {
 				getradioButtonHealthy().setSelected(false);
 			}
-			
+			//18.5 to 25
+			double a=user.getUserBMI();
+			if(a>=30) {
+				weightTxtImc.setStyle("-fx-text-inner-color: purple;");
+				labelIMCmean.setText("You are obese");
+				labelIMCmean.setTextFill(Color.PURPLE);
+			} else {
+				if(a<18.5 || a>=25) {
+				weightTxtImc.setStyle("-fx-text-inner-color: red;");
+					if(a<18.5)labelIMCmean.setText("You are underweight.");
+					else labelIMCmean.setText("You are overweight.");
+				labelIMCmean.setTextFill(Color.RED);
+				} else {
+				weightTxtImc.setStyle("-fx-text-inner-color: green;");
+				labelIMCmean.setText("Your weight is Healthy");
+				labelIMCmean.setTextFill(Color.GREEN);
+				}
+			}
 			DatabaseController.updateLoadedState(user.getuserId());
 	}
 	

@@ -14,6 +14,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="37.0" prefWidth="944.0" style="-fx-background-color: #D2D6D9;">
          <children>
+
             <JFXButton fx:id="buttonHome" onAction="#switchToHome" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #3A2F40;" text="Home" textFill="#d2d6d9">
                <font>
                   <Font name="Leelawadee UI Bold" size="18.0" />
@@ -60,8 +61,33 @@
    <center>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
-            <Pane prefHeight="567.0" prefWidth="949.0" />
-            <TextArea layoutX="230.0" layoutY="94.0" prefHeight="311.0" prefWidth="478.0" text="PageHome&#10;" />
+            <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="Recent Ingredients" />
+                            <TableColumn prefWidth="75.0" text="Expiration Date" />
+                          </columns>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+            <Label layoutX="14.0" layoutY="6.0" text="ActiveUser" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </center>
