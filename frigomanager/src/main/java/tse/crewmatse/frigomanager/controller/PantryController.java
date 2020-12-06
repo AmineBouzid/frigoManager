@@ -160,8 +160,8 @@ public class PantryController implements Initializable {
 	private void addButtonAction() {
 
 		Ingredients selectedApiResult=apiTableView.getSelectionModel().getSelectedItem();
-		DatabaseController.addItemInTable(selectedApiResult.getIdApi(),selectedApiResult.getNameFood(), datePicker.getValue().toString(),quantityField.getText());			
-		Ingredients toAdd = new Ingredients(selectedApiResult.getIdApi(), selectedApiResult.getNameFood(), datePicker.getValue().toString(),quantityField.getText());
+		DatabaseController.addItemInTable(selectedApiResult.getIdApi(),selectedApiResult.getNameFood(), quantityField.getText(), datePicker.getValue().toString());			
+		Ingredients toAdd = new Ingredients(selectedApiResult.getIdApi(), selectedApiResult.getNameFood(), quantityField.getText(),datePicker.getValue().toString());
 		getPantryView().getItems().add(toAdd);
 		apiTableView.getItems().clear();	
 		foodField.clear();
@@ -206,7 +206,7 @@ public class PantryController implements Initializable {
 			
 			ResultSet rs = DatabaseController.selectAllRows();
 			while (rs.next()) {
-				Ingredients toAdd = new Ingredients(rs.getString("apiID"),rs.getString("foodName"),rs.getString("expirationDate"),rs.getString("quantity"));
+				Ingredients toAdd = new Ingredients(rs.getString("apiID"),rs.getString("foodName"),rs.getString("quantity"),rs.getString("expirationDate"));
 				getPantryView().getItems().add(toAdd);
 			}
 		} catch (SQLException e) {
