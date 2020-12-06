@@ -239,6 +239,7 @@ public class RecipeController implements Initializable{
 	
 	@FXML
 	private void searchButtonAction() throws JSONException, IOException {
+		getRecipeTableView().getItems().clear();
 		ObservableList<Ingredients> ing = getSelectedTableView().getItems();
 		ArrayList<Ingredients> listIngredients = new ArrayList<Ingredients>();
 		for (int i = 0;i<ing.size();i++) {

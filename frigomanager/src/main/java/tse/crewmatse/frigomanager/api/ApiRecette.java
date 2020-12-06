@@ -62,12 +62,13 @@ public class ApiRecette {
     
     
     public static JSONArray urltoJsonRecette(String url) throws IOException, JSONException {
-        try (InputStream myurl = new URL(url).openStream()) {
-            BufferedReader rd = new BufferedReader(new InputStreamReader(myurl, Charset.forName("UTF-8")));
-            String jsonText = readAll(rd);
-            JSONArray json = new JSONArray(jsonText);
-            return json;
-        }
+        InputStream myurl = new URL(url).openStream();
+        BufferedReader rd = new BufferedReader(new InputStreamReader(myurl, Charset.forName("UTF-8")));
+        String jsonText = readAll(rd);
+        JSONArray json = new JSONArray(jsonText);
+        return json;
+        
+        
     }
     
     
