@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.emojione.EmojiOneView?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="619.0" prefWidth="949.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.ProfileController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="37.0" prefWidth="944.0" style="-fx-background-color: #D2D6D9;">
+         <children>
+            <JFXButton fx:id="profileButton" onAction="#switchToProfile" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #3a2f40;" text="Profile" textFill="#d2d6d9">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <EmojiOneView fill="#d2d6d9" glyphName="BUST_IN_SILHOUETTE" size="25" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonHome" onAction="#switchToHome" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Home" textFill="#3a2f40">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#3a2f40" glyphName="HOME" size="30" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonPantry" onAction="#switchToPantry" prefHeight="38.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Pantry" textFill="#3a2f40">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <EmojiOneView fill="#3a2f40" glyphName="SHOPPING_CART" size="25" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonRecipe" onAction="#switchToRecipe" prefHeight="38.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Recipe" textFill="#3a2f40">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <EmojiOneView fill="#3a2f40" glyphName="FORK_AND_KNIFE" size="25" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonAlerts" onAction="#switchToAlerts" prefHeight="41.0" prefWidth="184.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Notifications" textFill="#3a2f40">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <EmojiOneView fill="#3a2f40" glyphName="BELL" size="25" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="profileButton" onAction="#switchToProfile" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #3a2f40;" text="Profile" textFill="#d2d6d9">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <EmojiOneView fill="#d2d6d9" glyphName="BUST_IN_SILHOUETTE" size="25" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="18.0" prefWidth="949.0" style="-fx-background-color: #86ECBC;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="548.0" prefWidth="943.0" BorderPane.alignment="CENTER">
+         <children>
+<<<<<<< HEAD
+            <VBox alignment="CENTER" layoutX="26.0" layoutY="33.0" prefHeight="493.0" prefWidth="177.0">
+=======
+            <VBox alignment="CENTER" layoutX="26.0" layoutY="33.0" prefHeight="491.0" prefWidth="147.0">
+>>>>>>> 259a031625ff7ddb0dc2615a17dafd01c5592a6b
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                     
+                              <EmojiOneView fill="#86ecbc" glyphName="BUST_IN_SILHOUETTE" size="70" wrappingWidth="70.0">
+                           <HBox.margin>
+                              <Insets right="7.0" />
+                           </HBox.margin>
+                        </EmojiOneView>
+                        <VBox alignment="CENTER" prefHeight="78.0" prefWidth="94.0">
+                           <children>
+                              <ChoiceBox fx:id="choiceBoxProfile" prefHeight="25.0" prefWidth="123.0">
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" />
+                                 </VBox.margin>
+                              </ChoiceBox>
+                              <HBox prefHeight="29.0" prefWidth="104.0">
+                                 <children>
+                                    <Button fx:id="loadButtonProfile" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadButtonAction" text="Load">
+                                       <HBox.margin>
+                                          <Insets right="2.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                    <Button fx:id="deleteButtonProfile" mnemonicParsing="false" text="Delete" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label text="Username" />
+                  <TextField fx:id="usernameTxtField" />
+                  <Label text="First Name" />
+                  <TextField fx:id="firstNameTxtField" promptText="First Name">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></TextField>
+                  <Label text="Last Name" />
+                  <TextField fx:id="lastNameTxtField" promptText="Last Name" />
+                  <Label text="Gender" />
+                  <ChoiceBox fx:id="choiceBoxGender" prefHeight="25.0" prefWidth="183.0" />
+                  <Label text="Birth Date" />
+<<<<<<< HEAD
+                  <DatePicker fx:id="birthDatePicker" />
+                  <Label text="Height" />
+                  <TextField fx:id="heightTxtField" centerShape="false" prefHeight="25.0" prefWidth="82.0" scaleShape="false" />
+                  <Label text="Weight " />
+                  <TextField fx:id="weightTxtField" prefHeight="25.0" prefWidth="75.0" />
+                  <RadioButton fx:id="radioButtonHealthy" mnemonicParsing="false" text="Healthy Mode">
+                     <VBox.margin>
+                        <Insets bottom="4.0" top="4.0" />
+                     </VBox.margin>
+                  </RadioButton>
+=======
+                  <DatePicker fx:id="birthDatePicker" prefHeight="25.0" prefWidth="151.0" promptText="Birth Date" />
+                  <Label text="Height (cm)" />
+                  <TextField fx:id="heightTxtField" alignment="TOP_LEFT" centerShape="false" prefHeight="25.0" prefWidth="82.0" promptText="in centimeters" scaleShape="false" />
+                  <Label text="Weight (kg)" />
+                  <TextField fx:id="weightTxtField" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="75.0" promptText="in kilogramms" />
+>>>>>>> 259a031625ff7ddb0dc2615a17dafd01c5592a6b
+                  <Separator prefHeight="34.0" prefWidth="151.0" />
+                  <HBox>
+                     <children>
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="Your IMC:">
+                           <HBox.margin>
+                              <Insets left="3.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="weightTxtImc" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="73.0" promptText="[18.5,25]" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="4.0" top="4.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label fx:id="labelIMCmean" alignment="CENTER" text="IMCmeanning">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="17.0" text="Ideal Weight between :" />
+                  <HBox alignment="CENTER" scaleShape="false">
+                     <children>
+                        <TextField fx:id="weightTxtMinWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="-" />
+                        <TextField fx:id="weightTxtMaxWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
+                           <HBox.margin>
+                              <Insets right="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="kg" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="4.0" top="4.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Separator prefHeight="36.0" prefWidth="151.0" />
+<<<<<<< HEAD
+                  <HBox>
+                     <children>
+                        <Button fx:id="saveButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="96.0" text="Add Profile" />
+                        <Button fx:id="modifButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#modifButtonAction" prefHeight="25.0" prefWidth="96.0" text="Save Modifs">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+=======
+                  <Button fx:id="saveButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="135.0" text="save" VBox.vgrow="NEVER" />
+>>>>>>> 259a031625ff7ddb0dc2615a17dafd01c5592a6b
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
