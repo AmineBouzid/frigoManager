@@ -14,14 +14,6 @@
    <top>
       <HBox alignment="CENTER" prefHeight="37.0" prefWidth="944.0" style="-fx-background-color: #D2D6D9;">
          <children>
-            <JFXButton fx:id="profileButton" onAction="#switchToProfile" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Profile" textFill="#3a2f40">
-               <font>
-                  <Font name="Leelawadee UI Bold" size="18.0" />
-               </font>
-               <graphic>
-                  <EmojiOneView fill="#3a2f40" glyphName="BUST_IN_SILHOUETTE" size="25" />
-               </graphic>
-            </JFXButton>
             <JFXButton fx:id="buttonHome" onAction="#switchToHome" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Home" textFill="#3a2f40">
                <font>
                   <Font name="Leelawadee UI Bold" size="18.0" />
@@ -52,6 +44,14 @@
                </font>
                <graphic>
                   <EmojiOneView fill="#d2d6d9" glyphName="BELL" size="25" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="profileButton" onAction="#switchToProfile" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Profile" textFill="#3a2f40">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <EmojiOneView fill="#3a2f40" glyphName="BUST_IN_SILHOUETTE" size="25" />
                </graphic>
             </JFXButton>
          </children>

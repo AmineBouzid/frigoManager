@@ -1,22 +1,35 @@
 package tse.crewmatse.frigomanager.userprofile;
 
+import java.sql.Date;
 
 public class UserProfile {
 	
 	private double userWeight;
 	private double userHeight;
+	private String username;
 	private String userFirstName;
 	private String userLastName;
+	private String userGender;
 	private double userBMI;
 	private double idealWeightMin;
 	private double idealWeightMax;
 	private boolean healthyMode;
+	private Date birthDate;
+	private int userId;
 /*
  * tableau de recettes epingl�es
  * tableau recettes favorites
  * 
  */
 	//----------------------------------------Getters & Setters
+	public int getuserId() {
+		return userId;
+	}
+	
+	public void setuserId(int userId) {
+		this.userId=userId;
+	}
+	
 	public double getUserWeight() {
 		return userWeight;
 	}
@@ -33,6 +46,24 @@ public class UserProfile {
 		this.userHeight = userHeight;
 		this.calculateBMI();
 		this.calculateIdealWeight();
+	}
+	public Date getbirthDate() {
+		return birthDate;
+	}
+	public void setbirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+	public String getuserGender() {
+		return userGender;
+	}
+	public void setuserGender(String userGender) {
+		this.userGender = userGender;
+	}
+	public String getusername() {
+		return username;
+	}
+	public void setusername(String username) {
+		this.username = username;
 	}
 	public String getUserFirstName() {
 		return userFirstName;
@@ -73,14 +104,18 @@ public class UserProfile {
 	//Getters & Setters----------------------------------------
 	
 	//----------------------------------------Constructor
-	public UserProfile(double userWeight, double userHeight, String userFirstName, String userLastName,
-			boolean healthyMode) {
+	public UserProfile(double userWeight, double userHeight,String username, String userFirstName, String userLastName, String userGender,
+			boolean healthyMode, Date birthDate, int userId) {
 		//super();
+		this.username = username;
 		this.userWeight = userWeight;
 		this.userHeight = userHeight;
 		this.userFirstName = userFirstName;
 		this.userLastName = userLastName;
+		this.userGender = userGender;
 		this.healthyMode = healthyMode;
+		this.birthDate = birthDate;
+		this.userId = userId;
 		this.calculateBMI();
 		this.calculateIdealWeight();
 	}
