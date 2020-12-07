@@ -22,6 +22,7 @@
    <top>
       <HBox alignment="CENTER" prefHeight="37.0" prefWidth="944.0" style="-fx-background-color: #D2D6D9;">
          <children>
+
             <JFXButton fx:id="buttonHome" onAction="#switchToHome" prefHeight="37.0" prefWidth="190.0" style="-fx-border-color: #86ECBC; -fx-background-color: #d2d6d9;" text="Home" textFill="#3a2f40">
                <font>
                   <Font name="Leelawadee UI Bold" size="18.0" />
@@ -129,48 +130,39 @@
                      </VBox.margin>
                   </RadioButton>
                   <Separator prefHeight="34.0" prefWidth="151.0" />
-                  <HBox>
+                  <HBox prefHeight="43.0" prefWidth="151.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="25.0" prefWidth="125.0" text="Your IMC:">
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="Your IMC:">
                            <HBox.margin>
                               <Insets left="3.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField fx:id="weightTxtImc" />
+                        <TextField fx:id="weightTxtImc" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="73.0" promptText="[18.5,25]" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="4.0" top="4.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="CENTER">
-                     <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="90.0" text="Min Weight">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="110.0" text="Max Weight">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
-                     </children>
+                  <Label fx:id="labelIMCmean" alignment="CENTER" text="IMCmeanning">
                      <VBox.margin>
-                        <Insets bottom="4.0" top="4.0" />
+                        <Insets bottom="15.0" />
                      </VBox.margin>
-                  </HBox>
+                  </Label>
+                  <Label alignment="CENTER" prefHeight="17.0" text="Ideal Weight between :" />
                   <HBox alignment="CENTER" scaleShape="false">
                      <children>
-                        <TextField fx:id="weightTxtMinWeight" prefHeight="25.0" prefWidth="143.0">
+                        <TextField fx:id="weightTxtMinWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
                            <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
-                        <TextField fx:id="weightTxtMaxWeight" prefHeight="25.0" prefWidth="155.0">
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="-" />
+                        <TextField fx:id="weightTxtMaxWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
                            <HBox.margin>
-                              <Insets left="5.0" right="5.0" />
+                              <Insets right="5.0" />
                            </HBox.margin>
                         </TextField>
+                        <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="kg" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="4.0" top="4.0" />
