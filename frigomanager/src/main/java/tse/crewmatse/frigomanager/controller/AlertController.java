@@ -22,6 +22,18 @@ import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.util.DatabaseController;
 import tse.crewmatse.frigomanager.util.Ingredients;
 
+/**
+ * 
+ * @author LEKMAD Mohamed
+ * 
+ * This class manage notifications of our application.
+ * There are three types of notifications:
+ * 1.Close expiration dates: where we notify the user if an item is three days away from being expired.
+ * //TODO Add the other notifications
+ * 
+ *
+ */
+
 public class AlertController implements Initializable {
 
 	@FXML
@@ -83,23 +95,18 @@ public class AlertController implements Initializable {
 		colFood.setCellValueFactory(new PropertyValueFactory<Ingredients, String>("nameFood"));
 		colExpiration.setCellValueFactory(new PropertyValueFactory<Ingredients, String>("date"));
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		Calendar c = Calendar.getInstance();
+		
 
 		try {
 
 			ResultSet rs = DatabaseController.selectAllRows();
-			while (rs.next()) { // charge la database dans la table view au lancement de la fenetre Pantry
+			while (rs.next()) { 
 				Ingredients toAdd = new Ingredients(rs.getString("apiID"), rs.getString("foodName"),
 						rs.getString("quantity"), rs.getString("expirationDate"));
 
-				Date IngredientExpirationDate = dateFormat.parse(toAdd.getDate());
-				c.setTime(IngredientExpirationDate);
-				c.add(Calendar.DAY_OF_MONTH, 3);
-				Date riskDate = c.getTime();
+				
 
-				if (riskDate.compareTo(date) < 0) {
+				if (isCloseToBeExpired(toAdd.getDate())) {
 					getExpirationView().getItems().add(toAdd);
 				}
 
@@ -111,5 +118,24 @@ public class AlertController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public  Boolean isCloseToBeExpired(String date) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date currentDate = new Date();
+		Calendar c = Calendar.getInstance();
+		
+		Date IngredientExpirationDate = dateFormat.parse(date);
+		c.setTime(IngredientExpirationDate);
+		c.add(Calendar.DAY_OF_MONTH, -3);
+		Date riskDate = c.getTime();
+
+		if (currentDate.compareTo(riskDate) > 0) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
 
 }
