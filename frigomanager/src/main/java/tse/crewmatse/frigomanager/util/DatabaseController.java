@@ -258,4 +258,63 @@ public class DatabaseController {
 		
 	}
 	
+	public static ResultSet loadUserWithLoadedState() {
+		ResultSet rs = null;
+		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		    statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			rs = statement.executeQuery("select username from User where ProfileLoaded=1");
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Connection connection = null;
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return rs;
+		
+	}
+	public static ResultSet loadUserWithLoadedStateForInitialize() {
+		ResultSet rs = null;
+		try {
+			try {
+				if(connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		    statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			rs = statement.executeQuery("select * from User where ProfileLoaded=1");
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Connection connection = null;
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return rs;
+		
+	}
 }
+
+
+
+
+

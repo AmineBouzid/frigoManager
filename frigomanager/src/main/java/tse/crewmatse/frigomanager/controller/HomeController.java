@@ -2,20 +2,33 @@ package tse.crewmatse.frigomanager.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
+import tse.crewmatse.frigomanager.util.DatabaseController;
 
 public class HomeController implements Initializable{
 	@FXML private  TextField firstNameTxtField;
 	@FXML private  TextField lastNameTxtField;
+	@FXML private  Label labelActiveUser;
 	
-    @FXML
+    public Label getLabelActiveUser() {
+		return labelActiveUser;
+	}
+
+	public void setLabelActiveUser(Label labelActiveUser) {
+		this.labelActiveUser = labelActiveUser;
+	}
+
+	@FXML
     private void switchToProfile() throws IOException {
         App.setRoot("profile");
     }
@@ -62,6 +75,17 @@ public class HomeController implements Initializable{
 		
 		//getFirstNameTxtField().setText();
 		//getLastNameTxtField().setText("Bouzid");
+		
+		ResultSet rs = DatabaseController.loadUserWithLoadedState();
+		try {
+			getLabelActiveUser().setText(rs.getString(1));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

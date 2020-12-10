@@ -244,7 +244,59 @@ public class ProfileController  implements Initializable{
 		
 		populateUserChoiceBox();
 		
+		ResultSet rs = DatabaseController.loadUserWithLoadedStateForInitialize();
+		try {
+			user = new UserProfile(rs.getDouble(7), rs.getDouble(6), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(8),rs.getDate(9),rs.getInt(1));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		getusernameTxtField().setText(user.getusername());
+		getFirstNameTxtField().setText(user.getUserFirstName());
+		getLastNameTxtField().setText(user.getUserLastName());
+		
+		if(user.getuserGender().equalsIgnoreCase("Male")) {
+			getChoiceBoxGender().getSelectionModel().selectFirst();
+		} else if(user.getuserGender().equalsIgnoreCase("Female")) {
+			 
+			getChoiceBoxGender().getSelectionModel().selectLast();
+		}
+		
+		LocalDate birthdate = user.getbirthDate().toLocalDate();
+		getBirthDatePicker().setValue(birthdate);			
+		getHeightTxtField().setText(String.valueOf(user.getUserHeight()));	
+		getWeightTxtField().setText(String.valueOf(user.getUserWeight()));					 
+		getWeightTxtImc().setText(String.format("%.2f",user.getUserBMI()));			
+		getWeightTxtMaxWeight().setText(String.format("%.2f", user.getIdealWeightMax()));
+		getWeightTxtMinWeight().setText(String.format("%.2f", user.getIdealWeightMin()));
+		
+		if (user.getHealthyMode() == true) {
+			getradioButtonHealthy().setSelected(true);
+		}else {
+			getradioButtonHealthy().setSelected(false);
+		}
+		
+		double a=user.getUserBMI();
+		if(a>=30) {
+			weightTxtImc.setStyle("-fx-text-inner-color: purple;");
+			labelIMCmean.setText("You are obese");
+			labelIMCmean.setTextFill(Color.PURPLE);
+		} else {
+			if(a<18.5 || a>=25) {
+			weightTxtImc.setStyle("-fx-text-inner-color: red;");
+				if(a<18.5)labelIMCmean.setText("You are underweight.");
+				else labelIMCmean.setText("You are overweight.");
+			labelIMCmean.setTextFill(Color.RED);
+			} else {
+			weightTxtImc.setStyle("-fx-text-inner-color: green;");
+			labelIMCmean.setText("Your weight is Healthy");
+			labelIMCmean.setTextFill(Color.GREEN);
+			}
+		}	
 	}
 	
 	@FXML
