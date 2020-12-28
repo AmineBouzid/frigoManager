@@ -5,7 +5,10 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,6 +31,9 @@ import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
 import tse.crewmatse.frigomanager.util.DatabaseController;
 import tse.crewmatse.frigomanager.util.Ingredients;
+
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 
 public class ProfileController  implements Initializable{
 	
@@ -211,9 +217,9 @@ public class ProfileController  implements Initializable{
 		ArrayList<String> profileArrayList = new ArrayList<String>();
 		try {
 			
-			ResultSet rs = DatabaseController.getUserProfile();
+			CachedRowSet rs = DatabaseController.getUserProfile();
 			while (rs.next()) { 					
-				profileArrayList.add(rs.getString(1));
+				profileArrayList.add(rs.getString("Username"));
 			}
 			rs.close();
 		
@@ -230,7 +236,6 @@ public class ProfileController  implements Initializable{
             profileList[j] = profileArrayList.get(j); 
         } 
         getchoiceBoxProfile().getItems().addAll(profileList);
-		getchoiceBoxProfile().getSelectionModel().selectFirst();
 	}
 	
 	@Override
@@ -244,16 +249,21 @@ public class ProfileController  implements Initializable{
 		
 		populateUserChoiceBox();
 		
-		ResultSet rs = DatabaseController.loadUserWithLoadedStateForInitialize();
+	
 		try {
-			user = new UserProfile(rs.getDouble(7), rs.getDouble(6), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(8),rs.getDate(9),rs.getInt(1));
-		} catch (NumberFormatException e) {
+			CachedRowSet rs = DatabaseController.loadUserWithLoadedStateForInitialize();
+			 while (rs.next()) {
+			 user = new UserProfile(rs.getDouble("Weight"), rs.getDouble("Height"), rs.getString("Username"),rs.getString("FirstName"),rs.getString("LastName"),rs.getString("Gender"),rs.getBoolean("HealthyMode"),rs.getString("BirthDate"),rs.getInt("UserID"));
+			 }rs.close();
+		} 
+		catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		getusernameTxtField().setText(user.getusername());
 		getFirstNameTxtField().setText(user.getUserFirstName());
@@ -266,7 +276,8 @@ public class ProfileController  implements Initializable{
 			getChoiceBoxGender().getSelectionModel().selectLast();
 		}
 		
-		LocalDate birthdate = user.getbirthDate().toLocalDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate birthdate =LocalDate.parse(user.getbirthDate(), formatter); 
 		getBirthDatePicker().setValue(birthdate);			
 		getHeightTxtField().setText(String.valueOf(user.getUserHeight()));	
 		getWeightTxtField().setText(String.valueOf(user.getUserWeight()));					 
@@ -308,7 +319,7 @@ public class ProfileController  implements Initializable{
 		Double Height = Double.valueOf(getHeightTxtField().getText());
 		Double Weight = Double.valueOf(getWeightTxtField().getText());
 		Boolean HealthyMode = getradioButtonHealthy().isSelected();
-		Date birthDate = Date.valueOf(getBirthDatePicker().getValue());
+		String birthDate = String.valueOf(getBirthDatePicker().getValue());
 		if (username != null && !username.trim().isEmpty() 
 				&& FirstName != null && !LastName.trim().isEmpty()
 				&& LastName != null && !LastName.trim().isEmpty()
@@ -331,7 +342,7 @@ public class ProfileController  implements Initializable{
 		Double Height = Double.valueOf(getHeightTxtField().getText());
 		Double Weight = Double.valueOf(getWeightTxtField().getText());
 		Boolean HealthyMode = getradioButtonHealthy().isSelected();
-		Date birthDate = Date.valueOf(getBirthDatePicker().getValue());
+		String birthDate = String.valueOf(getBirthDatePicker().getValue());
 		Integer userId = Integer.valueOf(user.getuserId()); 
 		if (username != null && !username.trim().isEmpty() 
 			&& FirstName != null && !LastName.trim().isEmpty()
@@ -378,11 +389,16 @@ public class ProfileController  implements Initializable{
 	}
 	
 	@FXML
-	private void loadButtonAction() {
+	private void loadButtonAction() throws SQLException {
 			String username = getchoiceBoxProfile().getSelectionModel().getSelectedItem().toString();
-			ResultSet rs = DatabaseController.getUserInfo(username);
+			
 			try {
-				user = new UserProfile(rs.getDouble(7), rs.getDouble(6), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5),rs.getBoolean(8),rs.getDate(9),rs.getInt(1));
+				CachedRowSet rs = DatabaseController.getUserInfo(username);
+				//double userWeight, double userHeight,String username, String userFirstName, String userLastName, String userGender,boolean healthyMode, Date birthDate, int userId
+				while (rs.next()) {
+				user = new UserProfile(rs.getDouble("Weight"), rs.getDouble("Height"), rs.getString("Username"),rs.getString("FirstName"),rs.getString("LastName"),rs.getString("Gender"),rs.getBoolean("HealthyMode"),rs.getString("BirthDate"),rs.getInt("UserID"));
+				}
+				rs.close();
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -401,8 +417,8 @@ public class ProfileController  implements Initializable{
 				 
 				getChoiceBoxGender().getSelectionModel().selectLast();
 			}
-			
-			LocalDate birthdate = user.getbirthDate().toLocalDate();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate birthdate = LocalDate.parse(user.getbirthDate(), formatter);
 			getBirthDatePicker().setValue(birthdate);			
 			getHeightTxtField().setText(String.valueOf(user.getUserHeight()));	
 			getWeightTxtField().setText(String.valueOf(user.getUserWeight()));					 

@@ -14,6 +14,8 @@ import javafx.scene.control.TextField;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
 import tse.crewmatse.frigomanager.util.DatabaseController;
+import javax.sql.rowset.CachedRowSet;
+import javax.sql.rowset.RowSetProvider;
 
 public class HomeController implements Initializable{
 	@FXML private  TextField firstNameTxtField;
@@ -76,9 +78,14 @@ public class HomeController implements Initializable{
 		//getFirstNameTxtField().setText();
 		//getLastNameTxtField().setText("Bouzid");
 		
-		ResultSet rs = DatabaseController.loadUserWithLoadedState();
+		
 		try {
-			getLabelActiveUser().setText(rs.getString(1));
+			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+			 while (rs.next()) {
+				 getLabelActiveUser().setText(rs.getString("Username"));
+			    }
+			
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
