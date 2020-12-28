@@ -14,7 +14,7 @@ public class UserProfile {
 	private double idealWeightMin;
 	private double idealWeightMax;
 	private boolean healthyMode;
-	private Date birthDate;
+	private String birthDate;
 	private int userId;
 /*
  * tableau de recettes epinglees
@@ -47,10 +47,10 @@ public class UserProfile {
 		this.calculateBMI();
 		this.calculateIdealWeight();
 	}
-	public Date getbirthDate() {
+	public String getbirthDate() {
 		return birthDate;
 	}
-	public void setbirthDate(Date birthDate) {
+	public void setbirthDate(String birthDate) {
 		this.birthDate = birthDate;
 	}
 	public String getuserGender() {
@@ -105,7 +105,7 @@ public class UserProfile {
 	
 	//----------------------------------------Constructor
 	public UserProfile(double userWeight, double userHeight,String username, String userFirstName, String userLastName, String userGender,
-			boolean healthyMode, Date birthDate, int userId) {
+			boolean healthyMode, String birthDate, int userId) {
 		//super();
 		this.username = username;
 		this.userWeight = userWeight;
