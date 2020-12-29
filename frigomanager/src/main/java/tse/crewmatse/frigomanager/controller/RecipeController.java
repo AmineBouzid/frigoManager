@@ -245,7 +245,7 @@ public class RecipeController implements Initializable{
 		for (int i = 0;i<ing.size();i++) {
 			listIngredients.add(ing.get(i));
 		};
-		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonRecette(ApiRecette.urlRecette(listIngredients)));
+		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonArray(ApiRecette.urlRecette(listIngredients)));
 		for (int i = 0;i<listRecettes.size();i++) {
 			getRecipeTableView().getItems().add(listRecettes.get(i));
 		};
@@ -258,6 +258,11 @@ public class RecipeController implements Initializable{
 	private void deleteButtonAction() {
 		int i = getSelectedTableView().getSelectionModel().getSelectedIndex();
 		getSelectedTableView().getItems().remove(i);
+	}
+	
+	@FXML
+	private void clearButtonAction() {
+		getRecipeTableView().getItems().clear();
 	}
     
 }

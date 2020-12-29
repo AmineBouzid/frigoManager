@@ -12,63 +12,171 @@ public class Recette {
 		private ArrayList<String> listIngredient;
 		private ArrayList<String> listMissedIngredient;
 		private ArrayList<String> listUsedIngredient;
+		private ArrayList<String> listSteps;
+		private int servings;
+		private int healthscore;
+		private String image;
 		
 		
+		
+		
+		public void display() {
+			System.out.println("Id : "+this.idApi+" | Name : "+this.name+ " | Servings : "+this.servings+" | Healthscore : "+this.healthscore+" | Ingredients :");
+			for (int i = 0;i<this.listIngredient.size();i++) {
+				System.out.println(this.listIngredient.get(i));
+			};
+			for (int i = 0;i<this.listSteps.size();i++) {
+				System.out.println(this.listSteps.get(i));
+			};
+		}
+
+
+
+
 		public String getName() {
 			return name;
 		}
-		
+
+
+
+
 		public void setName(String name) {
 			this.name = name;
 		}
-		
+
+
+
+
 		public int getIdApi() {
 			return idApi;
 		}
-		
+
+
+
+
 		public void setIdApi(int idApi) {
 			this.idApi = idApi;
 		}
-		
+
+
+
+
 		public ArrayList<String> getListIngredient() {
 			return listIngredient;
 		}
-		
+
+
+
+
 		public void setListIngredient(ArrayList<String> listIngredient) {
 			this.listIngredient = listIngredient;
 		}
-		
+
+
+
+
 		public ArrayList<String> getListMissedIngredient() {
 			return listMissedIngredient;
 		}
-		
+
+
+
+
 		public void setListMissedIngredient(ArrayList<String> listMissedIngredient) {
 			this.listMissedIngredient = listMissedIngredient;
 		}
-		
+
+
+
+
 		public ArrayList<String> getListUsedIngredient() {
 			return listUsedIngredient;
 		}
-		
+
+
+
+
 		public void setListUsedIngredient(ArrayList<String> listUsedIngredient) {
 			this.listUsedIngredient = listUsedIngredient;
 		}
-		
-		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<String> listMissedIngredient, ArrayList<String> listUsedIngredient) {
+
+
+
+
+		public ArrayList<String> getListSteps() {
+			return listSteps;
+		}
+
+
+
+
+		public void setListSteps(ArrayList<String> listSteps) {
+			this.listSteps = listSteps;
+		}
+
+
+
+
+		public int getServings() {
+			return servings;
+		}
+
+
+
+
+		public void setServings(int servings) {
+			this.servings = servings;
+		}
+
+
+
+
+		public int getHealthscore() {
+			return healthscore;
+		}
+
+
+
+
+		public void setHealthscore(int helthscore) {
+			this.healthscore = helthscore;
+		}
+
+
+
+
+		public String getImage() {
+			return image;
+		}
+
+
+
+
+		public void setImage(String image) {
+			this.image = image;
+		}
+
+
+
+
+		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<String> listMissedIngredient,
+				ArrayList<String> listUsedIngredient, ArrayList<String> listSteps, int servings, int helthscore,
+				String image) {
 			super();
 			this.name = name;
 			this.idApi = idApi;
 			this.listIngredient = listIngredient;
 			this.listMissedIngredient = listMissedIngredient;
 			this.listUsedIngredient = listUsedIngredient;
+			this.listSteps = listSteps;
+			this.servings = servings;
+			this.healthscore = helthscore;
+			this.image = image;
 		}
+
+
+
 		
-		public void display() {
-			System.out.println("Id : "+this.idApi+" | Name : "+this.name+" | Ingredients :");
-			for (int i = 0;i<this.listIngredient.size();i++) {
-				System.out.println(this.listIngredient.get(i));
-			};
-		}
 		
 		
 		
