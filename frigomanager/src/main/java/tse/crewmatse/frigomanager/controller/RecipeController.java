@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import javax.sql.rowset.CachedRowSet;
+
 import org.json.JSONException;
 
 
@@ -223,7 +225,25 @@ public class RecipeController implements Initializable{
 	            public void handle(MouseEvent event) {
 	                if (event.getClickCount() == 2)
 	                {
-	                    System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	                    //System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	                	int loadedUserId = 0 ;
+	                	try {
+	            			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+	            			 while (rs.next()) {
+	            				 loadedUserId =rs.getInt("UserID");
+	            			    }
+	            			
+	            			
+	            		} catch (NumberFormatException e) {
+	            			// TODO Auto-generated catch block
+	            			e.printStackTrace();
+	            		} catch (SQLException e) {
+	            			// TODO Auto-generated catch block
+	            			e.printStackTrace();
+	            		}
+	                	DatabaseController.storeLastViewedRecipe(getRecipeTableView().getSelectionModel().getSelectedItem().getIdApi()
+	                			, loadedUserId, getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	                    
 	                }
 	            }
 	        });
