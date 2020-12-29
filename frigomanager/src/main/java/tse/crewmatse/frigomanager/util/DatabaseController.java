@@ -494,6 +494,53 @@ public class DatabaseController {
 		return crs;
 		
 	}
+
+	public static CachedRowSet getIngredientsClostoBeExpired(boolean justFive) throws SQLException {
+		ResultSet rs = null;
+		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
+		
+		try {
+			try {
+				if(connection != null)
+					connection.close();
+				if(statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		    statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			if(justFive) {
+				rs = statement.executeQuery("select * from Pantry where date('now', '+3 days') > date(\"expirationDate\") order by expirationDate asc LIMIT 5  ;");
+			}
+			else {
+				rs = statement.executeQuery("select * from Pantry where date('now', '+3 days') > date(\"expirationDate\");");
+			}
+			 crs.populate(rs);
+			 rs.close();
+			connection.close();
+			statement.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Connection connection = null;
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
+	        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+		}
+		return crs;
+		
+		
+	}
+	
 }
 
 
