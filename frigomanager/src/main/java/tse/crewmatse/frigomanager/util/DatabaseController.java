@@ -558,6 +558,48 @@ public class DatabaseController {
 		}
 		
 	}
+	
+	public static CachedRowSet getLastViewedRecipes(int user) throws SQLException {
+		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
+		ResultSet rs = null;
+		try {
+			try {
+				if(connection != null)
+					connection.close();
+				if(statement != null)
+					statement.close();
+			} catch (SQLException e) {
+				System.err.println(e);
+			}
+			Class.forName("org.sqlite.JDBC");
+			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+			PreparedStatement pS = connection.prepareStatement("select * from lastRecipes where user = ?");	
+			pS.setQueryTimeout(30);
+			pS.setInt(1, user);
+			rs = pS.executeQuery();
+			crs.populate(rs);
+			rs.close();
+			connection.close();
+			statement.close();
+			pS.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//Connection connection = null;
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		finally {
+			if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+	        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
+	        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+	       
+		}
+		
+		return crs;
+	}
 }
 
 

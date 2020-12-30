@@ -10,10 +10,15 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
 import tse.crewmatse.frigomanager.util.DatabaseController;
+import tse.crewmatse.frigomanager.util.Recette;
+
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
 
@@ -21,8 +26,27 @@ public class HomeController implements Initializable{
 	@FXML private  TextField firstNameTxtField;
 	@FXML private  TextField lastNameTxtField;
 	@FXML private  Label labelActiveUser;
+	@FXML private  TableView<Recette> lastViewedRecipestableView;	
+	@FXML private  TableColumn<Recette,String> lastViewedRecipesColumn;
 	
-    public Label getLabelActiveUser() {
+	
+	public TableView<Recette> getLastViewedRecipestableView() {
+		return lastViewedRecipestableView;
+	}
+
+	public void setLastViewedRecipestableView(TableView<Recette> lastViewedRecipestableView) {
+		this.lastViewedRecipestableView = lastViewedRecipestableView;
+	}	
+	
+    public TableColumn<Recette, String> getLastViewedRecipesColumn() {
+		return lastViewedRecipesColumn;
+	}
+
+	public void setLastViewedRecipesColumn(TableColumn<Recette, String> lastViewedRecipesColumn) {
+		this.lastViewedRecipesColumn = lastViewedRecipesColumn;
+	}
+
+	public Label getLabelActiveUser() {
 		return labelActiveUser;
 	}
 
@@ -77,13 +101,27 @@ public class HomeController implements Initializable{
 		
 		//getFirstNameTxtField().setText();
 		//getLastNameTxtField().setText("Bouzid");
+		int loadedUser = 0;
 		
+		
+		lastViewedRecipesColumn.setCellValueFactory(new PropertyValueFactory<Recette,String>("name"));
 		
 		try {
 			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
 			 while (rs.next()) {
 				 getLabelActiveUser().setText(rs.getString("Username"));
+				 loadedUser = rs.getInt("UserID");
 			    }
+			 
+			 CachedRowSet lastViewedRecipes = DatabaseController.getLastViewedRecipes(loadedUser);
+			 while ( lastViewedRecipes.next()) {
+				 Recette toAdd = new Recette ( lastViewedRecipes.getString("recipeName"),
+						 lastViewedRecipes.getInt("recipeId"));
+				 getLastViewedRecipestableView().getItems().add(toAdd);
+			 }
+			 
+			 rs.close();
+			 lastViewedRecipes.close();
 			
 			
 		} catch (NumberFormatException e) {
