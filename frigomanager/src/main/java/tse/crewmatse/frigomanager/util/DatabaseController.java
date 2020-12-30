@@ -497,8 +497,6 @@ public class DatabaseController {
 	
 	public static void storeLastViewedRecipe(int id, int user, String name) {
 		ResultSet rs = null;
-		//ResultSet key = null;
-		//int pKey = 0;
 		try {
 			try {
 				if(connection != null)
@@ -514,28 +512,19 @@ public class DatabaseController {
 			pS.setQueryTimeout(30);
 			pS.setInt(1, user);
 			rs = pS.executeQuery();
-			rs.next();
-			System.out.println(rs.getInt("count(*)"));
-			//statement = connection.createStatement();
-			//statement.setQueryTimeout(30);
-			//key = statement.executeQuery("select UserID from lastRecipes ORDER BY pKey DESC LIMIT 1");
-			//key.next();
-			//pKey= key.getInt("UserID");
-			
+			rs.next();				
 			
 			if ( rs.getInt("count(*)") == 5 ) {
 				PreparedStatement delPS = connection.prepareStatement("DELETE FROM lastRecipes WHERE pKey = ( SELECT MIN(pKey) from lastRecipes WHERE user = ?)");
 				delPS.setQueryTimeout(30);
 				delPS.setInt(1,user);
 				delPS.execute();
-				
-				System.out.println("pd");
+			
 				PreparedStatement insertPS = connection.prepareStatement("insert into lastRecipes(recipeId, user, recipeName) values (?,?,?)");
 				insertPS.setQueryTimeout(30);
 				insertPS.setInt(1, id);
 				insertPS.setInt(2, user);
 				insertPS.setString(3, name);
-				//insertPS.setInt(4, );
 				insertPS.executeUpdate();
 				insertPS.close();
 				delPS.close();
@@ -553,6 +542,7 @@ public class DatabaseController {
 			pS.close();
 			connection.close();
 			statement.close();
+			rs.close();
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -564,6 +554,7 @@ public class DatabaseController {
 		finally {
 	        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
 	        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+	        if (rs!=null) try {rs.close();} catch (SQLException ignore) {}
 		}
 		
 	}
