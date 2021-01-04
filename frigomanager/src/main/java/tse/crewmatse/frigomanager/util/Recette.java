@@ -63,6 +63,12 @@ public class Recette {
 			this.listUsedIngredient = listUsedIngredient;
 		}
 		
+		public Recette(String name, int idApi) {
+			super();
+			this.name = name;
+			this.idApi = idApi;
+		}
+		
 		public void display() {
 			System.out.println("Id : "+this.idApi+" | Name : "+this.name+" | Ingredients :");
 			for (int i = 0;i<this.listIngredient.size();i++) {
