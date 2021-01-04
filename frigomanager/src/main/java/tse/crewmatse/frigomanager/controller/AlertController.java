@@ -26,10 +26,10 @@ import tse.crewmatse.frigomanager.util.Ingredients;
  * 
  * @author LEKMAD Mohamed
  * 
- * This class manage notifications of our application.
- * There are three types of notifications:
- * 1.Close expiration dates: where we notify the user if an item is three days away from being expired.
- * //TODO Add the other notifications
+ *         This class manage notifications of our application. There are three
+ *         types of notifications: 1.Close expiration dates: where we notify the
+ *         user if an item is three days away from being expired. //TODO Add the
+ *         other notifications
  * 
  *
  */
@@ -95,47 +95,22 @@ public class AlertController implements Initializable {
 		colFood.setCellValueFactory(new PropertyValueFactory<Ingredients, String>("nameFood"));
 		colExpiration.setCellValueFactory(new PropertyValueFactory<Ingredients, String>("date"));
 
-		
-
 		try {
 
-			ResultSet rs = DatabaseController.selectAllRows();
-			while (rs.next()) { 
+			ResultSet rs = DatabaseController.getIngredientsClostoBeExpired(true);
+			while (rs.next()) {
 				Ingredients toAdd = new Ingredients(rs.getString("apiID"), rs.getString("foodName"),
 						rs.getString("quantity"), rs.getString("expirationDate"));
 
-				
-
-				if (isCloseToBeExpired(toAdd.getDate())) {
-					getExpirationView().getItems().add(toAdd);
-				}
+				getExpirationView().getItems().add(toAdd);
 
 			}
 			rs.close();
 
-		} catch (SQLException | ParseException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public  Boolean isCloseToBeExpired(String date) throws ParseException {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date currentDate = new Date();
-		Calendar c = Calendar.getInstance();
-		
-		Date IngredientExpirationDate = dateFormat.parse(date);
-		c.setTime(IngredientExpirationDate);
-		c.add(Calendar.DAY_OF_MONTH, -3);
-		Date riskDate = c.getTime();
-
-		if (currentDate.compareTo(riskDate) > 0) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	
 
 }
