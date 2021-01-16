@@ -79,9 +79,13 @@ public class RecipeViewController implements Initializable{
 			stepsListView.getItems().add(r.getListSteps().get(nSteps-1-i));
 		};
 		
+		ingredientsListView.getItems().add("Servings: "+r.getServings());
+		
 		for (int i = 0;i<nIngredients;i++) {
 			ingredientsListView.getItems().add(r.getListIngredientQuantity().get(i));
 		};
+		
+		
 		
 	}
 }

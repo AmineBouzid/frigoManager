@@ -14,15 +14,15 @@
       <Label fx:id="recipeTitle" BorderPane.alignment="CENTER" />
    </top>
    <left>
-      <ImageView fx:id="recipeImage" fitHeight="223.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT" />
+      <ImageView fx:id="recipeImage" fitHeight="425.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT" />
    </left>
    <bottom>
       <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" text="Quitter" BorderPane.alignment="BOTTOM_RIGHT" />
    </bottom>
    <center>
-      <SplitPane dividerPositions="0.5" prefHeight="425.0" prefWidth="0.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.5" prefHeight="425.0" prefWidth="561.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="423.0" prefWidth="98.0">
                <children>
                   <ListView fx:id="stepsListView" prefHeight="582.0" prefWidth="230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>

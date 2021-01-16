@@ -8,6 +8,7 @@ package tse.crewmatse.frigomanager.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 
 import javax.imageio.ImageIO;
@@ -44,7 +45,7 @@ public class ApiRecette {
 	}
 	
 	public static String urlRecette(ArrayList<Ingredients> ingredients) {
-		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=244bcc1fa9f84039951a54e8926203dc&ingredients=";
+		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=81864c9e51a048cda9377275626cd6b8&ingredients=";
 		for (int i =0;i<ingredients.size();i++) {
 			if (i!=0) {
 				url+=",+";
@@ -56,14 +57,15 @@ public class ApiRecette {
 	}
 	
 	public static String urlSteps(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=244bcc1fa9f84039951a54e8926203dc";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=81864c9e51a048cda9377275626cd6b8";
 		return url;
 	};
 	
 	public static String urlInf(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=244bcc1fa9f84039951a54e8926203dc";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=81864c9e51a048cda9377275626cd6b8";
 		return url;
 		// 81864c9e51a048cda9377275626cd6b8
+		// 244bcc1fa9f84039951a54e8926203dc
 	};
 	
 	private static String readAll(Reader rd) throws IOException {
@@ -136,7 +138,7 @@ public class ApiRecette {
     		for (int j = 0;j<steps.length();j++) {
     			JSONArray stepsInformation = steps.getJSONObject(j).getJSONArray("steps");
     			for (int k = 0 ;k<stepsInformation.length();k++) {
-    				listSteps.add(stepsInformation.getJSONObject(k).getString("step"));
+    				listSteps.add(stepsInformation.getJSONObject(k).getInt("number")+". "+stepsInformation.getJSONObject(k).getString("step"));
     			};
     		};
     		
@@ -144,7 +146,8 @@ public class ApiRecette {
     		listMissedIngredient = new ArrayList<String>(new HashSet<String>(listMissedIngredient));
     		listUsedIngredient = new ArrayList<String>(new HashSet<String>(listUsedIngredient));
     		listSteps = new ArrayList<String>(new HashSet<String>(listSteps));
-    		
+    		Collections.sort(listSteps);
+    		Collections.reverse(listSteps);
     		Recette r = new Recette(name,id,listIngredient,listIngredientQuantity,listMissedIngredient,listUsedIngredient,listSteps,servings,healthscore,image);
     		result.add(r);
     	};
