@@ -27,6 +27,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.util.DatabaseController;
 import tse.crewmatse.frigomanager.util.Ingredients;
@@ -58,7 +59,11 @@ public class RecipeController implements Initializable{
 	@FXML private Button deleteButton;
 	@FXML private Button searchButton;
 	
+	public static Recette selectedRecipe;
 	
+	public static Recette getSelectedRecipe() {
+		return selectedRecipe;
+	}
 
 	
 
@@ -219,35 +224,22 @@ public class RecipeController implements Initializable{
 		colUsed.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listUsedIngredient"));
 		colMissed.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listMissedIngredient"));
 		
-		 recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-	            @Override
-	            public void handle(MouseEvent event) {
-	                if (event.getClickCount() == 2)
-	                {
-	                    //System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
-	                	int loadedUserId = 0 ;
-	                	try {
-	            			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
-	            			 while (rs.next()) {
-	            				 loadedUserId =rs.getInt("UserID");
-	            			    }
-	            			
-	            			
-	            		} catch (NumberFormatException e) {
-	            			// TODO Auto-generated catch block
-	            			e.printStackTrace();
-	            		} catch (SQLException e) {
-	            			// TODO Auto-generated catch block
-	            			e.printStackTrace();
-	            		}
-	                	DatabaseController.storeLastViewedRecipe(getRecipeTableView().getSelectionModel().getSelectedItem().getIdApi()
-	                			, loadedUserId, getRecipeTableView().getSelectionModel().getSelectedItem().getName());
-	                    
-	                }
-	            }
-	        });
-		 
+		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+	    	public void handle(MouseEvent event) {
+	    		if (event.getClickCount() == 2) {
+	    			System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
+	    			try {
+						App.setRoot("recipeView");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    		}
+	    	}
+		});
+		
 		try {
 			
 			ResultSet rs = DatabaseController.selectAllRows();
@@ -277,7 +269,7 @@ public class RecipeController implements Initializable{
 		for (int i = 0;i<ing.size();i++) {
 			listIngredients.add(ing.get(i));
 		};
-		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonRecette(ApiRecette.urlRecette(listIngredients)));
+		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonArray(ApiRecette.urlRecette(listIngredients)));
 		for (int i = 0;i<listRecettes.size();i++) {
 			getRecipeTableView().getItems().add(listRecettes.get(i));
 		};
@@ -290,6 +282,11 @@ public class RecipeController implements Initializable{
 	private void deleteButtonAction() {
 		int i = getSelectedTableView().getSelectionModel().getSelectedIndex();
 		getSelectedTableView().getItems().remove(i);
+	}
+	
+	@FXML
+	private void clearButtonAction() {
+		getRecipeTableView().getItems().clear();
 	}
     
 }

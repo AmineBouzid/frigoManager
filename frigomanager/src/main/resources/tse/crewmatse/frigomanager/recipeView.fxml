@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.RecipeViewController">
+   <top>
+      <Label fx:id="recipeTitle" BorderPane.alignment="CENTER" />
+   </top>
+   <left>
+      <ImageView fx:id="recipeImage" fitHeight="425.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="TOP_LEFT" />
+   </left>
+   <bottom>
+      <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" text="Quitter" BorderPane.alignment="BOTTOM_RIGHT" />
+   </bottom>
+   <center>
+      <SplitPane dividerPositions="0.5" prefHeight="425.0" prefWidth="561.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="423.0" prefWidth="98.0">
+               <children>
+                  <ListView fx:id="stepsListView" prefHeight="582.0" prefWidth="230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ListView fx:id="ingredientsListView" prefHeight="580.0" prefWidth="162.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+        </items>
+         <BorderPane.margin>
+            <Insets right="50.0" />
+         </BorderPane.margin>
+      </SplitPane>
+   </center>
+</BorderPane>

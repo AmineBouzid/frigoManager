@@ -3,6 +3,7 @@ module tse.crewmatse.frigomanager {
     requires javafx.fxml;
 	requires javafx.base;
 	requires java.sql;
+	requires java.desktop;
 	requires org.json;
 	requires java.sql.rowset;
 	requires javafx.graphics;
