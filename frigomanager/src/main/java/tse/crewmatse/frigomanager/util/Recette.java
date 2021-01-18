@@ -191,6 +191,13 @@ public class Recette {
 			this.healthscore = healthscore;
 			this.image = image;
 		}
+		public Recette(String name, int idApi) {
+			super();
+			this.name = name;
+			this.idApi = idApi;
+
+		}
+
 
 
 
