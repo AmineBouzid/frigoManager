@@ -19,6 +19,7 @@ public class Recette {
 		private int servings;
 		private int healthscore;
 		private Image image;
+		private String cal;
 		
 		public void display() {
 			System.out.println("Id : "+this.idApi+" | Name : "+this.name+ " | Servings : "+this.servings+" | Healthscore : "+this.healthscore+" | Ingredients :");
@@ -28,6 +29,16 @@ public class Recette {
 			for (int i = 0;i<this.listSteps.size();i++) {
 				System.out.println(this.listSteps.get(i));
 			};
+		}
+
+
+		public String getCal() {
+			return cal;
+		}
+
+
+		public void setCal(String cal) {
+			this.cal = cal;
 		}
 
 
@@ -145,7 +156,7 @@ public class Recette {
 		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<Double> listQuantity,
 				ArrayList<String> listUnits, ArrayList<String> listMissedIngredient,
 				ArrayList<String> listUsedIngredient, ArrayList<String> listSteps, int servings, int healthscore,
-				@SuppressWarnings("exports") Image image) {
+				@SuppressWarnings("exports") Image image, String cal) {
 			super();
 			this.name = name;
 			this.idApi = idApi;
@@ -158,6 +169,7 @@ public class Recette {
 			this.servings = servings;
 			this.healthscore = healthscore;
 			this.image = image;
+			this.cal = cal;
 		}
 
 
