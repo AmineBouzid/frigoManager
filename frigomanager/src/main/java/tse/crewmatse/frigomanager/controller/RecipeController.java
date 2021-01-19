@@ -225,20 +225,45 @@ public class RecipeController implements Initializable{
 		colMissed.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listMissedIngredient"));
 		
 		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-	    	public void handle(MouseEvent event) {
-	    		if (event.getClickCount() == 2) {
-	    			System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
-	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
-	    			try {
-						App.setRoot("recipeView");
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-	    		}
-	    	}
-		});
+			   @Override
+	            public void handle(MouseEvent event) {
+	                if (event.getClickCount() == 2)
+	                {
+	                	
+	    	    			System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	    	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
+	    	    			try {
+	    						App.setRoot("recipeView");
+	    					} catch (IOException e) {
+	    						// TODO Auto-generated catch block
+	    						e.printStackTrace();
+	    					}
+
+	                    //System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	                	int loadedUserId = 0 ;
+	                	try {
+	            			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+	            			 while (rs.next()) {
+	            				 loadedUserId =rs.getInt("UserID");
+	            			    }
+	            			
+	            			
+	            		} catch (NumberFormatException e) {
+	            			// TODO Auto-generated catch block
+	            			e.printStackTrace();
+	            		} catch (SQLException e) {
+	            			// TODO Auto-generated catch block
+	            			e.printStackTrace();
+	            		}
+	                	DatabaseController.storeLastViewedRecipe(getRecipeTableView().getSelectionModel().getSelectedItem().getIdApi()
+	                			, loadedUserId, getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	                    
+	                }
+	            }
+	        });
+		 
+
+
 		
 		try {
 			
