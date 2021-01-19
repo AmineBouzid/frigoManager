@@ -2,45 +2,28 @@ package tse.crewmatse.frigomanager.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.sql.rowset.CachedRowSet;
-
 import org.json.JSONException;
-
-
-
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-
 import tse.crewmatse.frigomanager.App;
+import tse.crewmatse.frigomanager.api.ApiRecette;
 import tse.crewmatse.frigomanager.util.DatabaseController;
 import tse.crewmatse.frigomanager.util.Ingredients;
 import tse.crewmatse.frigomanager.util.Recette;
-import tse.crewmatse.frigomanager.api.ApiRecette;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import tse.crewmatse.api.ApiIngredients;
 
 public class RecipeController implements Initializable{
 	@FXML private SplitPane recipeSplitPane;
@@ -58,6 +41,7 @@ public class RecipeController implements Initializable{
 	@FXML private Button addButton;
 	@FXML private Button deleteButton;
 	@FXML private Button searchButton;
+	@FXML private ProgressIndicator progressBar;
 	
 	public static Recette selectedRecipe;
 	
@@ -67,11 +51,12 @@ public class RecipeController implements Initializable{
 
 	
 
+	@SuppressWarnings("exports")
 	public SplitPane getRecipeSplitPane() {
 		return recipeSplitPane;
 	}
 
-	public void setRecipeSplitPane(SplitPane recipeSplitPane) {
+	public void setRecipeSplitPane(@SuppressWarnings("exports") SplitPane recipeSplitPane) {
 		this.recipeSplitPane = recipeSplitPane;
 	}
 
@@ -163,27 +148,41 @@ public class RecipeController implements Initializable{
 		this.colIngredient = colIngredient;
 	}
 
+	@SuppressWarnings("exports")
 	public Button getAddButton() {
 		return addButton;
 	}
 
-	public void setAddButton(Button addButton) {
+	public void setAddButton(@SuppressWarnings("exports") Button addButton) {
 		this.addButton = addButton;
 	}
 
+	@SuppressWarnings("exports")
 	public Button getDeleteButton() {
 		return deleteButton;
 	}
 
-	public void setDeleteButton(Button deleteButton) {
+	public void setDeleteButton(@SuppressWarnings("exports") Button deleteButton) {
 		this.deleteButton = deleteButton;
 	}
 
+	@SuppressWarnings("exports")
 	public Button getSearchButton() {
 		return searchButton;
 	}
+	
+	@SuppressWarnings("exports")
+	public ProgressIndicator getProgressBar() {
+		return progressBar;
+	}
 
-	public void setSearchButton(Button searchButton) {
+	public void setProgressBar(@SuppressWarnings("exports") ProgressIndicator progressBar) {
+		this.progressBar = progressBar;
+	}
+
+
+
+	public void setSearchButton(@SuppressWarnings("exports") Button searchButton) {
 		this.searchButton = searchButton;
 	}
 
@@ -215,7 +214,7 @@ public class RecipeController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
-		
+		// progressBar.setVisible(false);
 		colFood.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("nameFood"));
 		colExpiration.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("date"));
 		colQuantity.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("quantity"));
@@ -225,45 +224,20 @@ public class RecipeController implements Initializable{
 		colMissed.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listMissedIngredient"));
 		
 		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			   @Override
-	            public void handle(MouseEvent event) {
-	                if (event.getClickCount() == 2)
-	                {
-	                	
-	    	    			System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
-	    	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
-	    	    			try {
-	    						App.setRoot("recipeView");
-	    					} catch (IOException e) {
-	    						// TODO Auto-generated catch block
-	    						e.printStackTrace();
-	    					}
-
-	                    //System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
-	                	int loadedUserId = 0 ;
-	                	try {
-	            			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
-	            			 while (rs.next()) {
-	            				 loadedUserId =rs.getInt("UserID");
-	            			    }
-	            			
-	            			
-	            		} catch (NumberFormatException e) {
-	            			// TODO Auto-generated catch block
-	            			e.printStackTrace();
-	            		} catch (SQLException e) {
-	            			// TODO Auto-generated catch block
-	            			e.printStackTrace();
-	            		}
-	                	DatabaseController.storeLastViewedRecipe(getRecipeTableView().getSelectionModel().getSelectedItem().getIdApi()
-	                			, loadedUserId, getRecipeTableView().getSelectionModel().getSelectedItem().getName());
-	                    
-	                }
-	            }
-	        });
-		 
-
-
+			@Override
+	    	public void handle(MouseEvent event) {
+	    		if (event.getClickCount() == 2) {
+	    			System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
+	    			try {
+						App.setRoot("recipeView");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+	    		}
+	    	}
+		});
 		
 		try {
 			
@@ -289,6 +263,8 @@ public class RecipeController implements Initializable{
 	@FXML
 	private void searchButtonAction() throws JSONException, IOException {
 		getRecipeTableView().getItems().clear();
+		//progressBar.setVisible(true);
+		//progressBar.setProgress(-1);
 		ObservableList<Ingredients> ing = getSelectedTableView().getItems();
 		ArrayList<Ingredients> listIngredients = new ArrayList<Ingredients>();
 		for (int i = 0;i<ing.size();i++) {
@@ -299,6 +275,7 @@ public class RecipeController implements Initializable{
 			getRecipeTableView().getItems().add(listRecettes.get(i));
 		};
 		getSelectedTableView().getItems().clear();
+		//progressBar.setVisible(false);
 	}
 	
 	

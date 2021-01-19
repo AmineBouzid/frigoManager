@@ -11,7 +11,8 @@ public class Recette {
 		private String name;
 		private int idApi;
 		private ArrayList<String> listIngredient;
-		private ArrayList<String> listIngredientQuantity;
+		private ArrayList<Double> listQuantity;
+		private ArrayList<String> listUnits;
 		private ArrayList<String> listMissedIngredient;
 		private ArrayList<String> listUsedIngredient;
 		private ArrayList<String> listSteps;
@@ -19,21 +20,6 @@ public class Recette {
 		private int healthscore;
 		private Image image;
 		
-		
-		
-		
-		public ArrayList<String> getListIngredientQuantity() {
-			return listIngredientQuantity;
-		}
-
-
-		public void setListIngredientQuantity(ArrayList<String> listQuantity) {
-			this.listIngredientQuantity = listQuantity;
-		}
-
-
-
-
 		public void display() {
 			System.out.println("Id : "+this.idApi+" | Name : "+this.name+ " | Servings : "+this.servings+" | Healthscore : "+this.healthscore+" | Ingredients :");
 			for (int i = 0;i<this.listIngredient.size();i++) {
@@ -45,13 +31,9 @@ public class Recette {
 		}
 
 
-
-
 		public String getName() {
 			return name;
 		}
-
-
 
 
 		public void setName(String name) {
@@ -59,13 +41,9 @@ public class Recette {
 		}
 
 
-
-
 		public int getIdApi() {
 			return idApi;
 		}
-
-
 
 
 		public void setIdApi(int idApi) {
@@ -73,13 +51,9 @@ public class Recette {
 		}
 
 
-
-
 		public ArrayList<String> getListIngredient() {
 			return listIngredient;
 		}
-
-
 
 
 		public void setListIngredient(ArrayList<String> listIngredient) {
@@ -87,6 +61,24 @@ public class Recette {
 		}
 
 
+		public ArrayList<Double> getListQuantity() {
+			return listQuantity;
+		}
+
+
+		public void setListQuantity(ArrayList<Double> listQuantity) {
+			this.listQuantity = listQuantity;
+		}
+
+
+		public ArrayList<String> getListUnits() {
+			return listUnits;
+		}
+
+
+		public void setListUnits(ArrayList<String> listUnits) {
+			this.listUnits = listUnits;
+		}
 
 
 		public ArrayList<String> getListMissedIngredient() {
@@ -94,13 +86,9 @@ public class Recette {
 		}
 
 
-
-
 		public void setListMissedIngredient(ArrayList<String> listMissedIngredient) {
 			this.listMissedIngredient = listMissedIngredient;
 		}
-
-
 
 
 		public ArrayList<String> getListUsedIngredient() {
@@ -108,13 +96,9 @@ public class Recette {
 		}
 
 
-
-
 		public void setListUsedIngredient(ArrayList<String> listUsedIngredient) {
 			this.listUsedIngredient = listUsedIngredient;
 		}
-
-
 
 
 		public ArrayList<String> getListSteps() {
@@ -122,13 +106,9 @@ public class Recette {
 		}
 
 
-
-
 		public void setListSteps(ArrayList<String> listSteps) {
 			this.listSteps = listSteps;
 		}
-
-
 
 
 		public int getServings() {
@@ -136,13 +116,9 @@ public class Recette {
 		}
 
 
-
-
 		public void setServings(int servings) {
 			this.servings = servings;
 		}
-
-
 
 
 		public int getHealthscore() {
@@ -150,40 +126,32 @@ public class Recette {
 		}
 
 
-
-
-		public void setHealthscore(int helthscore) {
-			this.healthscore = helthscore;
+		public void setHealthscore(int healthscore) {
+			this.healthscore = healthscore;
 		}
 
 
-
-
+		@SuppressWarnings("exports")
 		public Image getImage() {
 			return image;
 		}
 
 
-
-
-		public void setImage(Image image) {
+		public void setImage(@SuppressWarnings("exports") Image image) {
 			this.image = image;
 		}
 
 
-
-
-		
-
-
-		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<String> listQuantity,
-				ArrayList<String> listMissedIngredient, ArrayList<String> listUsedIngredient,
-				ArrayList<String> listSteps, int servings, int healthscore, Image image) {
+		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<Double> listQuantity,
+				ArrayList<String> listUnits, ArrayList<String> listMissedIngredient,
+				ArrayList<String> listUsedIngredient, ArrayList<String> listSteps, int servings, int healthscore,
+				@SuppressWarnings("exports") Image image) {
 			super();
 			this.name = name;
 			this.idApi = idApi;
 			this.listIngredient = listIngredient;
-			this.listIngredientQuantity = listQuantity;
+			this.listQuantity = listQuantity;
+			this.listUnits = listUnits;
 			this.listMissedIngredient = listMissedIngredient;
 			this.listUsedIngredient = listUsedIngredient;
 			this.listSteps = listSteps;
@@ -191,6 +159,8 @@ public class Recette {
 			this.healthscore = healthscore;
 			this.image = image;
 		}
+
+
 		public Recette(String name, int idApi) {
 			super();
 			this.name = name;

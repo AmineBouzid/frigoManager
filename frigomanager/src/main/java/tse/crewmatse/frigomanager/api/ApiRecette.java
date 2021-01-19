@@ -8,11 +8,7 @@ package tse.crewmatse.frigomanager.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-
-import javax.imageio.ImageIO;
-
 import javafx.scene.image.Image;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -21,10 +17,8 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import org.json.JSONObject;
-
 import tse.crewmatse.frigomanager.util.Ingredients;
 import tse.crewmatse.frigomanager.util.Recette;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -112,7 +106,8 @@ public class ApiRecette {
     		ArrayList<String> listMissedIngredient = new ArrayList<>();
     		ArrayList<String> listUsedIngredient = new ArrayList<>();
     		ArrayList<String> listSteps = new ArrayList<>();
-    		ArrayList<String> listIngredientQuantity = new ArrayList<>();
+    		ArrayList<Double> listQuantity = new ArrayList<>();
+    		ArrayList<String> listUnits = new ArrayList<>();
     		
     		String imageUrl = inf.getString("image");
     		Image image = new Image(imageUrl);
@@ -122,23 +117,19 @@ public class ApiRecette {
     		for (int j = 0;j<usedIngredient.length();j++) {
     			listIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
     			listUsedIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
-    			String n = usedIngredient.getJSONObject(j).getString("name");
-    			Double q = usedIngredient.getJSONObject(j).getDouble("amount");
-    			String s = n + ": " + q + " " + usedIngredient.getJSONObject(j).getString("unitLong");
-    			listIngredientQuantity.add(s);
+    			listQuantity.add(usedIngredient.getJSONObject(j).getDouble("amount"));
+    			listUnits.add(usedIngredient.getJSONObject(j).getString("unitLong"));
     		};
     		for (int j = 0;j<missedIngredient.length();j++) {
     			listIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
     			listMissedIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
-    			String n = missedIngredient.getJSONObject(j).getString("name");
-    			Double q = missedIngredient.getJSONObject(j).getDouble("amount");
-    			String s = n + ": " + q + " " + missedIngredient.getJSONObject(j).getString("unitLong");
-    			listIngredientQuantity.add(s);
+    			listQuantity.add(missedIngredient.getJSONObject(j).getDouble("amount"));
+    			listUnits.add(missedIngredient.getJSONObject(j).getString("unitLong"));
     		};
     		for (int j = 0;j<steps.length();j++) {
     			JSONArray stepsInformation = steps.getJSONObject(j).getJSONArray("steps");
     			for (int k = 0 ;k<stepsInformation.length();k++) {
-    				listSteps.add(stepsInformation.getJSONObject(k).getInt("number")+". "+stepsInformation.getJSONObject(k).getString("step"));
+    				listSteps.add(stepsInformation.getJSONObject(k).getString("step"));
     			};
     		};
     		
@@ -146,9 +137,8 @@ public class ApiRecette {
     		listMissedIngredient = new ArrayList<String>(new HashSet<String>(listMissedIngredient));
     		listUsedIngredient = new ArrayList<String>(new HashSet<String>(listUsedIngredient));
     		listSteps = new ArrayList<String>(new HashSet<String>(listSteps));
-    		Collections.sort(listSteps);
-    		Collections.reverse(listSteps);
-    		Recette r = new Recette(name,id,listIngredient,listIngredientQuantity,listMissedIngredient,listUsedIngredient,listSteps,servings,healthscore,image);
+    		
+    		Recette r = new Recette(name,id,listIngredient,listQuantity,listUnits,listMissedIngredient,listUsedIngredient,listSteps,servings,healthscore,image);
     		result.add(r);
     	};
     	return result;
