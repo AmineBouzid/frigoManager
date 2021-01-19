@@ -195,8 +195,8 @@ public class Recette {
 			super();
 			this.name = name;
 			this.idApi = idApi;
-
 		}
+		
 
 
 

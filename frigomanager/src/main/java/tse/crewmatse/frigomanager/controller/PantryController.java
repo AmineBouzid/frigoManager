@@ -197,7 +197,7 @@ public class PantryController implements Initializable {
 				String[] parts = quantity_fromDB.split("\\s+");
 				String quantity_temp = String.valueOf(Double.valueOf(parts[0]) + Double.valueOf(quantityField.getText()));
 				quantity = quantity_temp.concat(" " + unitChoiceBox.getSelectionModel().getSelectedItem().toString());
-				DatabaseController.updateItemInTable(selectedApiResult.getIdApi(), quantity);
+				DatabaseController.updateItemInTable(selectedApiResult.getIdApi(), quantity, datePicker.getValue().toString());
 				
 			} else {
 				DatabaseController.addItemInTable(selectedApiResult.getIdApi(), selectedApiResult.getNameFood(),

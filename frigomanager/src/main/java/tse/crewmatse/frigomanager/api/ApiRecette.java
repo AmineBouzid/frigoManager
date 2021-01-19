@@ -45,7 +45,7 @@ public class ApiRecette {
 	}
 	
 	public static String urlRecette(ArrayList<Ingredients> ingredients) {
-		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=81864c9e51a048cda9377275626cd6b8&ingredients=";
+		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=244bcc1fa9f84039951a54e8926203dc&ingredients=";
 		for (int i =0;i<ingredients.size();i++) {
 			if (i!=0) {
 				url+=",+";
@@ -57,12 +57,12 @@ public class ApiRecette {
 	}
 	
 	public static String urlSteps(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=81864c9e51a048cda9377275626cd6b8";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=244bcc1fa9f84039951a54e8926203dc";
 		return url;
 	};
 	
 	public static String urlInf(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=81864c9e51a048cda9377275626cd6b8";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=244bcc1fa9f84039951a54e8926203dc";
 		return url;
 		// 81864c9e51a048cda9377275626cd6b8
 		// 244bcc1fa9f84039951a54e8926203dc

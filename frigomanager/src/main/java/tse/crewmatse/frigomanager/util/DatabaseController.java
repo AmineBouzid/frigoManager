@@ -128,7 +128,7 @@ public class DatabaseController {
 		}
 	}
 	
-	public static void updateItemInTable(String apiID, String quantity)
+	public static void updateItemInTable(String apiID, String quantity,String expirationdate)
 	{
 		try {
 			try {
@@ -143,11 +143,12 @@ public class DatabaseController {
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 			statement = connection.createStatement();
 			statement.setQueryTimeout(30);
-			PreparedStatement pS = connection.prepareStatement("Update Pantry set quantity = ? WHERE apiID = ? ");
+			PreparedStatement pS = connection.prepareStatement("Update Pantry set quantity = ?, expirationDate= ? WHERE apiID = ? ");
 			pS.setQueryTimeout(30);
 			
 			pS.setString(1, quantity);
-			pS.setString(2, apiID); // HERE  replace 12 with the id returned by a http request to api
+			pS.setString(2,expirationdate);
+			pS.setString(3, apiID); // HERE  replace 12 with the id returned by a http request to api
 			pS.executeUpdate();
 			pS.close();
 			connection.close();
