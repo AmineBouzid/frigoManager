@@ -49,10 +49,13 @@ public class RecipeViewController implements Initializable{
 		int nIngredients = r.getListIngredient().size();
 		int nSteps = r.getListSteps().size();
 		
-		
-		for (int i = 0;i<nSteps;i++) {
-			stepsListView.getItems().add((i+1)+". "+r.getListSteps().get(nSteps-1-i));
-		};
+		if (r.getListSteps().size()==0) {
+			stepsListView.getItems().add("Sorry there are not steps for this recipe!");
+		} else {
+			for (int i = 0;i<nSteps;i++) {
+				stepsListView.getItems().add((i+1)+". "+r.getListSteps().get(nSteps-1-i));
+			};
+		}
 		
 		for (int i = 0;i<nIngredients;i++) {
 			String s = r.getListIngredient().get(i) + ": " + r.getListQuantity().get(i) + " " + r.getListUnits().get(i);

@@ -44,6 +44,8 @@ public class RecipeController implements Initializable{
 	@FXML private ProgressIndicator progressBar;
 	
 	public static Recette selectedRecipe;
+	public static ArrayList<Ingredients> selectedIngredients = new ArrayList<Ingredients>();
+	public static ArrayList<Recette> searchRecipes = new ArrayList<Recette>();
 	
 	public static Recette getSelectedRecipe() {
 		return selectedRecipe;
@@ -213,7 +215,7 @@ public class RecipeController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
+
 		// progressBar.setVisible(false);
 		colFood.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("nameFood"));
 		colExpiration.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("date"));
@@ -222,7 +224,17 @@ public class RecipeController implements Initializable{
 		colRecipe.setCellValueFactory( new PropertyValueFactory<Recette,String>("name"));
 		colUsed.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listUsedIngredient"));
 		colMissed.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listMissedIngredient"));
+		if (selectedIngredients!=null) {
+			for (int i=0;i<selectedIngredients.size();i++) {
+				getSelectedTableView().getItems().add(selectedIngredients.get(i));
+			}
+		}
 		
+		if (getSelectedTableView().getItems().size()!=0) {
+			for (int i=0;i<searchRecipes.size();i++) {
+				getRecipeTableView().getItems().add(searchRecipes.get(i));
+			}
+		}
 		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 	    	public void handle(MouseEvent event) {
@@ -232,7 +244,6 @@ public class RecipeController implements Initializable{
 	    			try {
 						App.setRoot("recipeView");
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 	    		}
@@ -252,12 +263,18 @@ public class RecipeController implements Initializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 	
 	@FXML
 	private void addButtonAction() {
 		Ingredients toAdd = getPantryTableView().getSelectionModel().getSelectedItem();
-		getSelectedTableView().getItems().add(toAdd);
+		if (!getSelectedTableView().getItems().contains(toAdd)) {
+			getSelectedTableView().getItems().add(toAdd);
+			selectedIngredients.add(toAdd);
+		}
+		
 	}
 	
 	@FXML
@@ -274,7 +291,7 @@ public class RecipeController implements Initializable{
 		for (int i = 0;i<listRecettes.size();i++) {
 			getRecipeTableView().getItems().add(listRecettes.get(i));
 		};
-		getSelectedTableView().getItems().clear();
+		searchRecipes=listRecettes;
 		//progressBar.setVisible(false);
 	}
 	
@@ -284,6 +301,7 @@ public class RecipeController implements Initializable{
 	private void deleteButtonAction() {
 		int i = getSelectedTableView().getSelectionModel().getSelectedIndex();
 		getSelectedTableView().getItems().remove(i);
+		selectedIngredients.remove(i);
 	}
 	
 	@FXML
