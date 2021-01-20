@@ -149,23 +149,6 @@ public class ApiRecette {
     	return result;
     };
     
-    public static void main(String[] args) throws JSONException, IOException {
-		Ingredients ing1 = new Ingredients();
-		ing1.setNameFood("unsalted butter");
-		Ingredients ing3 = new Ingredients();
-		ing3.setNameFood("Apple Country Apples");
-		Ingredients ing2 = new Ingredients();
-		ing2.setNameFood("flour");
-		ArrayList<Ingredients> list = new ArrayList<Ingredients>();
-		list.add(ing1);
-		list.add(ing3);
-		list.add(ing2);
-		
-		JSONArray r = urltoJsonArray(urlRecette(list));
-		ArrayList<Recette> listR = parse(r);
-		for(int i = 0;i<listR.size();i++) {
-			listR.get(i).display();
-		};
-	}
+
 
 }

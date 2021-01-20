@@ -311,6 +311,8 @@ public class RecipeController implements Initializable{
 			listIngredients.add(ing.get(i));
 		};
 		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonArray(ApiRecette.urlRecette(listIngredients)));
+		
+		
 		for (int i = 0;i<listRecettes.size();i++) {
 			getRecipeTableView().getItems().add(listRecettes.get(i));
 		};
