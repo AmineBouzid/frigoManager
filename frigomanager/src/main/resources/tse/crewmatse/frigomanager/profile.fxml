@@ -139,7 +139,7 @@
                   <TextField fx:id="heightTxtField" centerShape="false" prefHeight="25.0" prefWidth="82.0" scaleShape="false" />
                   <Label text="Weight " />
                   <TextField fx:id="weightTxtField" prefHeight="25.0" prefWidth="75.0" />
-                  <RadioButton fx:id="radioButtonHealthy" mnemonicParsing="false" text="Healthy Mode">
+                  <RadioButton fx:id="radioButtonHealthy" mnemonicParsing="false" onAction="#isHealthy" text="Healthy Mode">
                      <VBox.margin>
                         <Insets bottom="4.0" top="4.0" />
                      </VBox.margin>

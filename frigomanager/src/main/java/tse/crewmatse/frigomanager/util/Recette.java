@@ -7,7 +7,7 @@ package tse.crewmatse.frigomanager.util;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 
-public class Recette {
+public class Recette implements Comparable<Recette>{
 		private String name;
 		private int idApi;
 		private ArrayList<String> listIngredient;
@@ -178,6 +178,15 @@ public class Recette {
 			this.name = name;
 			this.idApi = idApi;
 		}
+
+
+		@Override
+		public int compareTo(Recette r) {
+			return (this.getHealthscore()-r.getHealthscore());
+		}
+
+
+		
 		
 
 

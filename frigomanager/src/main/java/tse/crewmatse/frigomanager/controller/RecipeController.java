@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import javax.sql.rowset.CachedRowSet;
@@ -312,6 +313,21 @@ public class RecipeController implements Initializable{
 			listIngredients.add(ing.get(i));
 		};
 		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonArray(ApiRecette.urlRecette(listIngredients)));
+		try {
+			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+			while (rs.next()) {
+				
+				if (rs.getBoolean("HealthyMode")) {
+					Collections.sort(listRecettes);
+				}
+			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		for (int i = 0;i<listRecettes.size();i++) {
