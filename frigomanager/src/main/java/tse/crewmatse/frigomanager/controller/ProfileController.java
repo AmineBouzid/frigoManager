@@ -452,7 +452,11 @@ public class ProfileController  implements Initializable{
 			}	
 	}
 	
-	
+	@FXML
+	private void isHealthy() {
+		
+		System.out.println("u are healthy");
+	}
 	
     
     
