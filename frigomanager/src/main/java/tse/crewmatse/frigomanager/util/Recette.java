@@ -180,6 +180,14 @@ public class Recette implements Comparable<Recette>{
 		}
 
 
+		public Recette(String name2, int id, ArrayList<String> listIngredient2) {
+			super();
+			this.name = name2;
+			this.idApi = id;
+			this.listIngredient = listIngredient2;
+		}
+
+
 		@Override
 		public int compareTo(Recette r) {
 			return (this.getHealthscore()-r.getHealthscore());

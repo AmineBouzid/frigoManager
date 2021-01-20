@@ -67,14 +67,14 @@
          <children>
             <TabPane prefHeight="558.0" prefWidth="949.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
               <tabs>
-                <Tab text="Featured Recipes">
+                <Tab text="Suggested Recipes">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="RecipesTableView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <TableView fx:id="recipeTableView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Recipe" />
-                                  <TableColumn prefWidth="75.0" text="Ingredients" />
+                                  <TableColumn fx:id="colRecipe" prefWidth="75.0" text="Recipe" />
+                                  <TableColumn fx:id="colIngredients" prefWidth="75.0" text="Ingredients" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -7,9 +7,15 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.ResourceBundle;
+
+import javax.sql.rowset.CachedRowSet;
+
+import org.json.JSONException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,8 +25,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import tse.crewmatse.frigomanager.App;
+import tse.crewmatse.frigomanager.api.ApiRecette;
 import tse.crewmatse.frigomanager.util.DatabaseController;
 import tse.crewmatse.frigomanager.util.Ingredients;
+import tse.crewmatse.frigomanager.util.Recette;
 
 /**
  * 
@@ -40,8 +48,7 @@ public class AlertController implements Initializable {
 	private TableView<Ingredients> ExpirationTableView;
 	@FXML
 	private TableView<Ingredients> IngredientsTableView;
-	@FXML
-	private TableView<Ingredients> RecipesTableView;
+	
 	@FXML
 	private TableColumn<Ingredients, String> colFood;
 	@FXML
@@ -50,6 +57,10 @@ public class AlertController implements Initializable {
 	private TextField foodField;
 	@FXML
 	private DatePicker datePicker;
+	
+	@FXML private TableView<Recette> recipeTableView;
+	@FXML private TableColumn<Recette, String> colRecipe;
+	@FXML private TableColumn<Recette, ArrayList<String>> colIngredients;
 
 	@FXML
 	private void switchToProfile() throws IOException {
@@ -87,14 +98,39 @@ public class AlertController implements Initializable {
 	public TableView getExpirationView() {
 		return this.ExpirationTableView;
 	}
+	public TableView<Recette> getRecipeTableView() {
+		return recipeTableView;
+	}
 
+	public void setRecipeTableView(TableView<Recette> recipeTableView) {
+		this.recipeTableView = recipeTableView;
+	}
+
+	public TableColumn<Recette, String> getColRecipe() {
+		return colRecipe;
+	}
+
+	public void setColRecipe(TableColumn<Recette, String> colRecipe) {
+		this.colRecipe = colRecipe;
+	}
+
+	public TableColumn<Recette, ArrayList<String>> getColIngredients() {
+		return colIngredients;
+	}
+
+	public void setColIngredients(TableColumn<Recette, ArrayList<String>> colIngredients) {
+		this.colIngredients = colIngredients;
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
 
 		colFood.setCellValueFactory(new PropertyValueFactory<Ingredients, String>("nameFood"));
 		colExpiration.setCellValueFactory(new PropertyValueFactory<Ingredients, String>("date"));
-
+		colRecipe.setCellValueFactory( new PropertyValueFactory<Recette,String>("name"));
+		colIngredients.setCellValueFactory( new PropertyValueFactory<Recette,ArrayList<String>>("listIngredient"));
+	
 		try {
 
 			ResultSet rs = DatabaseController.getIngredientsClostoBeExpired();
@@ -106,9 +142,21 @@ public class AlertController implements Initializable {
 
 			}
 			rs.close();
+			fillRecipeTableView();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void fillRecipeTableView() {
+		try {
+			ArrayList<Recette> recipes = ApiRecette.getRandomRecipes();		
+			for (int i = 0;i<recipes.size();i++) {
+				getRecipeTableView().getItems().add(recipes.get(i));
+			};
+		} catch (JSONException | IOException e ) {
 			e.printStackTrace();
 		}
 	}
