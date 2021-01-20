@@ -124,7 +124,8 @@ public class HomeController implements Initializable{
 			    }
 			 
 			 CachedRowSet lastViewedRecipes = DatabaseController.getLastViewedRecipes(loadedUser);
-			 while ( lastViewedRecipes.next()) {
+			 lastViewedRecipes.afterLast();
+			 while ( lastViewedRecipes.previous()) {
 				 Recette toAdd = new Recette ( lastViewedRecipes.getString("recipeName"), lastViewedRecipes.getInt("recipeId"));
 				 getLastViewedRecipestableView().getItems().add(toAdd);
 			 }
