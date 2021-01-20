@@ -643,7 +643,165 @@ public static CachedRowSet getIngredientsClostoBeExpired() throws SQLException {
 		
 	}
 
+public static void addFavouriteRecipe(int idRecipe, int user, String name) {
+	ResultSet rs = null;
+	try {
+		try {
+			if(connection != null)
+				connection.close();
+			if(statement != null)
+				statement.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		Class.forName("org.sqlite.JDBC");
+		connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		PreparedStatement pS = connection.prepareStatement("insert into favouriteRecipes(recipeId, user, recipeName) values (?,?,?)");
+		pS.setQueryTimeout(30);
+		pS.setInt(1,idRecipe);
+		pS.setInt(2, user);
+		pS.setString(3, name);
+		pS.executeUpdate();
+		pS.close();
+		connection.close();
+		statement.close();
+
+		
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	finally {
+        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
+        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        if (rs!=null) try {rs.close();} catch (SQLException ignore) {}
+	}
+	
 }
+
+public static void deleteFavouriteRecipe(int idRecipe, int user) {
+	ResultSet rs = null;
+	try {
+		try {
+			if(connection != null)
+				connection.close();
+			if(statement != null)
+				statement.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		Class.forName("org.sqlite.JDBC");
+		connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		PreparedStatement pS = connection.prepareStatement("delete from favouriteRecipes where recipeId=? AND user=?");
+		pS.setQueryTimeout(30);
+		pS.setInt(1,idRecipe);
+		pS.setInt(2, user);
+		pS.executeUpdate();
+		pS.close();
+		connection.close();
+		statement.close();
+
+		
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	finally {
+        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
+        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        if (rs!=null) try {rs.close();} catch (SQLException ignore) {}
+	}
+	
+}
+
+public static void deleteUser(String username) {
+	ResultSet rs = null;
+	try {
+		try {
+			if(connection != null)
+				connection.close();
+			if(statement != null)
+				statement.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		Class.forName("org.sqlite.JDBC");
+		connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		PreparedStatement pS = connection.prepareStatement("delete from User where Username=?");
+		pS.setQueryTimeout(30);
+		pS.setString(1,username);
+		pS.executeUpdate();
+		pS.close();
+		connection.close();
+		statement.close();
+
+		
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	finally {
+        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
+        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+        if (rs!=null) try {rs.close();} catch (SQLException ignore) {}
+	}
+	
+}
+
+public static CachedRowSet getFavouriteRecipe(int user) throws SQLException {
+	CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
+	ResultSet rs = null;
+	try {
+		try {
+			if(connection != null)
+				connection.close();
+			if(statement != null)
+				statement.close();
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+		Class.forName("org.sqlite.JDBC");
+		connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
+		PreparedStatement pS = connection.prepareStatement("select * from favouriteRecipes where user = ?");	
+		pS.setQueryTimeout(30);
+		pS.setInt(1, user);
+		rs = pS.executeQuery();
+		crs.populate(rs);
+		rs.close();
+		connection.close();
+		statement.close();
+		pS.close();
+	} catch (ClassNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	//Connection connection = null;
+	catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} 
+	finally {
+		if (rs != null) try { rs.close(); } catch (SQLException ignore) {}
+        if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
+        if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
+       
+	}
+	
+	return crs;
+}
+
+}
+
+
 
 
 

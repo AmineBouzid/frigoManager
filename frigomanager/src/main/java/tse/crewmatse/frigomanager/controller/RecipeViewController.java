@@ -30,6 +30,7 @@ public class RecipeViewController implements Initializable{
 	@FXML private Label servings;
 	@FXML private ImageView recipeImage;
 	@FXML private Button quitButton;
+	@FXML private Button favouriteButton;
 	@FXML private ListView<String> stepsListView;
 	@FXML private ListView<String> ingredientsListView;
 	
@@ -86,6 +87,25 @@ public class RecipeViewController implements Initializable{
 		};
 		
 	}
+	
+	@FXML
+    private void addToFavourite() throws IOException {
+		Recette r = RecipeController.getSelectedRecipe();
+		int loadedUser = 0;
+		try {
+			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+			 while (rs.next()) {
+				 loadedUser = rs.getInt("UserID");
+			    }
+			 DatabaseController.addFavouriteRecipe(r.getIdApi(),loadedUser, r.getName());
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 	
 	@FXML
     private void plus() throws IOException {
