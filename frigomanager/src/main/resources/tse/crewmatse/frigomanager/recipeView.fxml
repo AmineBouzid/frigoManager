@@ -7,14 +7,12 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.RecipeViewController">
    <top>
       <Label fx:id="recipeTitle" BorderPane.alignment="CENTER" />
    </top>
-   <bottom>
-      <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" text="Quitter" BorderPane.alignment="BOTTOM_RIGHT" />
-   </bottom>
    <left>
       <SplitPane fx:id="s" dividerPositions="0.35241248817407755" orientation="VERTICAL" prefHeight="425.0" prefWidth="199.0" BorderPane.alignment="CENTER">
         <items>
@@ -41,4 +39,12 @@
          </children>
       </AnchorPane>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="25.0" prefWidth="698.0" spacing="400.0">
+         <children>
+            <Button fx:id="favouriteButton" onAction="#addToFavourite" alignment="BASELINE_RIGHT" mnemonicParsing="false" text="Add to favourite" />
+            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" text="Quit" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

@@ -24,13 +24,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.userprofile.UserProfile;
 import tse.crewmatse.frigomanager.util.DatabaseController;
 import tse.crewmatse.frigomanager.util.Ingredients;
+import tse.crewmatse.frigomanager.util.Recette;
 
 import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetProvider;
@@ -54,7 +58,11 @@ public class ProfileController  implements Initializable{
 	@FXML private  Button modifButtonProfile;
 	@FXML private RadioButton radioButtonHealthy;
 	@FXML private  Label labelIMCmean;
-	
+	@FXML private TableView<Recette> favoriteRecipesList;
+    @FXML private TableColumn<Recette, String> colFavName;
+    @FXML private  Button favoriteRecipeDelete;
+    
+    
 	public UserProfile user = null;
 	
     @FXML
@@ -82,7 +90,29 @@ public class ProfileController  implements Initializable{
         App.setRoot("alerts");
     }
 
-    
+	public TableView<Recette> getFavoriteRecipesList() {
+		return favoriteRecipesList;
+	}
+
+	public void setFavoriteRecipesList(TableView<Recette> favoriteRecipesList) {
+		this.favoriteRecipesList = favoriteRecipesList;
+	}
+
+	public TableColumn<Recette, String> getColFavName() {
+		return colFavName;
+	}
+
+	public void setColFavName(TableColumn<Recette, String> colFavName) {
+		this.colFavName = colFavName;
+	}
+
+	public Button getFavoriteRecipeDelete() {
+		return favoriteRecipeDelete;
+	}
+
+	public void setFavoriteRecipeDelete(Button favoriteRecipeDelete) {
+		this.favoriteRecipeDelete = favoriteRecipeDelete;
+	}
    
     public RadioButton getradioButtonHealthy() {
 		return radioButtonHealthy;
@@ -238,6 +268,43 @@ public class ProfileController  implements Initializable{
         getchoiceBoxProfile().getItems().addAll(profileList);
 	}
 	
+	public void populateFavouriteTable() {
+		int loadedUser = 0;
+		try {
+			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+			 while (rs.next()) {
+				 loadedUser = rs.getInt("UserID");
+			    }
+			 rs.close();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+		colFavName.setCellValueFactory(new PropertyValueFactory<Recette,String>("name"));
+		
+		try {
+			CachedRowSet rs1 = DatabaseController.getFavouriteRecipe(loadedUser);
+			 while (rs1.next()) {
+					 Recette toAdd = new Recette ( rs1.getString("recipeName"), rs1.getInt("recipeId"));
+					 getFavoriteRecipesList().getItems().add(toAdd);
+				 }
+				 rs1.close();
+			 } 
+		catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -249,7 +316,9 @@ public class ProfileController  implements Initializable{
 		
 		populateUserChoiceBox();
 		
-	
+		populateFavouriteTable();
+		
+		
 		try {
 			CachedRowSet rs = DatabaseController.loadUserWithLoadedStateForInitialize();
 			 while (rs.next()) {
@@ -310,6 +379,37 @@ public class ProfileController  implements Initializable{
 		}	
 	}
 	
+	
+	@FXML
+	private void deleteFavouriteButtonAction() {
+		int loadedUser = 0;
+		try {
+			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+			 while (rs.next()) {
+				 loadedUser = rs.getInt("UserID");
+			    }
+			 rs.close();
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try {
+			int id = getFavoriteRecipesList().getSelectionModel().getSelectedItem().getIdApi();
+			int id_table = getFavoriteRecipesList().getSelectionModel().getSelectedIndex();
+			DatabaseController.deleteFavouriteRecipe(id,loadedUser);
+			getFavoriteRecipesList().getItems().remove(id_table);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	@FXML
 	private void saveButtonAction() {
 		String username = getusernameTxtField().getText();
@@ -331,6 +431,36 @@ public class ProfileController  implements Initializable{
 		DatabaseController.saveUserInfo(username, FirstName, LastName, userGender, Height, Weight, HealthyMode, birthDate);
 		}
 		populateUserChoiceBox();
+		user.setusername(username);
+		user.setUserFirstName(FirstName);
+		user.setUserLastName(LastName);
+		user.setuserGender(userGender);
+		user.setUserHeight(Height);
+		user.setUserWeight(Weight);
+		user.setHealthyMode(HealthyMode);
+		user.setbirthDate(birthDate);
+		user.calculateBMI();
+		user.calculateIdealWeight();
+		getWeightTxtImc().setText(String.format("%.2f",user.getUserBMI()));			
+		getWeightTxtMaxWeight().setText(String.format("%.2f", user.getIdealWeightMax()));
+		getWeightTxtMinWeight().setText(String.format("%.2f", user.getIdealWeightMin()));
+		double a=user.getUserBMI();
+		if(a>=30) {
+			weightTxtImc.setStyle("-fx-text-inner-color: purple;");
+			labelIMCmean.setText("You are obese");
+			labelIMCmean.setTextFill(Color.PURPLE);
+		} else {
+			if(a<18.5 || a>=25) {
+			weightTxtImc.setStyle("-fx-text-inner-color: red;");
+				if(a<18.5)labelIMCmean.setText("You are underweight.");
+				else labelIMCmean.setText("You are overweight.");
+			labelIMCmean.setTextFill(Color.RED);
+			} else {
+			weightTxtImc.setStyle("-fx-text-inner-color: green;");
+			labelIMCmean.setText("Your weight is Healthy");
+			labelIMCmean.setTextFill(Color.GREEN);
+			}
+		}	
 	}
 	
 	@FXML
@@ -449,14 +579,31 @@ public class ProfileController  implements Initializable{
 				labelIMCmean.setText("Your weight is Healthy");
 				labelIMCmean.setTextFill(Color.GREEN);
 				}
-			}	
+			}
+			getFavoriteRecipesList().getItems().clear();
+			populateFavouriteTable();
 	}
 	
 	@FXML
-	private void isHealthy() {
-		
-		System.out.println("u are healthy");
+	private void deleteButtonAction() throws SQLException {
+			String username = getchoiceBoxProfile().getSelectionModel().getSelectedItem().toString();
+			
+			try {
+				DatabaseController.deleteUser(username);
+				//double userWeight, double userHeight,String username, String userFirstName, String userLastName, String userGender,boolean healthyMode, Date birthDate, int userId
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			populateUserChoiceBox();
 	}
+	@FXML
+    private void isHealthy() {
+
+        System.out.println("u are healthy");
+    }
+	
+	
 	
     
     
