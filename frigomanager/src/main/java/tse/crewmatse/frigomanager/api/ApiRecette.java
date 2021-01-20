@@ -39,7 +39,7 @@ public class ApiRecette {
 	}
 	
 	public static String urlRecette(ArrayList<Ingredients> ingredients) {
-		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=81864c9e51a048cda9377275626cd6b8&ingredients=";
+		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=b08d5d7f88ee4a9f86823069e845b548&ingredients=";
 		for (int i =0;i<ingredients.size();i++) {
 			if (i!=0) {
 				url+=",+";
@@ -51,17 +51,17 @@ public class ApiRecette {
 	}
 	
 	public static String urlSteps(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=81864c9e51a048cda9377275626cd6b8";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=b08d5d7f88ee4a9f86823069e845b548";
 		return url;
 	};
 	
 	public static String urlCal(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/nutritionWidget.json?apiKey=81864c9e51a048cda9377275626cd6b8";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/nutritionWidget.json?apiKey=b08d5d7f88ee4a9f86823069e845b548";
 		return url;
 	};
 	
 	public static String urlInf(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=81864c9e51a048cda9377275626cd6b8";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=b08d5d7f88ee4a9f86823069e845b548";
 		return url;
 		// 81864c9e51a048cda9377275626cd6b8
 		// 244bcc1fa9f84039951a54e8926203dc
@@ -108,6 +108,7 @@ public class ApiRecette {
     		JSONArray steps = urltoJsonArray(urlSteps(id));
     		JSONObject inf = urltoJsonObject(urlInf(id));
     		JSONObject cal = urltoJsonObject(urlCal(id));
+    		JSONArray ing = inf.getJSONArray("extendedIngredients");
     		ArrayList<String> listIngredient = new ArrayList<>();
     		ArrayList<String> listMissedIngredient = new ArrayList<>();
     		ArrayList<String> listUsedIngredient = new ArrayList<>();
@@ -119,17 +120,16 @@ public class ApiRecette {
     		int healthscore = inf.getInt("healthScore");
     		int servings = inf.getInt("servings");
     		String calories = cal.getString("calories");
+    		for (int j = 0;j<ing.length();j++) {
+    			listIngredient.add(ing.getJSONObject(j).getString("originalName"));
+    			listQuantity.add(ing.getJSONObject(j).getJSONObject("measures").getJSONObject("us").getDouble("amount"));
+    			listUnits.add(ing.getJSONObject(j).getJSONObject("measures").getJSONObject("us").getString("unitLong"));
+    		}
     		for (int j = 0;j<usedIngredient.length();j++) {
-    			listIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
     			listUsedIngredient.add(usedIngredient.getJSONObject(j).getString("name"));
-    			listQuantity.add(usedIngredient.getJSONObject(j).getDouble("amount"));
-    			listUnits.add(usedIngredient.getJSONObject(j).getString("unitLong"));
     		};
     		for (int j = 0;j<missedIngredient.length();j++) {
-    			listIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
     			listMissedIngredient.add(missedIngredient.getJSONObject(j).getString("name"));
-    			listQuantity.add(missedIngredient.getJSONObject(j).getDouble("amount"));
-    			listUnits.add(missedIngredient.getJSONObject(j).getString("unitLong"));
     		};
     		for (int j = 0;j<steps.length();j++) {
     			JSONArray stepsInformation = steps.getJSONObject(j).getJSONArray("steps");
@@ -138,7 +138,6 @@ public class ApiRecette {
     			};
     		};
     		
-    		listIngredient = new ArrayList<String>(new HashSet<String>(listIngredient));
     		listMissedIngredient = new ArrayList<String>(new HashSet<String>(listMissedIngredient));
     		listUsedIngredient = new ArrayList<String>(new HashSet<String>(listUsedIngredient));
     		listSteps = new ArrayList<String>(new HashSet<String>(listSteps));

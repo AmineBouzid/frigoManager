@@ -243,6 +243,7 @@ public class RecipeController implements Initializable{
 	    	public void handle(MouseEvent event) {
 	    		if (event.getClickCount() == 2) {
 	    			System.out.println(getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+	    			System.out.println(""+getRecipeTableView().getSelectionModel().getSelectedItem().getIdApi());
 	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
 	    			try {
 						App.setRoot("recipeView");
