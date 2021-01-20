@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import javax.sql.rowset.CachedRowSet;
+
 import org.json.JSONException;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -235,6 +238,26 @@ public class RecipeController implements Initializable{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+	    			
+	    			int loadedUserId = 0 ;
+                	try {
+            			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+            			 while (rs.next()) {
+            				 loadedUserId =rs.getInt("UserID");
+            			    }
+            			
+            			
+            		} catch (NumberFormatException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		} catch (SQLException e) {
+            			// TODO Auto-generated catch block
+            			e.printStackTrace();
+            		}
+                	DatabaseController.storeLastViewedRecipe(getRecipeTableView().getSelectionModel().getSelectedItem().getIdApi()
+                			, loadedUserId, getRecipeTableView().getSelectionModel().getSelectedItem().getName());
+
+
 	    		}
 	    	}
 		});
