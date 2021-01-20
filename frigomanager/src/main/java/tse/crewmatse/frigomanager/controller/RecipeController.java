@@ -15,7 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -44,8 +44,10 @@ public class RecipeController implements Initializable{
 	@FXML private Button addButton;
 	@FXML private Button deleteButton;
 	@FXML private Button searchButton;
-	@FXML private ProgressIndicator progressBar;
+	@FXML private ProgressBar loadingRecipes;
+		
 	
+
 	public static Recette selectedRecipe;
 	public static ArrayList<Ingredients> selectedIngredients = new ArrayList<Ingredients>();
 	public static ArrayList<Recette> searchRecipes = new ArrayList<Recette>();
@@ -176,13 +178,12 @@ public class RecipeController implements Initializable{
 		return searchButton;
 	}
 	
-	@SuppressWarnings("exports")
-	public ProgressIndicator getProgressBar() {
-		return progressBar;
+	public ProgressBar getLoadingRecipes() {
+		return loadingRecipes;
 	}
 
-	public void setProgressBar(@SuppressWarnings("exports") ProgressIndicator progressBar) {
-		this.progressBar = progressBar;
+	public void setLoadingRecipes(ProgressBar loadingRecipes) {
+		this.loadingRecipes = loadingRecipes;
 	}
 
 
@@ -218,8 +219,7 @@ public class RecipeController implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
-		// progressBar.setVisible(false);
+		loadingRecipes.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 		colFood.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("nameFood"));
 		colExpiration.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("date"));
 		colQuantity.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("quantity"));
@@ -302,10 +302,8 @@ public class RecipeController implements Initializable{
 	}
 	
 	@FXML
-	private void searchButtonAction() throws JSONException, IOException {
+	private void searchButtonAction() throws JSONException, IOException {		
 		getRecipeTableView().getItems().clear();
-		//progressBar.setVisible(true);
-		//progressBar.setProgress(-1);
 		ObservableList<Ingredients> ing = getSelectedTableView().getItems();
 		ArrayList<Ingredients> listIngredients = new ArrayList<Ingredients>();
 		for (int i = 0;i<ing.size();i++) {
@@ -318,7 +316,7 @@ public class RecipeController implements Initializable{
 			getRecipeTableView().getItems().add(listRecettes.get(i));
 		};
 		searchRecipes=listRecettes;
-		//progressBar.setVisible(false);
+		loadingRecipes.setProgress(100);
 	}
 	
 	
