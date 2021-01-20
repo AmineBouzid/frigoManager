@@ -147,7 +147,7 @@ public class HomeController implements Initializable{
 
 		try {
 
-			ResultSet rs = DatabaseController.getIngredientsClostoBeExpired(false);
+			ResultSet rs = DatabaseController.getIngredientsClostoBeExpired();
 			while (rs.next()) {
 				Ingredients toAdd = new Ingredients(rs.getString("apiID"), rs.getString("foodName"),
 						rs.getString("quantity"), rs.getString("expirationDate"));

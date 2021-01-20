@@ -601,7 +601,7 @@ public static void storeLastViewedRecipe(int id, int user, String name) {
 		return crs;
 	}
 
-public static CachedRowSet getIngredientsClostoBeExpired(boolean justFive) throws SQLException {
+public static CachedRowSet getIngredientsClostoBeExpired() throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
 		
@@ -618,12 +618,8 @@ public static CachedRowSet getIngredientsClostoBeExpired(boolean justFive) throw
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 		    statement = connection.createStatement();
 			statement.setQueryTimeout(30);
-			if(justFive) {
-				rs = statement.executeQuery("select * from Pantry where date('now', '+3 days') > date(\"expirationDate\") order by expirationDate asc LIMIT 5  ;");
-			}
-			else {
-				rs = statement.executeQuery("select * from Pantry where date('now', '+3 days') > date(\"expirationDate\");");
-			}
+				rs = statement.executeQuery("select * from Pantry where date('now', '+4 days') > date(\"expirationDate\");");
+			
 			 crs.populate(rs);
 			 rs.close();
 			connection.close();
