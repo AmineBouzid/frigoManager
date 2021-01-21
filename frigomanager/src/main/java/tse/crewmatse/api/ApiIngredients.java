@@ -12,7 +12,12 @@ import java.util.stream.Stream;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
+/**
+ * 
+ * @author LEKMAD
+ * This class manages the ingredient Api, it uses spoonacular api to get the data 
+ *
+ */
 
 public class ApiIngredients {
 
@@ -20,6 +25,11 @@ public class ApiIngredients {
 	private static HttpURLConnection connection;
 	private static HashMap<String, String> result;
 	
+	/**
+	 * 
+	 * @param keyword
+	 * @return Connects to the api and return an ingredient based on a keyword
+	 */
 	public static HashMap<String, String> apiConnectionAndTest(String keyword) {
 	
 		BufferedReader reader;
@@ -64,6 +74,11 @@ public class ApiIngredients {
 		return result;
 		
 	}
+	/**
+	 * 
+	 * @param responseBody
+	 * @return a hashmap containing the ID of an ingredient and its name
+	 */
 	
 	public static HashMap<String, String>  parse(String responseBody) {
 		HashMap<String, String> apiResponses = new HashMap<String, String>();
