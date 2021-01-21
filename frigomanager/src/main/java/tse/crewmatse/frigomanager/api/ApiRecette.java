@@ -32,10 +32,11 @@ import org.json.JSONException;
  *		// 7bf95295ec3e40eaad42f4c49b80c864
  *		// b08d5d7f88ee4a9f86823069e845b548
  *		// a42249d17e734eba97d81142ec081884
+ *      // 7bf70bf5cac046ffa913edb188647024
  **/
 
 public class ApiRecette {
-	private static final String API_KEY = "244bcc1fa9f84039951a54e8926203dc";
+	private static final String API_KEY = "7bf70bf5cac046ffa913edb188647024";
 	public static String ingredientToUrl(Ingredients ingredient) {
 		String ingredientUrl = "";
 		for (int i = 0;i<ingredient.getNameFood().length();i++) {
