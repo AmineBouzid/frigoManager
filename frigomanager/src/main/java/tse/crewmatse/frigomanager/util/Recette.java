@@ -1,12 +1,12 @@
-/**
- * @author Thomas
- *
- */
 package tse.crewmatse.frigomanager.util;
 
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 
+/**
+ * @author Thomas
+ *
+ */
 public class Recette implements Comparable<Recette>{
 	//Attributes List
 	private String name;
