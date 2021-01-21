@@ -18,6 +18,11 @@ public class DatabaseController {
 	private static Statement statement;
 	
 	
+	/**
+	 * This method is used to get all the ingredients stored in the pantry
+	 * @return A CachedRowSet containing the ingredients in the pantry, each ingredient having 
+	 * @throws SQLException
+	 */
 	public static CachedRowSet selectAllRows() throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -41,12 +46,9 @@ public class DatabaseController {
 			connection.close();
 			statement.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
