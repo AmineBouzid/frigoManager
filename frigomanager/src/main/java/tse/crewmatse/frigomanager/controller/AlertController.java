@@ -225,6 +225,10 @@ public class AlertController implements Initializable {
 	/**
 	 * This function opens the page where the user can see details about a double clicked suggested recipe
 	 **/
+	
+	/**
+	 * This function opens the page where the user can see details about a double clicked suggested recipe
+	 **/
 	public void showRecipeDetails() {
 		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
