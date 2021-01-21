@@ -39,30 +39,24 @@ public class ApiIngredients {
 			
 			int status = connection.getResponseCode();
 			
-			//System.out.println(status);
 			if(status > 299) {
 				reader = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
 				while((line = reader.readLine()) != null) {
-//					System.out.println(line);
 					responseContent.append(line);
 				}
 				reader.close();
 			}else {
 				reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				while((line = reader.readLine()) != null) {
-//					System.out.println(line.toString());
 					responseContent.append(line);
 				}
 				reader.close();
 			}
 			
 			result = parse(responseContent.toString());
-			//System.out.println(responseContent.toString());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			connection.disconnect();
@@ -81,18 +75,12 @@ public class ApiIngredients {
 			String foodId = food.getString("foodId");
 			String foodName = food.getString("label");
 			apiResponses.put(foodId, foodName);
-//			System.out.println("ID: "+ foodId + " name: " + foodName);
-
 		}
-//		System.out.println(apiResponses.toString());
+
 		return apiResponses;
 	}
 	
 	
-	public static void main(String[] args) {
-		apiConnectionAndTest("pizza");
-		
-		}
 	
 
 }
