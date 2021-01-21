@@ -24,6 +24,11 @@ import tse.crewmatse.frigomanager.util.Recette;
 import java.text.DecimalFormat;
 
 
+/**
+ * This class is the controller of the detailled view of a recipe, which appears when double clicking on it
+ * @author Thomas Blomme, Amine Bouzid
+ *
+ */
 public class RecipeViewController implements Initializable{
 	@FXML private SplitPane splitPane;
 	@FXML private Label recipeTitle;
@@ -40,6 +45,9 @@ public class RecipeViewController implements Initializable{
         App.setRoot("recipe");
     }
 	
+	/**
+	 * This method initializes the RecipeView with the data of the selected recipe in the page Recipe
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -88,6 +96,10 @@ public class RecipeViewController implements Initializable{
 		
 	}
 	
+	/**
+	 * This method let the user add the current recipe he his viewing in his favorites
+	 * @throws IOException
+	 */
 	@FXML
     private void addToFavourite() throws IOException {
 		Recette r = RecipeController.getSelectedRecipe();
@@ -107,6 +119,10 @@ public class RecipeViewController implements Initializable{
 		}
     }
 	
+	/**
+	 * This method handle the + button to augment the number of servings and the quantity of ingredients
+	 * @throws IOException
+	 */
 	@FXML
     private void plus() throws IOException {
 		DecimalFormat df = new DecimalFormat("#");
@@ -123,6 +139,10 @@ public class RecipeViewController implements Initializable{
 		};
     }
 	
+	/**
+	 * This method handle the - button to lower the number of servings and the quantity of ingredients
+	 * @throws IOException
+	 */
 	@FXML
     private void minus() throws IOException {
 		DecimalFormat df = new DecimalFormat("#.#");
@@ -143,6 +163,13 @@ public class RecipeViewController implements Initializable{
 		
     }
 	
+	/**
+	 * This method is used to make the ingredient quantity scalable with the number of servings
+	 * @param d
+	 * @param s
+	 * @param q
+	 * @return
+	 */
 	private String produitEnCroix(double d,double s,double q) {
 		double r = (d/s)*q;
 		DecimalFormat df = new DecimalFormat("#.#");
