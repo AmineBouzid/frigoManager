@@ -9,11 +9,14 @@ package tse.crewmatse.frigomanager.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+
 import javafx.scene.image.Image;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import org.json.JSONObject;
@@ -22,9 +25,17 @@ import tse.crewmatse.frigomanager.util.Recette;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-
+/**
+ * List of API KEYS:
+ * 		// 81864c9e51a048cda9377275626cd6b8
+ *		// 244bcc1fa9f84039951a54e8926203dc
+ *		// 7bf95295ec3e40eaad42f4c49b80c864
+ *		// b08d5d7f88ee4a9f86823069e845b548
+ *		// a42249d17e734eba97d81142ec081884
+ **/
 
 public class ApiRecette {
+	private static final String API_KEY = "a42249d17e734eba97d81142ec081884";
 	public static String ingredientToUrl(Ingredients ingredient) {
 		String ingredientUrl = "";
 		for (int i = 0;i<ingredient.getNameFood().length();i++) {
@@ -39,7 +50,8 @@ public class ApiRecette {
 	}
 	
 	public static String urlRecette(ArrayList<Ingredients> ingredients) {
-		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey=7bf95295ec3e40eaad42f4c49b80c864&ingredients=";
+		
+		String url="https://api.spoonacular.com/recipes/findByIngredients?apiKey="+API_KEY+"&ingredients=";
 		for (int i =0;i<ingredients.size();i++) {
 			if (i!=0) {
 				url+=",+";
@@ -51,22 +63,18 @@ public class ApiRecette {
 	}
 	
 	public static String urlSteps(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey=7bf95295ec3e40eaad42f4c49b80c864";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/analyzedInstructions?apiKey="+API_KEY;
 		return url;
 	};
 	
 	public static String urlCal(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/nutritionWidget.json?apiKey=7bf95295ec3e40eaad42f4c49b80c864";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/nutritionWidget.json?apiKey="+API_KEY;
 		return url;
 	};
 	
 	public static String urlInf(int apiId) {
-		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey=7bf95295ec3e40eaad42f4c49b80c864";
+		String url ="https://api.spoonacular.com/recipes/"+apiId+"/information?apiKey="+API_KEY;
 		return url;
-		// 81864c9e51a048cda9377275626cd6b8
-		// 244bcc1fa9f84039951a54e8926203dc
-		// 7bf95295ec3e40eaad42f4c49b80c864
-		// b08d5d7f88ee4a9f86823069e845b548
 	};
 	
 	private static String readAll(Reader rd) throws IOException {
@@ -150,6 +158,32 @@ public class ApiRecette {
     	return result;
     };
     
+    public static ArrayList<Recette> getRandomRecipes() throws IOException{
+    	ArrayList<Recette> result = new ArrayList<Recette>();
+    	String url = "https://api.spoonacular.com/recipes/random?number=10&apiKey="+API_KEY;
+    	JSONObject recipes =  urltoJsonObject(url);
+    	JSONArray recipesArray = recipes.getJSONArray("recipes");    
+    	for (int i = 0;i<recipesArray.length();i++) {
+    		ArrayList<String> listIngredient = new ArrayList<>();
+    		int id = recipesArray.getJSONObject(i).getInt("id");
+    		JSONObject inf = urltoJsonObject(urlInf(id));
+    		String imageUrl = new String();
+    		imageUrl = inf.getString("image");
+    		Image image = new Image(imageUrl);
+    		String summary = recipesArray.getJSONObject(i).getString("summary");
+    		String name = recipesArray.getJSONObject(i).getString("title");
+    		JSONArray ing = recipesArray.getJSONObject(i).getJSONArray("extendedIngredients");
+    		for (int j = 0;j<ing.length();j++) {
+    			listIngredient.add(ing.getJSONObject(j).getString("originalName"));
+    		}
+    		Recette r = new Recette(name,id,listIngredient,image,summary);
+    		result.add(r);
+    		
+    	}
+    	return result;
+    			
+    }
 
-
+   
+   
 }

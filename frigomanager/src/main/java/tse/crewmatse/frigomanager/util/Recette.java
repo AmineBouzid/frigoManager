@@ -20,7 +20,11 @@ public class Recette implements Comparable<Recette>{
 		private int healthscore;
 		private Image image;
 		private String cal;
+		private String summary;
 		
+		
+
+
 		public void display() {
 			System.out.println("Id : "+this.idApi+" | Name : "+this.name+ " | Servings : "+this.servings+" | Healthscore : "+this.healthscore+" | Ingredients :");
 			for (int i = 0;i<this.listIngredient.size();i++) {
@@ -151,6 +155,15 @@ public class Recette implements Comparable<Recette>{
 		public void setImage(@SuppressWarnings("exports") Image image) {
 			this.image = image;
 		}
+		
+		public String getSummary() {
+			return summary;
+		}
+
+
+		public void setSummary(String summary) {
+			this.summary = summary;
+		}
 
 
 		public Recette(String name, int idApi, ArrayList<String> listIngredient, ArrayList<Double> listQuantity,
@@ -177,6 +190,16 @@ public class Recette implements Comparable<Recette>{
 			super();
 			this.name = name;
 			this.idApi = idApi;
+		}
+
+
+		public Recette(String name2, int id, ArrayList<String> listIngredient2,@SuppressWarnings("exports") Image image,String summary) {
+			super();
+			this.name = name2;
+			this.idApi = id;
+			this.listIngredient = listIngredient2;
+			this.image = image;
+			this.summary = summary;
 		}
 
 
