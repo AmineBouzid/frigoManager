@@ -23,7 +23,7 @@ import org.json.JSONObject;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -40,10 +40,11 @@ import tse.crewmatse.frigomanager.util.Recette;
  * 
  * @author LEKMAD Mohamed
  * 
- *         This class manage notifications of our application. There are three
- *         types of notifications: 1.Close expiration dates: where we notify the
- *         user if an item is three days away from being expired. //TODO Add the
- *         other notifications
+ *         This class manages notifications of our application.
+ *         There are three types of notifications: 
+ *         		1.Close expiration dates: where we notify the
+ *         user if an item is three days away from being expired. 
+ *         		2.Missing Ingredients: 
  *  
  * 
  *
@@ -63,9 +64,9 @@ public class AlertController implements Initializable {
 	private TableColumn<Ingredients, String> colExpiration;
 	@FXML
 	private TextField foodField;
+	
 	@FXML
-	private DatePicker datePicker;
-
+	private Button loadButton;
 	@FXML
 	private TableColumn<Recette, String> colRecipe;
 	@FXML
@@ -103,10 +104,6 @@ public class AlertController implements Initializable {
 
 	public TextField getFoodField() {
 		return this.foodField;
-	}
-
-	public DatePicker getExpirationDate() {
-		return this.datePicker;
 	}
 
 	public TableView getExpirationView() {
@@ -172,8 +169,7 @@ public class AlertController implements Initializable {
 		colMissingIngredients.setCellValueFactory(new PropertyValueFactory<Recette, ArrayList<String>>("listIngredient"));
 
 		getCloseToExpireIngredients();
-		fillRecipeTableView();
-		showRecipeDetails();
+		
 		getMissingIngredients();
 
 	}
@@ -212,6 +208,11 @@ public class AlertController implements Initializable {
 		}
 	}
 
+	@FXML
+    private void loadSuggestedRecipes() throws IOException {
+		fillRecipeTableView();
+		showRecipeDetails();
+    }
 	public void showRecipeDetails() {
 		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
