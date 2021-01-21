@@ -231,5 +231,14 @@ public class Recette implements Comparable<Recette>{
 	public int compareTo(Recette r) {
 		return (this.getHealthscore()-r.getHealthscore());
 	}
+	public Recette(String name2, int id, ArrayList<String> listIngredient2,@SuppressWarnings("exports") Image image,String summary) {
+			super();
+			this.name = name2;
+			this.idApi = id;
+			this.listIngredient = listIngredient2;
+			this.image = image;
+			this.summary = summary;
+		}
+
 			
 }
