@@ -14,7 +14,11 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.RecipeDetailsController">
    <top>
-      <Label fx:id="recipeTitle" BorderPane.alignment="CENTER" />
+      <Label fx:id="recipeTitle" BorderPane.alignment="CENTER" >
+      	<font>
+          <Font name="System Bold" size="12.0" />
+     	</font>
+   	  </Label>
    </top>
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -37,7 +41,10 @@
                               <Insets top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <Label fx:id="summary" prefHeight="279.0" prefWidth="399.0" wrapText="true" />
+                        <Label fx:id="summary" prefHeight="279.0" prefWidth="399.0" wrapText="true">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin></Label>
                      </children>
                   </VBox>
                </children>
@@ -48,7 +55,10 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="25.0" prefWidth="698.0" spacing="400.0">
          <children>
-            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="53.0" text="Quit" />
+           <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quit" text="Click to go back" textFill="#ff0101">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </children>
       </HBox>
    </bottom>
