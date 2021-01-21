@@ -1,5 +1,6 @@
 /**
- * @author Guillaume
+ * This class is a controller for the page Pantry
+ * @author Guillaume Bayon, Amine Bouzid
  *
  */
 
@@ -64,7 +65,6 @@ public class PantryController implements Initializable {
 	private Button addButton;
 	@FXML
 	private Button searchButton;
-	// @FXML private ListView apiListView;
 	@FXML
 	private Button delButton;
 
@@ -141,9 +141,12 @@ public class PantryController implements Initializable {
 		return this.delButton;
 	}
 
+
+	/**
+	 * Here we initialize the Pantry page, loading the pantry database in the tableview
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
 		pantrySplitPane.setDividerPositions(0.8f);
 		String[] unitsList = { "item", "g", "L", "unit(s)" };
 		unitChoiceBox.getItems().addAll(unitsList);
@@ -156,7 +159,7 @@ public class PantryController implements Initializable {
 		try {
 
 			CachedRowSet rs = DatabaseController.selectAllRows();
-			while (rs.next()) { // charge la database dans la table view au lancement de la fenetre Pantry
+			while (rs.next()) { 
 				Ingredients toAdd = new Ingredients(rs.getString("apiID"), rs.getString("foodName"),
 						rs.getString("quantity"), rs.getString("expirationDate"));
 				getPantryView().getItems().add(toAdd);
@@ -164,7 +167,6 @@ public class PantryController implements Initializable {
 			rs.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -182,6 +184,9 @@ public class PantryController implements Initializable {
 //		datePicker.getEditor().clear();
 //		
 //	}
+	/**
+	 * This method handles the addButton, by adding the selected api ingredient in the database and tableview
+	 */
 	@FXML
 	private void addButtonAction() {
 
@@ -191,7 +196,6 @@ public class PantryController implements Initializable {
 
 		try {
 			CachedRowSet crs = DatabaseController.checkIfItemExists(selectedApiResult.getIdApi());
-//			ResultSet rs = DatabaseController.checkIfItemExists(selectedApiResult.getIdApi());
 			if (crs.next()) {
 				String quantity_fromDB = crs.getString("quantity");
 				String[] parts = quantity_fromDB.split("\\s+");
@@ -206,14 +210,13 @@ public class PantryController implements Initializable {
 			crs.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		getPantryView().getItems().clear();
 		try {
 
 			CachedRowSet rs1 = DatabaseController.selectAllRows();
-			while (rs1.next()) { // charge la database dans la table view au lancement de la fenetre Pantry
+			while (rs1.next()) { 
 				Ingredients toAdd = new Ingredients(rs1.getString("apiID"), rs1.getString("foodName"),
 						rs1.getString("quantity"), rs1.getString("expirationDate"));
 				getPantryView().getItems().add(toAdd);
@@ -221,7 +224,6 @@ public class PantryController implements Initializable {
 			rs1.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -233,7 +235,7 @@ public class PantryController implements Initializable {
 	}
 
 	/**
-	 * 
+	 * This method handles the searchButton, by using edamam api to give 10 results according to the food the user typed
 	 */
 	@FXML
 	private void searchButtonAction() {
@@ -243,7 +245,6 @@ public class PantryController implements Initializable {
 		result = ApiIngredients.apiConnectionAndTest(foodField.getText());
 
 		for (Map.Entry<String, String> entry : result.entrySet()) {
-			// int id = Integer.parseInt(entry.getKey());
 			String quantity = quantityField.getText()
 					.concat(" " + unitChoiceBox.getSelectionModel().getSelectedItem().toString());
 			Ingredients addListView = new Ingredients(entry.getKey(), entry.getValue(), quantity,
@@ -252,10 +253,12 @@ public class PantryController implements Initializable {
 			System.out.println(entry.getKey() + "    " + entry.getValue());
 		}
 
-		// result.forEach(foodId,foodName)-> ;
 
 	}
 
+	/**
+	 * This method handles the delButton, wich deletes the selected ingredient from the database and tableview
+	 */
 	@FXML
 	private void delButtonAction() {
 		Ingredients selectedIngredient = pantryTableView.getSelectionModel().getSelectedItem();
@@ -272,12 +275,9 @@ public class PantryController implements Initializable {
 				getPantryView().getItems().add(toAdd);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// pantryTableView.getSelectionModel().clearSelection(); does not work but
-		// why???????
 	}
 
 }
