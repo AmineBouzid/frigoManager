@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -27,6 +28,7 @@ public class HomeController implements Initializable{
 	@FXML private  TextField firstNameTxtField;
 	@FXML private  TextField lastNameTxtField;
 	@FXML private  Label labelActiveUser;
+	@FXML private  Label sysDate;
 	@FXML private  TableView<Recette> lastViewedRecipestableView;	
 	@FXML private  TableColumn<Recette,String> lastViewedRecipesColumn;
 	
@@ -59,6 +61,14 @@ public class HomeController implements Initializable{
 
 	public void setLabelActiveUser(Label labelActiveUser) {
 		this.labelActiveUser = labelActiveUser;
+	}
+	
+	public Label getSysDate() {
+		return sysDate;
+	}
+
+	public void setSysDate(Label sysDate) {
+		this.sysDate = sysDate;
 	}
 
 	@FXML
@@ -107,12 +117,10 @@ public class HomeController implements Initializable{
 	}
 	//@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// TODO Auto-generated method stub
-		
-		//getFirstNameTxtField().setText();
-		//getLastNameTxtField().setText("Bouzid");
+		LocalDate date = LocalDate.now();	
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		int loadedUser = 0;
-		
+		getSysDate().setText(String.valueOf(formatter.format(date)));
 		
 		lastViewedRecipesColumn.setCellValueFactory(new PropertyValueFactory<Recette,String>("name"));
 		
