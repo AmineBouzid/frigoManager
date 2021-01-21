@@ -89,7 +89,7 @@
                   </Label>
                   <Label fx:id="labelActiveUser" text="ActiveUser">
                      <font>
-                        <Font size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
@@ -106,6 +106,18 @@
                   </TableView>
                </children>
             </AnchorPane>
+            <HBox layoutX="747.0" layoutY="18.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+               <children>
+                  <Label fx:id="sysDate" text="sysDate">
+                     <font>
+                        <Font name="Leelawadee UI" size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </center>

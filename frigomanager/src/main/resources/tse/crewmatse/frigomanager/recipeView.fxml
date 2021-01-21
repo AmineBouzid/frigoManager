@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -8,25 +9,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tse.crewmatse.frigomanager.controller.RecipeViewController">
-   <top>
-      <Label fx:id="recipeTitle" BorderPane.alignment="CENTER" />
-   </top>
    <left>
-      <SplitPane fx:id="s" dividerPositions="0.35241248817407755" orientation="VERTICAL" prefHeight="425.0" prefWidth="199.0" BorderPane.alignment="CENTER">
+      <SplitPane dividerPositions="0.35241248817407755" orientation="VERTICAL" prefHeight="425.0" prefWidth="199.0" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ImageView fx:id="recipeImage" fitHeight="146.0" fitWidth="198.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ImageView fx:id="recipeImage" fitHeight="146.0" fitWidth="198.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ListView fx:id="ingredientsListView" layoutY="40.0" prefHeight="252.0" prefWidth="198.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                  <ListView fx:id="ingredientsListView" layoutY="40.0" prefHeight="252.0" prefWidth="198.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
                   <Label fx:id="servings" layoutX="82.0" layoutY="4.0" text="Label" textAlignment="CENTER" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="11.0" />
-                  <Button fx:id="plusButton" layoutX="105.0" mnemonicParsing="false" onAction="#plus" prefHeight="30.0" prefWidth="30.0" text="+" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0" />
-                  <Button fx:id="minusButton" layoutX="-1.0" layoutY="-3.0" mnemonicParsing="false" onAction="#minus" prefHeight="30.0" prefWidth="30.0" text="-" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0" />
+                  <Button fx:id="plusButton" layoutX="105.0" mnemonicParsing="false" onAction="#plus" prefHeight="30.0" prefWidth="30.0" text="+" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
+                  <Button fx:id="minusButton" layoutX="-1.0" layoutY="-3.0" mnemonicParsing="false" onAction="#minus" prefHeight="30.0" prefWidth="30.0" text="-" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="5.0">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font></Button>
                </children>
             </AnchorPane>
         </items>
@@ -35,16 +40,36 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ListView fx:id="stepsListView" prefHeight="425.0" prefWidth="538.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0" />
+            <ListView fx:id="stepsListView" prefHeight="425.0" prefWidth="538.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="1.0" />
          </children>
+         <padding>
+            <Insets left="5.0" />
+         </padding>
       </AnchorPane>
    </center>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="25.0" prefWidth="698.0" spacing="400.0">
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="698.0" spacing="400.0" style="-fx-background-color: #86ECBC;">
          <children>
-            <Button fx:id="favouriteButton" onAction="#addToFavourite" alignment="BASELINE_RIGHT" mnemonicParsing="false" text="Add to favourite" />
-            <Button fx:id="quitButton" mnemonicParsing="false" onAction="#quit" text="Quit" />
+            <Button fx:id="favouriteButton" alignment="CENTER" mnemonicParsing="false" onAction="#addToFavourite" text="Add to favourites" textFill="#10ab1a">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quit" text="Leave the Recipe View" textFill="#ff0101">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
          </children>
       </HBox>
    </bottom>
+   <top>
+      <AnchorPane prefHeight="25.0" prefWidth="200.0" style="-fx-background-color: #86ECBC;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="recipeTitle" alignment="CENTER" text="Label" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>

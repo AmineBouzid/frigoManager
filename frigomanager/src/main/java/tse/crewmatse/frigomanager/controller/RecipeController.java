@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -46,6 +47,7 @@ public class RecipeController implements Initializable{
 	@FXML private Button deleteButton;
 	@FXML private Button searchButton;
 	@FXML private ProgressBar loadingRecipes;
+	@FXML private Label labelFeedBack;
 		
 	
 
@@ -221,6 +223,7 @@ public class RecipeController implements Initializable{
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadingRecipes.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
+		labelFeedBack.setVisible(false);
 		colFood.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("nameFood"));
 		colExpiration.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("date"));
 		colQuantity.setCellValueFactory( new PropertyValueFactory<Ingredients,String>("quantity"));
@@ -294,6 +297,8 @@ public class RecipeController implements Initializable{
 	
 	@FXML
 	private void addButtonAction() {
+		labelFeedBack.setVisible(false);
+		loadingRecipes.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 		Ingredients toAdd = getPantryTableView().getSelectionModel().getSelectedItem();
 		if (!getSelectedTableView().getItems().contains(toAdd)) {
 			getSelectedTableView().getItems().add(toAdd);
@@ -310,35 +315,47 @@ public class RecipeController implements Initializable{
 		for (int i = 0;i<ing.size();i++) {
 			listIngredients.add(ing.get(i));
 		};
-		ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonArray(ApiRecette.urlRecette(listIngredients)));
-		try {
-			CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
-			while (rs.next()) {
-				
-				if (rs.getBoolean("HealthyMode")) {
-					Collections.sort(listRecettes);
+		try { //if no error 402:
+
+			ArrayList<Recette> listRecettes = ApiRecette.parse(ApiRecette.urltoJsonArray(ApiRecette.urlRecette(listIngredients)));
+			labelFeedBack.setVisible(true);
+			labelFeedBack.setText("Recipes Found !");
+			try {
+				CachedRowSet rs = DatabaseController.loadUserWithLoadedState();
+				while (rs.next()) {
+					
+					if (rs.getBoolean("HealthyMode")) {
+						Collections.sort(listRecettes);
+					}
 				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			
+			for (int i = 0;i<listRecettes.size();i++) {
+				getRecipeTableView().getItems().add(listRecettes.get(i));
+			};
+			searchRecipes=listRecettes;
+			loadingRecipes.setProgress(100);
+			
+		} catch (IOException e) { //catch error 402 API request
+			labelFeedBack.setVisible(true);
+			labelFeedBack.setText("Error 402 : No More tokens");
+			loadingRecipes.setProgress(0);
 		}
-		
-		
-		for (int i = 0;i<listRecettes.size();i++) {
-			getRecipeTableView().getItems().add(listRecettes.get(i));
-		};
-		searchRecipes=listRecettes;
-		loadingRecipes.setProgress(100);
 	}
 	
 	
 
 	@FXML
 	private void deleteButtonAction() {
+		labelFeedBack.setVisible(false);
+		loadingRecipes.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 		int i = getSelectedTableView().getSelectionModel().getSelectedIndex();
 		getSelectedTableView().getItems().remove(i);
 		selectedIngredients.remove(i);
@@ -346,6 +363,8 @@ public class RecipeController implements Initializable{
 	
 	@FXML
 	private void clearButtonAction() {
+		labelFeedBack.setVisible(false);
+		loadingRecipes.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
 		getRecipeTableView().getItems().clear();
 	}
     

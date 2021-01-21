@@ -80,7 +80,7 @@
          <children>
             <AnchorPane AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <TableView fx:id="favoriteRecipesList" prefHeight="490.0" prefWidth="716.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="favoriteRecipesList" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="colFavName" prefWidth="75.0" text="Favorites Recipes" />
                     </columns>
@@ -88,20 +88,24 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="favoriteRecipeDelete" onAction="#deleteFavouriteButtonAction" layoutX="653.0" layoutY="501.0" mnemonicParsing="false" text="Delete Selection" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <Button fx:id="favoriteRecipeDelete" layoutX="653.0" layoutY="501.0" mnemonicParsing="false" onAction="#deleteFavouriteButtonAction" text="Delete Favourite" textFill="#ff0101" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Separator layoutX="-3.0" orientation="VERTICAL" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
-            <VBox alignment="CENTER" prefHeight="493.0" prefWidth="177.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <VBox alignment="CENTER" prefHeight="540.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" spacing="10.0">
                      <children>
                      
                                     <EmojiOneView fill="#86ecbc" glyphName="BUST_IN_SILHOUETTE" size="70" wrappingWidth="70.0">
                            <HBox.margin>
-                              <Insets right="7.0" />
+                              <Insets />
                            </HBox.margin>
                         </EmojiOneView>
-                        <VBox alignment="CENTER" prefHeight="78.0" prefWidth="94.0">
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="100.0">
                            <children>
                               <ChoiceBox fx:id="choiceBoxProfile" prefHeight="25.0" prefWidth="123.0">
                                  <VBox.margin>
@@ -110,12 +114,18 @@
                               </ChoiceBox>
                               <HBox prefHeight="29.0" prefWidth="104.0">
                                  <children>
-                                    <Button fx:id="loadButtonProfile" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadButtonAction" text="Load">
+                                    <Button fx:id="loadButtonProfile" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadButtonAction" text="Load" textFill="#9a5a0b">
                                        <HBox.margin>
                                           <Insets right="2.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
                                     </Button>
-                                    <Button fx:id="deleteButtonProfile" onAction="#deleteButtonAction" mnemonicParsing="false" text="Delete" />
+                                    <Button fx:id="deleteButtonProfile" alignment="CENTER" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" textFill="#ff0101">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font></Button>
                                  </children>
                               </HBox>
                            </children>
@@ -126,19 +136,19 @@
                      </VBox.margin>
                   </HBox>
                   <Label text="Username" />
-                  <TextField fx:id="usernameTxtField" />
+                  <TextField fx:id="usernameTxtField" promptText="username" />
                   <Label text="First Name" />
-                  <TextField fx:id="firstNameTxtField" />
+                  <TextField fx:id="firstNameTxtField" promptText="firstName" />
                   <Label text="Last Name" />
-                  <TextField fx:id="lastNameTxtField" />
+                  <TextField fx:id="lastNameTxtField" promptText="lastName" />
                   <Label text="Gender" />
-                  <ChoiceBox fx:id="choiceBoxGender" prefHeight="25.0" prefWidth="183.0" />
+                  <ChoiceBox fx:id="choiceBoxGender" prefHeight="25.0" prefWidth="200.0" />
                   <Label text="Birth Date" />
-                  <DatePicker fx:id="birthDatePicker" />
-                  <Label text="Height" />
-                  <TextField fx:id="heightTxtField" centerShape="false" prefHeight="25.0" prefWidth="82.0" scaleShape="false" />
-                  <Label text="Weight " />
-                  <TextField fx:id="weightTxtField" prefHeight="25.0" prefWidth="75.0" />
+                  <DatePicker fx:id="birthDatePicker" prefWidth="200.0" promptText="birthDate" />
+                  <Label text="Height (cm)" />
+                  <TextField fx:id="heightTxtField" centerShape="false" prefHeight="25.0" prefWidth="82.0" promptText="centimerters" scaleShape="false" />
+                  <Label text="Weight (kg)" />
+                  <TextField fx:id="weightTxtField" prefHeight="25.0" prefWidth="75.0" promptText="kilogramms" />
                   <RadioButton fx:id="radioButtonHealthy" mnemonicParsing="false" text="Healthy Mode">
                      <VBox.margin>
                         <Insets bottom="4.0" top="4.0" />
@@ -166,13 +176,13 @@
                   <Label alignment="CENTER" prefHeight="17.0" text="Ideal Weight between :" />
                   <HBox alignment="CENTER" scaleShape="false">
                      <children>
-                        <TextField fx:id="weightTxtMinWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
+                        <TextField fx:id="weightTxtMinWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="min">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
                         </TextField>
                         <Label alignment="CENTER" prefHeight="27.0" prefWidth="69.0" text="-" />
-                        <TextField fx:id="weightTxtMaxWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0">
+                        <TextField fx:id="weightTxtMaxWeight" alignment="CENTER" editable="false" prefHeight="25.0" prefWidth="100.0" promptText="max">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
@@ -186,11 +196,17 @@
                   <Separator prefHeight="36.0" prefWidth="151.0" />
                   <HBox>
                      <children>
-                        <Button fx:id="saveButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="96.0" text="Add Profile" />
-                        <Button fx:id="modifButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#modifButtonAction" prefHeight="25.0" prefWidth="96.0" text="Save Modifs">
+                        <Button fx:id="saveButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#saveButtonAction" prefHeight="25.0" prefWidth="96.0" text="Create Profile" textFill="#10ab1a">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font></Button>
+                        <Button fx:id="modifButtonProfile" centerShape="false" mnemonicParsing="false" onAction="#modifButtonAction" prefHeight="25.0" prefWidth="96.0" text="Update" textFill="#0958bf">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
                         </Button>
                      </children>
                   </HBox>
