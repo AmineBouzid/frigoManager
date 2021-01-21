@@ -216,6 +216,11 @@ public class AlertController implements Initializable {
 		}
 	}
 
+	
+	/**
+	 * This function loads the suggested recipes when the user click the right button
+	 * @throws IOException
+	 */
 	@FXML
     private void loadSuggestedRecipes() throws IOException {
 		fillRecipeTableView();
