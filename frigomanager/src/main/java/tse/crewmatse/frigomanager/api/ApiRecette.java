@@ -40,7 +40,7 @@ import org.json.JSONException;
  */
 
 public class ApiRecette {
-	private static final String API_KEY = "7bf70bf5cac046ffa913edb188647024";
+	private static final String API_KEY = "9ff6061565234091a0227455d0500a94";
 	public static String ingredientToUrl(Ingredients ingredient) {
 		String ingredientUrl = "";
 		for (int i = 0;i<ingredient.getNameFood().length();i++) {
