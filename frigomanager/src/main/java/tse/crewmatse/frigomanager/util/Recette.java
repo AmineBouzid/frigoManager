@@ -21,6 +21,7 @@ public class Recette implements Comparable<Recette>{
 	private int healthscore;
 	private Image image;
 	private String cal;
+	private String summary;
 	
 	//Getters & Setters List
 	/**
