@@ -40,12 +40,12 @@ import tse.crewmatse.frigomanager.util.Recette;
  * 
  * @author LEKMAD Mohamed
  * 
- *         This class manage notifications of our application. There are three
- *         types of notifications: 1.Close expiration dates: where we notify the
- *         user if an item is three days away from being expired. //TODO Add the
- *         other notifications
- *  
- * 
+ *         This class manages notifications of our application.
+ *          There are three types of notifications: 
+ *          1.Close expiration dates: where we notify the user if an item is three days away from being expired. 
+ *        	2.Suggested recipes : Here we suggested cool recipes to the user to try if he wants
+ *          3.Missing Ingredients: we check the user's favorites recipes and we show the user what ingredients he misses to make these delicious recipes
+ *          
  *
  */
 
@@ -160,6 +160,10 @@ public class AlertController implements Initializable {
 		AlertController.selectedRecipe = selectedRecipe;
 	}
 
+	/**
+	 * This method initializes the alerts interface with the data needed from the apis
+	 **/
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -177,7 +181,9 @@ public class AlertController implements Initializable {
 		getMissingIngredients();
 
 	}
-
+	/**
+	 * This function fills the table view of the ingredients that are close to their expiration date
+	 **/
 	public void getCloseToExpireIngredients() {
 		try {
 
@@ -196,7 +202,10 @@ public class AlertController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * This function fills the table view of the suggested recipes
+	 **/
 	public void fillRecipeTableView() {
 		try {
 			ArrayList<Recette> recipes = ApiRecette.getRandomRecipes();
@@ -212,6 +221,10 @@ public class AlertController implements Initializable {
 		}
 	}
 
+	
+	/**
+	 * This function opens the page where the user can see details about a double clicked suggested recipe
+	 **/
 	public void showRecipeDetails() {
 		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -229,6 +242,10 @@ public class AlertController implements Initializable {
 		});
 	}
 
+	
+	/**
+	 * This function fills the table view of the ingredients missing the user to make his favorite recipes
+	 **/
 	public void getMissingIngredients() {
 		ArrayList<String> allIngredients = getAllIngredients();
 		try {
@@ -283,7 +300,10 @@ public class AlertController implements Initializable {
 		}
 	}
 
-	
+	/**
+	 * 
+	 * @return all the ingredients in the pantry
+	 */
 
 	public ArrayList<String> getAllIngredients() {
 		ArrayList<String> ingredients = new ArrayList<>();
