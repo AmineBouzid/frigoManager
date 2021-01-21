@@ -1,10 +1,18 @@
 /**
- * @author Guillaume
+ * This class defines the Ingredients type
+ * @author Guillaume Bayon
  *
  */
 package tse.crewmatse.frigomanager.util;
 
 public class Ingredients {
+	/** 
+	 * The constructor of Ingredients
+	 * @param idApi A string returned by edamam api
+	 * @param nameFood The name of the food, returned by edamam api
+	 * @param quantity The quantity, entered by the user
+	 * @param date The expiration date of the food, entered by the user
+	 */
 	public Ingredients(String idApi, String nameFood, String quantity, String date) {
 		super();
 		this.idApi = idApi;
