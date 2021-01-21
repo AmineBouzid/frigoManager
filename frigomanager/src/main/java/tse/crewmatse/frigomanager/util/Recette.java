@@ -169,7 +169,21 @@ public class Recette implements Comparable<Recette>{
 	public void setImage(@SuppressWarnings("exports") Image image) {
 		this.image = image;
 	}
+	/**
+	 * @return the summary of the recipe
+	 */
+	public String getSummary() {
+		return summary;
+	}
+	/**
+	 * @param summary : the summary of the recipe
+	 */
 
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	
 
 	/**
 	 * Constructor of the class with all attributes
