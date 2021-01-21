@@ -13,6 +13,11 @@ import javax.sql.rowset.RowSetProvider;
 
 import java.sql.ResultSet;
 
+/**
+ * This class contains methods to interact with the database
+ * @author Guillaume Bayon, Amine Bouzid, Mohamed Lekmad
+ *
+ */
 public class DatabaseController {
 	private static Connection connection;
 	private static Statement statement;
@@ -20,7 +25,8 @@ public class DatabaseController {
 	
 	/**
 	 * This method is used to get all the ingredients stored in the pantry
-	 * @return A CachedRowSet containing the ingredients in the pantry, each ingredient having 
+	 * @return A CachedRowSet containing the ingredients in the pantry, each ingredient having in this order a field apiID, a field foodName, a field
+	 *  expirationDate and a field quantity
 	 * @throws SQLException
 	 */
 	public static CachedRowSet selectAllRows() throws SQLException {
@@ -61,6 +67,10 @@ public class DatabaseController {
 		
 	}
 	
+	/**
+	 * Delete a certain ingredient from pantry.db
+	 * @param apiID a string that is obtained when selecting a row in the pantry view
+	 */
 	public static void deleteSelectedRow(String apiID) {
 		try {
 			try {
@@ -95,6 +105,13 @@ public class DatabaseController {
 		}
 	}
 	
+	/**
+	 * Method used to store ingredient one at a time in the table Pantry in the database
+	 * @param string The apiID, obtained with a edamam api search
+	 * @param foodName The name of the selected food
+	 * @param expirationdate The expiration date selected in the calendar
+	 * @param quantity The quantity to add in the pantry, with it's unit
+	 */
 	public static void addItemInTable(String string, String foodName, String expirationdate, String quantity) {
 		try {
 			try {
@@ -109,7 +126,7 @@ public class DatabaseController {
 			connection = DriverManager.getConnection("jdbc:sqlite:pantry.db");
 			PreparedStatement pS = connection.prepareStatement("insert into Pantry values (?,?,?,?)");
 			pS.setQueryTimeout(30);
-			pS.setString(1, string); // HERE  replace 12 with the id returned by a http request to api
+			pS.setString(1, string); 
 			pS.setString(2, foodName); 
 			pS.setString(3,expirationdate);
 			pS.setString(4, quantity);
@@ -130,6 +147,12 @@ public class DatabaseController {
 		}
 	}
 	
+	/**
+	 * Updates the Pantry table if the user wants to insert an ingredient already existing in the pantry
+	 * @param apiID The apiID given by edamam api
+	 * @param quantity The quantity the user wants to insert in the pantry
+	 * @param expirationdate The expiration date, which will be used to update the current expiration date
+	 */
 	public static void updateItemInTable(String apiID, String quantity,String expirationdate)
 	{
 		try {
@@ -150,7 +173,7 @@ public class DatabaseController {
 			
 			pS.setString(1, quantity);
 			pS.setString(2,expirationdate);
-			pS.setString(3, apiID); // HERE  replace 12 with the id returned by a http request to api
+			pS.setString(3, apiID); 
 			pS.executeUpdate();
 			pS.close();
 			connection.close();
@@ -168,6 +191,12 @@ public class DatabaseController {
 		}
 	}
 	
+	/**
+	 * Search if an ingredient is already present in the pantry before inserting it
+	 * @param apiID The apiID return by edamam api
+	 * @return A CachedRowSet, containing 1 to 0 elements, depending if the ingredient is already in the pantry or not
+	 * @throws SQLException
+	 */
 	public static CachedRowSet checkIfItemExists(String apiID) throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -192,12 +221,9 @@ public class DatabaseController {
 			connection.close();
 			statement.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
@@ -208,6 +234,17 @@ public class DatabaseController {
 		return crs;
 	}
 	
+	/**
+	 * Saves the user's info in the database
+	 * @param username The name which will be displayed on the home page
+	 * @param FirstName User's first name
+	 * @param LastName User's last name
+	 * @param userGender User's gender
+	 * @param Height User's height
+	 * @param Weight User's weight
+	 * @param HealthyMode User's preference about seeing calories information or not
+	 * @param birthDate User's birth date
+	 */
 	public static void saveUserInfo(String username ,String FirstName, String LastName,String userGender, Double Height, Double Weight, Boolean HealthyMode, String birthDate ) {
 		try {
 			try {
@@ -224,7 +261,7 @@ public class DatabaseController {
 			pS.setQueryTimeout(30);
 			pS.setNull(1,Types.INTEGER);
 			pS.setString(2, username);
-			pS.setString(3, FirstName); // HERE  replace 12 with the id returned by a http request to api
+			pS.setString(3, FirstName); 
 			pS.setString(4, LastName); 
 			pS.setString(5, userGender);
 			pS.setDouble(6,Height);
@@ -237,10 +274,8 @@ public class DatabaseController {
 			connection.close();
 			statement.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -250,6 +285,11 @@ public class DatabaseController {
 		
 	}
 	
+	/**
+	 * Used to get the usernames to populate the combobox
+	 * @return A CachedRowSet containing all the usernames from the table User
+	 * @throws SQLException
+	 */
 	public static CachedRowSet getUserProfile() throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -274,12 +314,9 @@ public class DatabaseController {
 
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
@@ -290,6 +327,12 @@ public class DatabaseController {
 		return crs;
 	}
 	
+	/**
+	 * Used to get all the informations about a certain user
+	 * @param username The username of the user we want to get info
+	 * @return The selected user's information
+	 * @throws SQLException
+	 */
 	public static CachedRowSet getUserInfo(String username) throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -316,12 +359,9 @@ public class DatabaseController {
 			statement.close();
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
@@ -333,6 +373,18 @@ public class DatabaseController {
 		
 	}
 	
+	/**
+	 * Used to update the informations about a certain user, referenced by his auto generated userID
+	 * @param username The username to update
+	 * @param FirstName The first name to update
+	 * @param LastName The last name to update
+	 * @param userGender The gender to update
+	 * @param Height The height to update
+	 * @param Weight The weight to update
+	 * @param HealthyMode The healthy mode to update
+	 * @param birthDate The birht date to update
+	 * @param userId The userId identifying the user to update
+	 */
 	public static void modifUserInfo(String username ,String FirstName, String LastName,String userGender, Double Height, Double Weight, Boolean HealthyMode, String birthDate, Integer userId ) {
 		try {
 			try {
@@ -351,7 +403,7 @@ public class DatabaseController {
 			pS.setQueryTimeout(30);
 			
 			pS.setString(1, username);
-			pS.setString(2, FirstName); // HERE  replace 12 with the id returned by a http request to api
+			pS.setString(2, FirstName); 
 			pS.setString(3, LastName); 
 			pS.setString(4, userGender);
 			pS.setDouble(5,Height);
@@ -365,10 +417,8 @@ public class DatabaseController {
 			statement.close();
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -378,6 +428,10 @@ public class DatabaseController {
 		
 	}
 	
+	/**
+	 * Used to change the loaded user
+	 * @param userId The id of the user to be loaded
+	 */
 	public static void updateLoadedState(Integer userId   ) {
 		try {
 			try {
@@ -409,10 +463,8 @@ public class DatabaseController {
 			statementa2.close();
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -422,6 +474,11 @@ public class DatabaseController {
 		
 	}
 	
+	/**
+	 * This method is used to get the information of the loaded user (the one using the software)
+	 * @return A CachedRowSet containing the info of the loaded user
+	 * @throws SQLException
+	 */
 	public static CachedRowSet loadUserWithLoadedState() throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -444,12 +501,9 @@ public class DatabaseController {
 
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
@@ -460,6 +514,11 @@ public class DatabaseController {
 		return crs;
 		
 	}
+	/**
+	 * This method is used at the startup of the software to load the user 
+	 * @return A CachedRowSet containing the last loaded user info
+	 * @throws SQLException
+	 */
 	public static CachedRowSet loadUserWithLoadedStateForInitialize() throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -481,12 +540,9 @@ public class DatabaseController {
 			statement.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
@@ -497,6 +553,12 @@ public class DatabaseController {
 		return crs;
 		
 	}
+/**
+ * Stores the last recipe viewed by the loaded user on the page recipe
+ * @param id The recipe Id
+ * @param user The loaded user id
+ * @param name The name of the recipe to store
+ */
 public static void storeLastViewedRecipe(int id, int user, String name) {
 		ResultSet rs = null;
 		try {
@@ -547,10 +609,8 @@ public static void storeLastViewedRecipe(int id, int user, String name) {
 			rs.close();
 			
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -561,6 +621,12 @@ public static void storeLastViewedRecipe(int id, int user, String name) {
 		
 	}
 	
+	/**
+	 * This method returns the last 5 viewed recipes by a certain user
+	 * @param user The user id you want to get the last viewed recipes
+	 * @return A CachedRowSet containing the last 5 viewed recipes of a certain user
+	 * @throws SQLException
+	 */
 	public static CachedRowSet getLastViewedRecipes(int user) throws SQLException {
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
 		ResultSet rs = null;
@@ -585,12 +651,10 @@ public static void storeLastViewedRecipe(int id, int user, String name) {
 			statement.close();
 			pS.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		//Connection connection = null;
 		catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		finally {
@@ -603,6 +667,11 @@ public static void storeLastViewedRecipe(int id, int user, String name) {
 		return crs;
 	}
 
+/**
+ * This method is used to check if the ingredients in the pantry are close to their expiration date
+ * @return A CachedRowSet containing the information of the close to expire ingredients
+ * @throws SQLException
+ */
 public static CachedRowSet getIngredientsClostoBeExpired() throws SQLException {
 		ResultSet rs = null;
 		CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
@@ -645,6 +714,12 @@ public static CachedRowSet getIngredientsClostoBeExpired() throws SQLException {
 		
 	}
 
+/**
+ * Stores a recipe in the favorites table to be seen later
+ * @param idRecipe The recipe id (given by spoonacular api) of the recipe to save
+ * @param user The user id of the user that added this recipe to his favorites
+ * @param name The name of the recipe to add to the favorites
+ */
 public static void addFavouriteRecipe(int idRecipe, int user, String name) {
 	ResultSet rs = null;
 	try {
@@ -670,10 +745,8 @@ public static void addFavouriteRecipe(int idRecipe, int user, String name) {
 
 		
 	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	finally {
@@ -684,6 +757,11 @@ public static void addFavouriteRecipe(int idRecipe, int user, String name) {
 	
 }
 
+/**
+ * Deletes the selected favorite recipe
+ * @param idRecipe The id of the recipe to delete
+ * @param user The user id associated with this favorite
+ */
 public static void deleteFavouriteRecipe(int idRecipe, int user) {
 	ResultSet rs = null;
 	try {
@@ -708,10 +786,8 @@ public static void deleteFavouriteRecipe(int idRecipe, int user) {
 
 		
 	} catch (ClassNotFoundException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	finally {
@@ -722,6 +798,10 @@ public static void deleteFavouriteRecipe(int idRecipe, int user) {
 	
 }
 
+/**
+ * Deletes the selected user 
+ * @param username The id of the user to delete
+ */
 public static void deleteUser(String username) {
 	ResultSet rs = null;
 	try {
@@ -759,6 +839,12 @@ public static void deleteUser(String username) {
 	
 }
 
+/**
+ * Used to get the favorite recipes of the loaded user
+ * @param user The user id of the loaded user
+ * @return A CachedRowSet containing the favorites recipes of a certain user
+ * @throws SQLException
+ */
 public static CachedRowSet getFavouriteRecipe(int user) throws SQLException {
 	CachedRowSet crs = RowSetProvider.newFactory().createCachedRowSet();
 	ResultSet rs = null;
