@@ -89,8 +89,8 @@
                            <children>
                               <TableView fx:id="IngredientsTableView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <columns>
-                                    <TableColumn prefWidth="75.0" text="Missing Ingredient" />
-                                    <TableColumn prefWidth="75.0" text="Pinned Recipe" />
+                                    <TableColumn fx:id="colMissingIngredients" prefWidth="650.0" resizable="false" text="Missing Ingredients" />
+                                    <TableColumn fx:id="colFavRecipe" prefWidth="277.33331298828125" text="Pinned Recipe" />
                                  </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

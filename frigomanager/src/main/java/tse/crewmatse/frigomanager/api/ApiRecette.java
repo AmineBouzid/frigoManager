@@ -35,7 +35,7 @@ import org.json.JSONException;
  **/
 
 public class ApiRecette {
-	private static final String API_KEY = "a42249d17e734eba97d81142ec081884";
+	private static final String API_KEY = "244bcc1fa9f84039951a54e8926203dc";
 	public static String ingredientToUrl(Ingredients ingredient) {
 		String ingredientUrl = "";
 		for (int i = 0;i<ingredient.getNameFood().length();i++) {
@@ -168,7 +168,13 @@ public class ApiRecette {
     		int id = recipesArray.getJSONObject(i).getInt("id");
     		JSONObject inf = urltoJsonObject(urlInf(id));
     		String imageUrl = new String();
-    		imageUrl = inf.getString("image");
+    		if(inf.has("image")) {
+    			imageUrl = inf.getString("image");
+        		
+    		}
+    		else {
+    			imageUrl = "https://safetyaustraliagroup.com.au/wp-content/uploads/2019/05/image-not-found.png";
+    		}
     		Image image = new Image(imageUrl);
     		String summary = recipesArray.getJSONObject(i).getString("summary");
     		String name = recipesArray.getJSONObject(i).getString("title");
@@ -176,9 +182,10 @@ public class ApiRecette {
     		for (int j = 0;j<ing.length();j++) {
     			listIngredient.add(ing.getJSONObject(j).getString("originalName"));
     		}
-    		Recette r = new Recette(name,id,listIngredient,image,summary);
-    		result.add(r);
+    		Recette recipe = new Recette(name,id,listIngredient,image,summary);
+    		result.add(recipe);
     		
+    
     	}
     	return result;
     			
