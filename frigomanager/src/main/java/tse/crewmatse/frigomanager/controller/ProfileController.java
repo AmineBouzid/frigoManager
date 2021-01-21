@@ -242,6 +242,10 @@ public class ProfileController  implements Initializable{
 		this.saveButtonProfile = saveButtonProfile;
 	}
 	
+	/**
+	 * This method calls the DatabaseController method getUserProfile that returns the list of usernames in the database.
+	 * It then populate the user checkbox with the returned list
+	 */
 	public void populateUserChoiceBox() {
 		getchoiceBoxProfile().getItems().clear();
 		ArrayList<String> profileArrayList = new ArrayList<String>();
@@ -268,6 +272,11 @@ public class ProfileController  implements Initializable{
         getchoiceBoxProfile().getItems().addAll(profileList);
 	}
 	
+	/**
+	 * This method calls the DatabaseController method loadUserWithLoadedState that returns the loaded user.
+	 * It then loads the favourite recipes of that user from the favouriteRecipe table using the DatabaseController method getFavouriteRecipe
+	 * It adds each loaded recipe to the tableview of the page. 
+	 */ 
 	public void populateFavouriteTable() {
 		int loadedUser = 0;
 		try {
@@ -305,6 +314,14 @@ public class ProfileController  implements Initializable{
 		}
 	}
 	
+	/**
+	 * Here we initialize the Porfile page, loading the loaded user with loadedstate = 1 info from the database.
+	 * It calls the populateUserChoiceBox and populateFavouriteTable
+	 * It  updates the user's class attributes to the loaded user info.
+	 * It then populates the user information fields with the loaded data then calculates the userBMI and weight methods and displays them
+	 * 
+	 * 
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -380,6 +397,11 @@ public class ProfileController  implements Initializable{
 	}
 	
 	
+	/**
+	 * This method is called when the delete favourite recipe button is clicked. It checks which user profile is loaded. 
+	 * Then calls the database method deleteFavouriteRecipe with the loaded user's username and selected recipe's Id as parameters
+	 * Then deletes the recipe from the tableView.
+	 */
 	@FXML
 	private void deleteFavouriteButtonAction() {
 		int loadedUser = 0;
@@ -410,6 +432,10 @@ public class ProfileController  implements Initializable{
 		
 	}
 	
+	/**
+	 * This method extracts all the information from the page's textfields and datepicker. Then calls the DatabaseCOntroller method saveUserInfo with the extracted data as parameters
+	 * It then updates the user's class attributes to the saved user info.
+	 */
 	@FXML
 	private void saveButtonAction() {
 		String username = getusernameTxtField().getText();
@@ -463,6 +489,9 @@ public class ProfileController  implements Initializable{
 		}	
 	}
 	
+	/**
+	 * This method updates an existing user's profile with the date that the user just modified in the UI
+	 */
 	@FXML
 	private void modifButtonAction() {
 		String username = getusernameTxtField().getText();
@@ -518,6 +547,10 @@ public class ProfileController  implements Initializable{
 		}	
 	}
 	
+	/**
+	 * This method loads the user's informations depending on which one is selcted in the getchoiceBoxProfile
+	 * @throws SQLException
+	 */
 	@FXML
 	private void loadButtonAction() throws SQLException {
 			String username = getchoiceBoxProfile().getSelectionModel().getSelectedItem().toString();
@@ -584,6 +617,10 @@ public class ProfileController  implements Initializable{
 			populateFavouriteTable();
 	}
 	
+	/**
+	 * @throws SQLException
+	 * This method will delete the user's profile depending on which user is selected in the getchoiceBoxProfile
+	 */
 	@FXML
 	private void deleteButtonAction() throws SQLException {
 			String username = getchoiceBoxProfile().getSelectionModel().getSelectedItem().toString();
