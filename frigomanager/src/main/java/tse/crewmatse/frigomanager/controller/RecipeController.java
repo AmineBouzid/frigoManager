@@ -30,6 +30,11 @@ import tse.crewmatse.frigomanager.util.Ingredients;
 import tse.crewmatse.frigomanager.util.Recette;
 
 
+/**
+ * This class is the controller for the recipe page
+ * @author Thomas Blomme, Amine Bouzid
+ *
+ */
 public class RecipeController implements Initializable{
 	@FXML private SplitPane recipeSplitPane;
 	@FXML private TableView<Recette> recipeTableView;
@@ -61,136 +66,232 @@ public class RecipeController implements Initializable{
 
 	
 
+	/**
+	 * @return recipeSplitPane
+	 */
 	@SuppressWarnings("exports")
 	public SplitPane getRecipeSplitPane() {
 		return recipeSplitPane;
 	}
 
+	/**
+	 * @param recipeSplitPane
+	 */
 	public void setRecipeSplitPane(@SuppressWarnings("exports") SplitPane recipeSplitPane) {
 		this.recipeSplitPane = recipeSplitPane;
 	}
 
+	/**
+	 * @return recipeTableView
+	 */
 	public TableView<Recette> getRecipeTableView() {
 		return recipeTableView;
 	}
 
+	/**
+	 * @param recipeTableView
+	 */
 	public void setRecipeTableView(TableView<Recette> recipeTableView) {
 		this.recipeTableView = recipeTableView;
 	}
 
+	/**
+	 * @return colRecipe
+	 */
 	public TableColumn<Recette, String> getColRecipe() {
 		return colRecipe;
 	}
 
+	/**
+	 * @param colRecipe
+	 */
 	public void setColRecipe(TableColumn<Recette, String> colRecipe) {
 		this.colRecipe = colRecipe;
 	}
 
+	/**
+	 * @return colIngredient
+	 */
 	public TableColumn<Recette, TableView<Recette>> getColIngredients() {
 		return colIngredients;
 	}
 
+	/**
+	 * @param colIngredients
+	 */
 	public void setColIngredients(TableColumn<Recette, TableView<Recette>> colIngredients) {
 		this.colIngredients = colIngredients;
 	}
 
+	/**
+	 * @return colUsed
+	 */
 	public TableColumn<Recette, ArrayList<String>> getColUsed() {
 		return colUsed;
 	}
 
+	/**
+	 * @param colUsed
+	 */
 	public void setColUsed(TableColumn<Recette, ArrayList<String>> colUsed) {
 		this.colUsed = colUsed;
 	}
 
+	/**
+	 * @return colMissed
+	 */
 	public TableColumn<Recette, ArrayList<String>> getColMissed() {
 		return colMissed;
 	}
 
+	/**
+	 * @param colMissed
+	 */
 	public void setColMissed(TableColumn<Recette, ArrayList<String>> colMissed) {
 		this.colMissed = colMissed;
 	}
 
+	/**
+	 * @return pantryTableView
+	 */
 	public TableView<Ingredients> getPantryTableView() {
 		return pantryTableView;
 	}
 
+	/**
+	 * @param pantryTableView
+	 */
 	public void setPantryTableView(TableView<Ingredients> pantryTableView) {
 		this.pantryTableView = pantryTableView;
 	}
 
+	/**
+	 * @return colFood
+	 */
 	public TableColumn<Ingredients, String> getColFood() {
 		return colFood;
 	}
 
+	/**
+	 * @param colFood
+	 */
 	public void setColFood(TableColumn<Ingredients, String> colFood) {
 		this.colFood = colFood;
 	}
 
+	/**
+	 * @return colExpiration
+	 */
 	public TableColumn<Ingredients, String> getColExpiration() {
 		return colExpiration;
 	}
 
+	/**
+	 * @param colExpiration
+	 */
 	public void setColExpiration(TableColumn<Ingredients, String> colExpiration) {
 		this.colExpiration = colExpiration;
 	}
 
+	/**
+	 * @return colQuantity
+	 */
 	public TableColumn<Ingredients, String> getColQuantity() {
 		return colQuantity;
 	}
 
+	/**
+	 * @param colQuantity
+	 */
 	public void setColQuantity(TableColumn<Ingredients, String> colQuantity) {
 		this.colQuantity = colQuantity;
 	}
 
+	/**
+	 * @return selectedTableView
+	 */
 	public TableView<Ingredients> getSelectedTableView() {
 		return selectedTableView;
 	}
 
+	/**
+	 * @param selectedTableView
+	 */
 	public void setSelectedTableView(TableView<Ingredients> selectedTableView) {
 		this.selectedTableView = selectedTableView;
 	}
 
+	/**
+	 * @return colIngredient
+	 */
 	public TableColumn<Ingredients, String> getColIngredient() {
 		return colIngredient;
 	}
 
+	/**
+	 * @param colIngredient
+	 */
 	public void setColIngredient(TableColumn<Ingredients, String> colIngredient) {
 		this.colIngredient = colIngredient;
 	}
 
+	/**
+	 * @return addButton
+	 */
 	@SuppressWarnings("exports")
 	public Button getAddButton() {
 		return addButton;
 	}
 
+	/**
+	 * @param addButton
+	 */
 	public void setAddButton(@SuppressWarnings("exports") Button addButton) {
 		this.addButton = addButton;
 	}
 
+	/**
+	 * @return deleteButton
+	 */
 	@SuppressWarnings("exports")
 	public Button getDeleteButton() {
 		return deleteButton;
 	}
 
+	/**
+	 * @param deleteButton
+	 */
 	public void setDeleteButton(@SuppressWarnings("exports") Button deleteButton) {
 		this.deleteButton = deleteButton;
 	}
 
+	/**
+	 * @return searchButton
+	 */
 	@SuppressWarnings("exports")
 	public Button getSearchButton() {
 		return searchButton;
 	}
 	
+	/**
+	 * @return loadingRecipes
+	 */
 	public ProgressBar getLoadingRecipes() {
 		return loadingRecipes;
 	}
 
+	/**
+	 * @param loadingRecipes
+	 */
 	public void setLoadingRecipes(ProgressBar loadingRecipes) {
 		this.loadingRecipes = loadingRecipes;
 	}
 
 
 
+	/**
+	 * @param searchButton
+	 */
 	public void setSearchButton(@SuppressWarnings("exports") Button searchButton) {
 		this.searchButton = searchButton;
 	}
@@ -220,6 +321,9 @@ public class RecipeController implements Initializable{
         App.setRoot("alerts");
     }
 
+	/**
+	 * This method initializes the Recipe page with the pantry ingredients and the search bar
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		loadingRecipes.setProgress(ProgressBar.INDETERMINATE_PROGRESS);
@@ -295,6 +399,9 @@ public class RecipeController implements Initializable{
 		
 	}
 	
+	/**
+	 * Handles the addButton, to add ingredients in the search zone and update the progress bar
+	 */
 	@FXML
 	private void addButtonAction() {
 		labelFeedBack.setVisible(false);
@@ -307,6 +414,12 @@ public class RecipeController implements Initializable{
 		
 	}
 	
+	/**
+	 * Handles the searchButton, launch a call to the spoonacular api and updates the progress bar
+	 * After an api response, displays the recipes
+	 * @throws JSONException
+	 * @throws IOException
+	 */
 	@FXML
 	private void searchButtonAction() throws JSONException, IOException {		
 		getRecipeTableView().getItems().clear();
@@ -352,6 +465,9 @@ public class RecipeController implements Initializable{
 	
 	
 
+	/**
+	 * Handles the deleteButton to delete ingredients from the search zone
+	 */
 	@FXML
 	private void deleteButtonAction() {
 		labelFeedBack.setVisible(false);
@@ -361,6 +477,9 @@ public class RecipeController implements Initializable{
 		selectedIngredients.remove(i);
 	}
 	
+	/**
+	 * Handles the clearButton, which clears the search zone
+	 */
 	@FXML
 	private void clearButtonAction() {
 		labelFeedBack.setVisible(false);
