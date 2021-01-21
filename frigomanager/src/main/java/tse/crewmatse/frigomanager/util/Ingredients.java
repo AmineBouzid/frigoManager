@@ -12,6 +12,10 @@ public class Ingredients {
 		this.quantity = quantity;
 		this.date = date;
 	}
+	public Ingredients(String nameFood) {
+		super();
+		this.nameFood = nameFood;
+	}
 	
 	public Ingredients() {
 		super();

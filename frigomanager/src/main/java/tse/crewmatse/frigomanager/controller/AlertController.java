@@ -17,6 +17,7 @@ import javax.sql.rowset.CachedRowSet;
 
 import org.json.JSONException;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
@@ -24,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import tse.crewmatse.frigomanager.App;
 import tse.crewmatse.frigomanager.api.ApiRecette;
 import tse.crewmatse.frigomanager.util.DatabaseController;
@@ -62,6 +64,7 @@ public class AlertController implements Initializable {
 	@FXML private TableColumn<Recette, String> colRecipe;
 	@FXML private TableColumn<Recette, ArrayList<String>> colIngredients;
 
+	public static Recette selectedRecipe;
 	@FXML
 	private void switchToProfile() throws IOException {
 		App.setRoot("profile");
@@ -121,7 +124,13 @@ public class AlertController implements Initializable {
 	public void setColIngredients(TableColumn<Recette, ArrayList<String>> colIngredients) {
 		this.colIngredients = colIngredients;
 	}
-	
+	public static Recette getSelectedRecipe() {
+		return selectedRecipe;
+	}
+
+	public static void setSelectedRecipe(Recette selectedRecipe) {
+		AlertController.selectedRecipe = selectedRecipe;
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// TODO Auto-generated method stub
@@ -143,6 +152,7 @@ public class AlertController implements Initializable {
 			}
 			rs.close();
 			fillRecipeTableView();
+			showRecipeDetails();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -160,5 +170,22 @@ public class AlertController implements Initializable {
 			e.printStackTrace();
 		}
 	}
+	public void showRecipeDetails() {
+		recipeTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+	    	public void handle(MouseEvent event) {
+	    		if (event.getClickCount() == 2) {
+	    			selectedRecipe = getRecipeTableView().getSelectionModel().getSelectedItem();
+	    			try {
+						App.setRoot("recipeDetails");
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+	    			
+	    		}
+	    	}
+		});
+	}
+	
 
 }

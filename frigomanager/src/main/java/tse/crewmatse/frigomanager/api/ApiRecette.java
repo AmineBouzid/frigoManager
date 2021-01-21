@@ -166,12 +166,17 @@ public class ApiRecette {
     	for (int i = 0;i<recipesArray.length();i++) {
     		ArrayList<String> listIngredient = new ArrayList<>();
     		int id = recipesArray.getJSONObject(i).getInt("id");
+    		JSONObject inf = urltoJsonObject(urlInf(id));
+    		String imageUrl = new String();
+    		imageUrl = inf.getString("image");
+    		Image image = new Image(imageUrl);
+    		String summary = recipesArray.getJSONObject(i).getString("summary");
     		String name = recipesArray.getJSONObject(i).getString("title");
     		JSONArray ing = recipesArray.getJSONObject(i).getJSONArray("extendedIngredients");
-    		for (int j = 0;j<4;j++) {
+    		for (int j = 0;j<ing.length();j++) {
     			listIngredient.add(ing.getJSONObject(j).getString("originalName"));
     		}
-    		Recette r = new Recette(name,id,listIngredient);
+    		Recette r = new Recette(name,id,listIngredient,image,summary);
     		result.add(r);
     		
     	}
