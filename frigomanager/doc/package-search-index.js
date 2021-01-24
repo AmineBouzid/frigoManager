@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"tse.crewmatse.api"},{"l":"tse.crewmatse.frigomanager"},{"l":"tse.crewmatse.frigomanager.api"},{"l":"tse.crewmatse.frigomanager.controller"},{"l":"tse.crewmatse.frigomanager.userprofile"},{"l":"tse.crewmatse.frigomanager.util"}]
